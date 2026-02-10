@@ -1,4 +1,5 @@
 import { useState } from "react";
+import logoTax from "@assets/img/logo_taxServices.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,11 +8,12 @@ const Navbar = () => {
     <nav className="fixed w-full z-50 bg-white backdrop-blur-md border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center">
-   
           <div className="flex items-center shrink-0">
-            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-              Tax
-            </div>
+            <img src={logoTax} className="w-8" alt="Tax Services Logo" />
+            <span className="ml-2 text-xl font-extrabold text-primary-hover">
+              TAX
+              <span className="text-primary-hover font-light ">Services</span>
+            </span>
           </div>
 
           <div className="hidden md:flex items-center flex-1 justify-center gap-8">

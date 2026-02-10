@@ -10,10 +10,10 @@ const Footer = () => {
               <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
                 Tax
               </div>
-              <span className="text-2xl font-bold text-blue-900 tracking-tight">
+              <span className="ml-2 text-2xl font-extrabold text-primary-hover">
                 TAX
+                <span className="text-primary-hover font-light ">Services</span>
               </span>
-              <span className="text-blue-900">services</span>
             </div>
             <p className="text-slate-500 leading-relaxed">
               The all-in-one compliance platform for international entrepreneurs
@@ -100,9 +100,8 @@ const Footer = () => {
             © {currentYear} CorpPath. All rights reserved.
           </p>
           <p className="text-slate-400 text-xs max-w-2xl">
-            This website is for informational purposes only and does not
-            constitute legal or tax advice. We are a private service provider,
-            not a government agency.
+            All rights reserved. This website is for informational purposes and
+            does not constitute legal advice.
           </p>
         </div>
       </div>

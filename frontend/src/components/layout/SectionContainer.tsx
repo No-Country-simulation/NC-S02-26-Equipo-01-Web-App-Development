@@ -4,7 +4,7 @@ interface SectionProps {
   badge?: string;
   title: string;
   description?: string;
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
 }
 
