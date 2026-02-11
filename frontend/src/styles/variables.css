@@ -1,19 +1,12 @@
 @theme {
-  --color-primary: #646cff;
-  --color-primary-hover: #0C3F86;
+  --color-primary: #0C3F86;
+  --color-primary-hover: #09326C;
 
   
-  --color-secondary: #62748e ;
-  --color-secondary-hover: #61dafbaa;
+  --color-secondary: #F07F15 ;
+  --color-secondary-hover: #B86111;
   --color-secondary-active: #61dafbaa;
   
   --color-background: #ffffff;
   --color-text: #213547;
-}
-
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-background: #1a1a1a;
-    --color-text: #e0e0e0;
-  }
 }
