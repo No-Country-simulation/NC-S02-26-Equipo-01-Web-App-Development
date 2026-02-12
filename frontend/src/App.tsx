@@ -13,37 +13,31 @@ function App() {
       <main>
         <Hero></Hero>
         <SectionContainer
-          title="Section 1"
-          description="This is the first section."
+          title="Starting a U.S.Business Shouldn’t Be this hard"
+          description="International founders face a fragmented system that wastes time, money and peace of mind."
         ></SectionContainer>
 
         <SectionContainer
-          title="Section 2"
-          description="This is the second section."
+          title="Everything Your U.S. Business Needs"
+          description="Three critical services, one integrated bundle. No gaps, no overlaps, no confusion."
         ></SectionContainer>
         <SectionContainer
-          title="Section 3"
-          description="This is the third section."
-        ></SectionContainer>
-
-        <SectionContainer
-          title="Section 4"
-          description="This is the fourth section."
+          title="Three Simple Steps to Get Started"
+          description="We've streamlined the entire process so you can go from idea to legally operating U.S. business."
         ></SectionContainer>
 
-        <SectionContainer
-          title="Section 5"
-          description="This is the fifth  section."
-        ></SectionContainer>
+        <SectionContainer title="The Smarter Way to Start Your U.S. Business"></SectionContainer>
 
         <SectionContainer
-          title="Section 6"
-          description="This is the sixth section."
+          title="Simple, Transparent Pricing"
+          description="Choose the plan that fits your needs. No hidden fees, no surprises."
         ></SectionContainer>
-        
+
+        <SectionContainer title="Trusted by Founders Worldwide"></SectionContainer>
+
         <SectionContainer
-          title="Section 7"
-          description="This is the seventh section."
+          title="Frequently Asked Questions"
+          description="Everything you need to know about starting your U.S. business."
         ></SectionContainer>
       </main>
       <Footer />
