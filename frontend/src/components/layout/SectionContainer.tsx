@@ -1,11 +1,18 @@
 import { type ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
+import Badge from "../common/Badge";
 
 interface SectionProps {
-  badge?: string;
+  badge?: {
+    text: string;
+    icon?: React.ReactNode;
+  };
   title: string;
   description?: string;
   children?: ReactNode;
   className?: string;
+  dataTestId?: string;
+  isDark?: boolean;
 }
 
 const SectionContainer = ({
@@ -14,23 +21,35 @@ const SectionContainer = ({
   description,
   children,
   className = "",
+  dataTestId = "section-container",
+  isDark = false
 }: SectionProps) => {
   return (
-    <section className={`py-20 ${className}`}>
-      <div className="max-w-7xl mx-auto px-4 bg-white sm:px-6 lg:px-8">
+    <section data-testid={dataTestId}>
+      <div
+        className={twMerge(
+          `max-w-7xl mx-auto px-4 py-20 ${isDark ? "bg-black text-white" : "bg-white text-black"} sm:px-6 lg:px-8 text-center`,
+          className,
+        )}
+      >
         <div className="text-center mb-16">
           {badge && (
             <div className="inline-block mb-4">
-              <span className="px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold">
-                {badge}
-              </span>
+              <Badge
+                text={badge.text}
+                icon={badge.icon}
+                dataTestId={`${dataTestId}-badge`}
+              />
             </div>
           )}
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+          <h2
+            data-testid={`${dataTestId}-title`}
+            className={`text-4xl md:text-5xl font-bold ${isDark ? "text-white" : "text-slate-900"} mb-6`}
+          >
             {title}
           </h2>
           {description && (
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className={`text-md ${isDark ? "text-blue-100" : "text-slate-700"} max-w-2xl mx-auto`}>
               {description}
             </p>
           )}

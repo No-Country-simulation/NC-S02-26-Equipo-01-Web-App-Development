@@ -1,11 +1,11 @@
 import { useState } from "react";
 import logoTax from "@assets/img/logo_taxServices.png";
 
-const Navbar = () => {
+const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed w-full z-50 bg-white backdrop-blur-md border-b border-slate-100">
+    <nav data-testid={dataTestId} className="fixed w-full z-50 bg-white backdrop-blur-md border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center">
           <div className="flex items-center shrink-0">
@@ -17,22 +17,23 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center flex-1 justify-center gap-8">
-            <a href="#services" className="nav-link">
+            <a href="#services" data-testid="nav-link-services" className="nav-link">
               Services
             </a>
-            <a href="#how-it-works" className="nav-link">
+            <a href="#how-it-works" data-testid="nav-link-how" className="nav-link">
               How it Works
             </a>
-            <a href="#pricing" className="nav-link">
+            <a href="#pricing" data-testid="nav-link-pricing" className="nav-link">
               Pricing
             </a>
-            <a href="#faq" className="nav-link">
+            <a href="#faq" data-testid="nav-link-faq" className="nav-link">
               FAQ
             </a>
           </div>
 
           <div className="md:hidden flex flex-1 items-center justify-end">
             <button
+              data-testid="nav-toggle"
               onClick={() => setIsOpen(!isOpen)}
               className="text-slate-600"
             >
@@ -58,16 +59,16 @@ const Navbar = () => {
 
       {isOpen && (
         <div className="md:hidden bg-white border-b border-slate-100 p-4 gap-4 flex flex-col">
-          <a href="#services" className="block nav-link">
+          <a href="#services" data-testid="nav-link-services-mobile" className="block nav-link">
             Services
           </a>
-          <a href="#how-it-works" className="block nav-link">
+          <a href="#how-it-works" data-testid="nav-link-how-mobile" className="block nav-link">
             How it Works
           </a>
-          <a href="#pricing" className="block nav-link">
+          <a href="#pricing" data-testid="nav-link-pricing-mobile" className="block nav-link">
             Pricing
           </a>
-          <a href="#faq" className="block nav-link">
+          <a href="#faq" data-testid="nav-link-faq-mobile" className="block nav-link">
             FAQ
           </a>
         </div>
