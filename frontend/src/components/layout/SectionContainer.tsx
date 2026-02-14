@@ -12,7 +12,7 @@ interface SectionProps {
   children?: ReactNode;
   className?: string;
   dataTestId?: string;
-  isDark?: boolean;
+  color?: "light" | "dark" | "blue";
 }
 
 const SectionContainer = ({
@@ -22,13 +22,19 @@ const SectionContainer = ({
   children,
   className = "",
   dataTestId = "section-container",
-  isDark = false
+  color = "light",
 }: SectionProps) => {
+  const colorClasses = {
+    light: "bg-white text-gray-900",
+    dark: "bg-black text-white",
+    blue: "bg-light-blue-25 text-blue-900",
+  };
+
   return (
     <section data-testid={dataTestId}>
       <div
         className={twMerge(
-          `max-w-7xl mx-auto px-4 py-20 ${isDark ? "bg-black text-white" : "bg-white text-black"} sm:px-6 lg:px-8 text-center`,
+          `max-w-7xl mx-auto px-4 py-20 ${colorClasses[color]} sm:px-6 lg:px-8 text-center`,
           className,
         )}
       >
@@ -44,12 +50,14 @@ const SectionContainer = ({
           )}
           <h2
             data-testid={`${dataTestId}-title`}
-            className={`text-4xl md:text-5xl font-bold ${isDark ? "text-white" : "text-slate-900"} mb-6`}
+            className={`text-4xl md:text-5xl font-bold ${color === "dark" ? "text-white" : "text-slate-900"} mb-6`}
           >
             {title}
           </h2>
           {description && (
-            <p className={`text-md ${isDark ? "text-blue-100" : "text-slate-700"} max-w-2xl mx-auto`}>
+            <p
+              className={`text-md ${color === "dark" ? "text-blue-100" : "text-slate-700"} max-w-2xl mx-auto`}
+            >
               {description}
             </p>
           )}
