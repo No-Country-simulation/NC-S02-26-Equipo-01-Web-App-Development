@@ -4,7 +4,7 @@ import Navbar from "@components/layout/Navbar";
 import Hero from "@components/layout/Hero";
 import SectionContainer from "@components/layout/SectionContainer";
 import Button from "@components/common/Button";
-import { theProblems } from "@data/data";
+import { pricingPlans, smarterWay, theProblems, theServices, threeSteps } from "@data/data";
 import Card from "@components/common/Card";
 
 function App() {
@@ -45,7 +45,34 @@ function App() {
             dataTestId="app-section-everything-business"
             badge={{ text: "OUR SERVICES", icon: "🛡️" }}
             color="blue"
-          ></SectionContainer>
+          >
+            <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
+              {theServices &&
+                theServices.map((service, index) => (
+                  <Card
+                    key={index}
+                    dataTestId={`app-card-service-${index}`}
+                    data={service}
+                    color="light"
+                  >
+                    {service.list && (
+                      <ul className="mt-4 list-disc list-inside text-left">
+                        {service.list.map((item, idx) => (
+                          <li
+                            key={idx}
+                            data-testid={`app-card-service-${index}-list-item-${idx}`}
+                            className="list-none"
+                          >
+                            <span className="mr-2">✅</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </Card>
+                ))}
+            </div>
+          </SectionContainer>
 
           <SectionContainer
             title="Three Simple Steps to Get Started"
@@ -53,13 +80,43 @@ function App() {
             dataTestId="app-section-three-steps"
             badge={{ text: "How It Works", icon: "🛡️" }}
             color="dark"
-          ></SectionContainer>
+          >
+            <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
+              {threeSteps &&
+                threeSteps.map((step, index) => (
+                  <div key={index} className="relative">
+                    <span className="mx-auto w-16 h-16 rounded-full border-4 border-secondary text-white flex items-center justify-center text-2xl font-light tracking-widest">
+                      0{index + 1}
+                    </span>
+                    <Card
+                      key={index}
+                      dataTestId={`app-card-step-${index}`}
+                      data={step}
+                      color="transparent"
+                    ></Card>
+                  </div>
+                ))}
+            </div>
+          </SectionContainer>
 
           <SectionContainer
             title="The Smarter Way to Start Your U.S. Business"
             dataTestId="app-section-smarter-way"
             badge={{ text: "Why CorpPath", icon: "⚙️" }}
-          ></SectionContainer>
+          >
+            <div className="flex  gap-6 justify-center mt-10 flex-wrap">
+              {smarterWay &&
+                smarterWay.map((item, index) => (
+                  <Card
+                    key={index}
+                    dataTestId={`app-card-smarter-way-${index}`}
+                    data={item}
+                    color="blue"
+                    isHorizontal
+                  ></Card>
+                ))}
+            </div>
+          </SectionContainer>
 
           <SectionContainer
             title="Simple, Transparent Pricing"
@@ -67,7 +124,34 @@ function App() {
             dataTestId="app-section-simple-pricing"
             badge={{ text: "Pricing", icon: "📈" }}
             color="blue"
-          ></SectionContainer>
+          >
+            <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
+              {pricingPlans &&
+                pricingPlans.map((service, index) => (
+                  <Card
+                    key={index}
+                    dataTestId={`app-card-pricing-${index}`}
+                    data={service}
+                    color="light"
+                  >
+                    {service.list && (
+                      <ul className="mt-4 list-disc list-inside text-left">
+                        {service.list.map((item, idx) => (
+                          <li
+                            key={idx}
+                            data-testid={`app-card-pricing-${index}-list-item-${idx}`}
+                            className="list-none"
+                          >
+                            <span className="mr-2">✅</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </Card>
+                ))}
+            </div>
+          </SectionContainer>
 
           <SectionContainer
             title="Trusted by Founders Worldwide"
