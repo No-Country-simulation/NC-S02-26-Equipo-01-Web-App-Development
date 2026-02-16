@@ -41,7 +41,7 @@ export default function HomePage() {
               ))}
           </div>
 
-          <Button className="mt-14">
+          <Button className="mt-14" dataTestId="app-button-one-team">
             → One team. One checkout. Everything handled{" "}
           </Button>
         </SectionContainer>
@@ -158,6 +158,7 @@ export default function HomePage() {
                     one-time + <span>${service.price?.PayMonthly}/mo</span>
                   </p>
                   <Button
+                    dataTestId={`app-button-pricing-${index}`}
                     className={`w-full mx-auto mt-4 ${service.title === "Growth" ? "bg-gold hover:bg-gold-hover" : "bg-black hover:bg-gray-800"}`}
                   >
                     Start Now →
@@ -196,7 +197,7 @@ export default function HomePage() {
           badge={{ text: "FAQ", icon: "❓" }}
           color="blue"
         >
-            
+
 
 
         </SectionContainer>
@@ -207,10 +208,10 @@ export default function HomePage() {
           dataTestId="app-section-ready-launch"
           color="dark"
         >
-          <Button className="mt-4 bg-gold hover:bg-gold-hover">
+          <Button className="mt-4 bg-gold hover:bg-gold-hover" dataTestId="app-button-cta">
             Start Now It Takes 5 minutes →
           </Button>
-          <p className="text-sm text-slate-50 mt-5">
+          <p className="text-sm text-slate-50 mt-5" data-testid="app-text-cta-disclaimer">
             No credit card required to get started. Secure checkout via Stripe.
           </p>
         </SectionContainer>
