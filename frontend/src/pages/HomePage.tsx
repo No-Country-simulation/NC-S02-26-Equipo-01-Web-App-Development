@@ -22,7 +22,9 @@ export default function HomePage() {
       </header>
       <main>
         <Hero dataTestId="app-hero"></Hero>
-        <SectionContainer          id="app-section-problems"          title="Starting a U.S.Business Shouldn’t Be this hard"
+        <SectionContainer
+          id="app-section-problems"
+          title="Starting a U.S.Business Shouldn’t Be this hard"
           description="International founders face a fragmented system that wastes time, money and peace of mind."
           dataTestId="app-section-starting-business"
           badge={{ text: "The Problem", icon: "⚠️" }}
@@ -60,6 +62,7 @@ export default function HomePage() {
                   dataTestId={`app-card-service-${index}`}
                   data={service}
                   color="light"
+                  className="text-center"
                 >
                   {service.list && (
                     <ul className="mt-4 list-disc list-inside text-left">
@@ -100,6 +103,7 @@ export default function HomePage() {
                     dataTestId={`app-card-step-${index}`}
                     data={step}
                     color="transparent"
+                    className="text-center"
                   ></Card>
                 </div>
               ))}
@@ -134,7 +138,7 @@ export default function HomePage() {
           badge={{ text: "Pricing", icon: "📈" }}
           color="blue"
         >
-          <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
+          <div className="flex flex-row gap-6 items-center justify-center mt-10 flex-wrap">
             {pricingPlans &&
               pricingPlans.map((service, index) => (
                 <Card
@@ -142,14 +146,29 @@ export default function HomePage() {
                   dataTestId={`app-card-pricing-${index}`}
                   data={service}
                   color="light"
+                  className={
+                    service.title === "Growth" ? "border-2 border-gold" : ""
+                  }
+                  titleSize="2xl"
                 >
+                  <p className="mt-4 text-left font-bold text-xs text-text">
+                    <span className="text-2xl text-black">
+                      {service.price?.amount}
+                    </span>{" "}
+                    one-time + <span>${service.price?.PayMonthly}/mo</span>
+                  </p>
+                  <Button
+                    className={`w-full mx-auto mt-4 ${service.title === "Growth" ? "bg-gold hover:bg-gold-hover" : "bg-black hover:bg-gray-800"}`}
+                  >
+                    Start Now →
+                  </Button>
                   {service.list && (
-                    <ul className="mt-4 list-disc list-inside text-left">
+                    <ul className="mt-4 text-left list-disc list-inside flex flex-col gap-2 mx-auto w-fit">
                       {service.list.map((item, idx) => (
                         <li
                           key={idx}
                           data-testid={`app-card-pricing-${index}-list-item-${idx}`}
-                          className="list-none"
+                          className="list-none text-sm"
                         >
                           <span className="mr-2">✅</span>
                           {item}
@@ -176,7 +195,11 @@ export default function HomePage() {
           dataTestId="app-section-faq"
           badge={{ text: "FAQ", icon: "❓" }}
           color="blue"
-        ></SectionContainer>
+        >
+            
+
+
+        </SectionContainer>
         <SectionContainer
           id="app-section-cta"
           title="Ready to Launch Your U.S. Business?"

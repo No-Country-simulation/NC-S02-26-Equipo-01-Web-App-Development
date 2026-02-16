@@ -112,6 +112,10 @@ export const pricingPlans: Service[] = [
   {
     title: "Starter",
     description: "Perfect for solo founders launching their first U.S. entity.",
+    price: {
+      amount: 499,
+      PayMonthly: 150,
+    },
     list: [
       "LLC formation in any state",
       "EIN obtainment",
@@ -126,6 +130,14 @@ export const pricingPlans: Service[] = [
     title: "Growth",
     description:
       "For scaling businesses that need full-service tax & compliance.",
+    price: {
+      amount: 899,
+      PayMonthly: 299,
+    },
+    badged: {
+      text: "Most Popular",
+      color: "gold",
+    },
     list: [
       "LLC or C-Corp formation",
       "EIN obtainment",
