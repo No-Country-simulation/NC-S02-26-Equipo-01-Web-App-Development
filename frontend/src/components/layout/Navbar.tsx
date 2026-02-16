@@ -17,16 +17,16 @@ const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
           </div>
 
           <div className="hidden md:flex items-center flex-1 justify-center gap-8">
-            <a href="#services" data-testid="nav-link-services" className="nav-link">
+            <a href="#app-section-services" data-testid="nav-link-services" className="nav-link">
               Services
             </a>
-            <a href="#how-it-works" data-testid="nav-link-how" className="nav-link">
+            <a href="#app-section-steps" data-testid="nav-link-how" className="nav-link">
               How it Works
             </a>
-            <a href="#pricing" data-testid="nav-link-pricing" className="nav-link">
+            <a href="#app-section-pricing" data-testid="nav-link-pricing" className="nav-link">
               Pricing
             </a>
-            <a href="#faq" data-testid="nav-link-faq" className="nav-link">
+            <a href="#app-section-faq" data-testid="nav-link-faq" className="nav-link">
               FAQ
             </a>
           </div>
@@ -59,16 +59,16 @@ const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
 
       {isOpen && (
         <div className="md:hidden bg-white border-b border-slate-100 p-4 gap-4 flex flex-col">
-          <a href="#services" data-testid="nav-link-services-mobile" className="block nav-link">
+          <a href="#app-section-services" data-testid="nav-link-services-mobile" className="block nav-link" onClick={() => setIsOpen(false)}>
             Services
           </a>
-          <a href="#how-it-works" data-testid="nav-link-how-mobile" className="block nav-link">
+          <a href="#app-section-steps" data-testid="nav-link-how-mobile" className="block nav-link" onClick={() => setIsOpen(false)}>
             How it Works
           </a>
-          <a href="#pricing" data-testid="nav-link-pricing-mobile" className="block nav-link">
+          <a href="#app-section-pricing" data-testid="nav-link-pricing-mobile" className="block nav-link" onClick={() => setIsOpen(false)}>
             Pricing
           </a>
-          <a href="#faq" data-testid="nav-link-faq-mobile" className="block nav-link">
+          <a href="#app-section-faq" data-testid="nav-link-faq-mobile" className="block nav-link" onClick={() => setIsOpen(false)}>
             FAQ
           </a>
         </div>

@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import Badge from "../common/Badge";
 
 interface SectionProps {
+  id?: string;
   badge?: {
     text: string;
     icon?: React.ReactNode;
@@ -16,6 +17,7 @@ interface SectionProps {
 }
 
 const SectionContainer = ({
+  id,
   badge,
   title,
   description,
@@ -31,7 +33,7 @@ const SectionContainer = ({
   };
 
   return (
-    <section data-testid={dataTestId}>
+    <section id={id} data-testid={dataTestId}>
       <div
         className={twMerge(
           `max-w-7xl mx-auto px-4 py-20 ${colorClasses[color]} sm:px-6 lg:px-8 text-center`,
