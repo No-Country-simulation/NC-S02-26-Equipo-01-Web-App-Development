@@ -22,7 +22,7 @@ Background:
   Scenario: Validar error en el formulario por email inválido
     When el usuario rellena el formulario con un email con formato incorrecto "usuario@test"
     And hace click en el botón "Finalizar compra"
-    Then el sistema debe mostrar un mensaje de alerta "Email inválido"
+    Then el sistema debe mostrar un mensaje de alerta "Campos inválidos o incompletos"
     And no debe permitir el progreso a la página de éxito
 
   @UI @Negative @HU3

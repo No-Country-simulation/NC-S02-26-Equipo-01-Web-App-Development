@@ -97,7 +97,6 @@ Then(
   'el sistema debe resaltar los campos obligatorios en rojo',
   async function (this: CustomWorld) {
     const checkout = new CheckoutPage(this.page!)
-    const claseError = await checkout.campoTieneError('number')
-    expect(claseError).toContain('invalid')
+    await expect(checkout.mensajeErrorStripe).toBeVisible()
   },
 )

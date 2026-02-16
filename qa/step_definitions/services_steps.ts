@@ -48,10 +48,11 @@ Then(
     for (const nombre of servicios) {
       const card = landing.obtenerCardServicio(nombre)
       const count = await card.count()
-      if (count === 0) {
-        continue
+      if (count !== 0) {
+        throw new Error('Existen los servicios')
+      } else {
+        await expect(card).not.toBeVisible()
       }
-      await expect(card).not.toBeVisible()
     }
   },
 )

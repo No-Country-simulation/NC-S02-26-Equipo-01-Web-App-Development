@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cucumber-js && node ./generate.report.js",
-    "test:junit": "cucumber-js --format junit:reports/junit.xml",
     "typecheck": "tsc --noEmit",
-    "serve-mocks": "dotenv -e .env -- http-server ./mocks -p 3000"
+    "serve-mocks": "dotenv -e .env -- http-server ./mocks -p 3000",
+    "test": "cucumber-js && node ./generate.report.js",
+    "test:junit": "cucumber-js --format junit:reports/junit.xml"
   },
   "repository": {
     "type": "git",

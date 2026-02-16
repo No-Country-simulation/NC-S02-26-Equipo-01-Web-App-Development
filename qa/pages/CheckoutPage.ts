@@ -37,18 +37,6 @@ export class CheckoutPage extends BasePage {
     if (datos.cvc) await this.inputCardCvc.fill(datos.cvc)
   }
 
-  async campoTieneError(nombreCampo: 'number' | 'expiry' | 'cvc') {
-    const selector = {
-      number: '#cardNumber',
-      expiry: '#cardExpiry',
-      cvc: '#cardCvc',
-    }[nombreCampo]
-
-    const input = this.stripeFrame.locator(selector)
-    // Nota: stripe suele usar clases como ".StripeElement--invalid" o atributos aria
-    return await input.getAttribute('class')
-  }
-
   get mensajeErrorStripe() {
     return this.stripeErrorMessage
   }
