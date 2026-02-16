@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<testsuite name="Cucumber" time="27.714" tests="7" skipped="0" failures="4" errors="0" timestamp="2026-02-13T19:00:45.269Z">
+  <testcase classname="Realizar compra del servicio" name="Efectuar compra del servicio solicitado con todos los campos ingresados" time="8.447">
+    <failure type="Error" message="[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed&#xA;&#xA;Locator:  locator('.Checkout-totalAmount, [data-testid=&quot;total-amount-text&quot;]')&#xA;Expected: [32m&quot;$499&quot;[39m&#xA;Received: [31m&quot;$499[7m.00[27m&quot;[39m&#xA;Timeout:  5000ms&#xA;&#xA;Call log:&#xA;[2m  - Expect &quot;to.have.text&quot; with timeout 5000ms[22m&#xA;[2m  - waiting for locator('.Checkout-totalAmount, [data-testid=&quot;total-amount-text&quot;]')[22m&#xA;[2m    9 × locator resolved to &lt;div class=&quot;Checkout-totalAmount&quot;>$499.00&lt;/div>[22m&#xA;[2m      - unexpected value &quot;$499.00&quot;[22m&#xA;"><![CDATA[    at Proxy.<anonymous> (C:\Dev\Simulaciones\team-01-tax-service-web-app\node_modules\playwright\lib\matchers\expect.js:213:24)
+    at MyWorld.<anonymous> (C:\Dev\Simulaciones\team-01-tax-service-web-app\step_definitions\checkout_steps.ts:26:40)]]></failure>
+    <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
+And los datos de tráfico se almacenan correctamente en el sistema...........passed
+And el usuario ha seleccionado un servicio de "$499"........................passed
+And se valida que el usuario se encuentra en la pasarela de pago............passed
+Then el precio total a pagar "$499" sea igual al servicio solicitado........failed
+When el usuario rellena el formulario con los siguientes datos:.............skipped
+And hace click en el botón "Finalizar compra"...............................skipped
+Then el sistema debe procesar el pago y enviar los IDs "g_123" y "f_456" al servidor..skipped
+And el usuario es redirigido a la página de pago exitoso....................skipped]]></system-out>
+  </testcase>
+  <testcase classname="Realizar compra del servicio" name="Validar error en el formulario por email inválido" time="6.357">
+    <failure type="Error" message="[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed&#xA;&#xA;Locator: locator('#error-message, .ErrorMessage, [role=&quot;alert&quot;]')&#xA;Expected substring: [32m&quot;[7mEmail[27m inválido&quot;[39m&#xA;Received string:    [31m&quot;[7mCampos[27m inválido[7ms o incompletos[27m&quot;[39m&#xA;Timeout: 5000ms&#xA;&#xA;Call log:&#xA;[2m  - Expect &quot;to.have.text&quot; with timeout 5000ms[22m&#xA;[2m  - waiting for locator('#error-message, .ErrorMessage, [role=&quot;alert&quot;]')[22m&#xA;[2m    9 × locator resolved to &lt;div id=&quot;error-message&quot; data-testid=&quot;error-message&quot;>Campos inválidos o incompletos&lt;/div>[22m&#xA;[2m      - unexpected value &quot;Campos inválidos o incompletos&quot;[22m&#xA;"><![CDATA[    at Proxy.<anonymous> (C:\Dev\Simulaciones\team-01-tax-service-web-app\node_modules\playwright\lib\matchers\expect.js:213:24)
+    at MyWorld.<anonymous> (C:\Dev\Simulaciones\team-01-tax-service-web-app\step_definitions\checkout_steps.ts:78:47)]]></failure>
+    <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
+And los datos de tráfico se almacenan correctamente en el sistema...........passed
+And el usuario ha seleccionado un servicio de "$499"........................passed
+And se valida que el usuario se encuentra en la pasarela de pago............passed
+When el usuario rellena el formulario con un email con formato incorrecto "usuario@test"..passed
+And hace click en el botón "Finalizar compra"...............................passed
+Then el sistema debe mostrar un mensaje de alerta "Email inválido"..........failed
+And no debe permitir el progreso a la página de éxito.......................skipped]]></system-out>
+  </testcase>
+  <testcase classname="Realizar compra del servicio" name="Validar campos obligatorios vacíos" time="1.086">
+    <failure type="Error" message="[2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m&#xA;&#xA;[1mMatcher error[22m: [31mreceived[39m value must not be null nor undefined&#xA;&#xA;Received has value: [31mnull[39m"><![CDATA[    at Proxy.<anonymous> (C:\Dev\Simulaciones\team-01-tax-service-web-app\node_modules\playwright\lib\matchers\expect.js:213:24)
+    at MyWorld.<anonymous> (C:\Dev\Simulaciones\team-01-tax-service-web-app\step_definitions\checkout_steps.ts:101:24)]]></failure>
+    <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
+And los datos de tráfico se almacenan correctamente en el sistema...........passed
+And el usuario ha seleccionado un servicio de "$499"........................passed
+And se valida que el usuario se encuentra en la pasarela de pago............passed
+When el usuario deja todos los campos del formulario en blanco..............passed
+And hace click en el botón "Finalizar compra"...............................passed
+Then el sistema debe resaltar los campos obligatorios en rojo...............failed
+And no debe permitir el progreso a la página de éxito.......................skipped]]></system-out>
+  </testcase>
+  <testcase classname="Selección de servicio" name="Elegir un servicio para ingresar al proceso de pago" time="1.102">
+    <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
+And los datos de tráfico se almacenan correctamente en el sistema...........passed
+When el usuario navega hasta la sección de planes...........................passed
+Then se deben visualizar los precios de los servicios.......................passed
+And el usuario hace click en el botón "Start Now" del plan "$499"...........passed
+Then el usuario es redirigido a la página de pago...........................passed]]></system-out>
+  </testcase>
+  <testcase classname="Selección de servicio" name="Error de inconsistencia de precios en la selección" time="1.033">
+    <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
+And los datos de tráfico se almacenan correctamente en el sistema...........passed
+When el usuario visualiza un plan sin precio definido.......................passed
+And el usuario hace click en el botón "Start Now" del plan ""...............passed
+Then el sistema debe bloquear la redirección al checkout....................passed
+And debe mostrar un aviso de "Precio no disponible, contacte a soporte".....passed]]></system-out>
+  </testcase>
+  <testcase classname="Interfaz de Usuario y Checkout" name="Carga de landing para conocer los servicios ofrecidos" time="1.024">
+    <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
+And los datos de tráfico se almacenan correctamente en el sistema...........passed
+When el usuario visualiza las opciones del menú.............................passed
+And el usuario hace click en la opción "Services" del menú..................passed
+Then se deben visualizar los detalles de "Incorporation", "Tax" y "Bookkeeping"..passed]]></system-out>
+  </testcase>
+  <testcase classname="Interfaz de Usuario y Checkout" name="Error en la visualización de los servicios" time="6.04">
+    <failure type="Error" message="[2mexpect([22m[31mlocator[39m[2m).not.[22mtoBeVisible[2m([22m[2m)[22m failed&#xA;&#xA;Locator:  locator('[data-testid=&quot;services-section&quot;]:has-text(&quot;Incorporation&quot;)')&#xA;Expected: not visible&#xA;Received: visible&#xA;Timeout:  5000ms&#xA;&#xA;Call log:&#xA;[2m  - Expect &quot;to.be.visible&quot; with timeout 5000ms[22m&#xA;[2m  - waiting for locator('[data-testid=&quot;services-section&quot;]:has-text(&quot;Incorporation&quot;)')[22m&#xA;[2m    9 × locator resolved to &lt;section data-testid=&quot;services-section&quot;>…&lt;/section>[22m&#xA;[2m      - unexpected value &quot;visible&quot;[22m&#xA;"><![CDATA[    at Proxy.<anonymous> (C:\Dev\Simulaciones\team-01-tax-service-web-app\node_modules\playwright\lib\matchers\expect.js:213:24)
+    at MyWorld.<anonymous> (C:\Dev\Simulaciones\team-01-tax-service-web-app\step_definitions\services_steps.ts:54:30)]]></failure>
+    <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
+And los datos de tráfico se almacenan correctamente en el sistema...........passed
+When el usuario visualiza las opciones del menú.............................passed
+And el usuario hace click en la opción "Services" del menú..................passed
+Then no se visualizan los servicios "Incorporation", "Tax" y "Bookkeeping"..failed]]></system-out>
+  </testcase>
+</testsuite>

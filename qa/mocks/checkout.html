@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mock Stripe Checkout</title>
+    <style>
+      .error {
+        color: red;
+        border: 1px solid red;
+      }
+      #error-message {
+        color: red;
+        display: none;
+        margin-top: 10px;
+      }
+      input {
+        display: block;
+        margin: 10px 0;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Checkout</h1>
+
+    <div class="Checkout-totalAmount">$499.00</div>
+
+    <input
+      id="email"
+      data-testid="input-email"
+      placeholder="Email"
+    />
+    <input
+      id="billingName"
+      data-testid="input-name"
+      placeholder="Nombre"
+    />
+
+    <iframe
+      id="stripe-iframe"
+      title="Secure card payment input frame"
+      style="width: 100%; height: 200px; border: 1px solid #eee"
+      srcdoc="
+        <html>
+            <style>body { margin: 0; padding: 10px; font-family: sans-serif; }</style>
+            <body>
+                <input id='cardNumber' placeholder='Card number' data-testid='input-card-number' /><br>
+                <input id='cardExpiry' placeholder='MM/YY' data-testid='input-card-expiry' /><br>
+                <input id='cardCvc' placeholder='CVC' data-testid='input-card-cvc' />
+            </body>
+        </html>"
+    >
+    </iframe>
+
+    <div
+      id="error-message"
+      data-testid="error-message"
+    ></div>
+
+    <button
+      data-testid="btn-finish-purchase"
+      onclick="finalizar()"
+    >
+      Finalizar compra
+    </button>
+
+    <script>
+      function finalizar() {
+        // 1. Elementos del Padre
+        const email = document.getElementById('email').value
+        const billingName = document.getElementById('billingName').value
+
+        // 2. Elementos del Hijo (Iframe)
+        // Obtenemos el iframe primero
+        const iframe = document.getElementById('stripe-iframe')
+        // Accedemos a su documento interno
+        const iframeDoc =
+          iframe.contentDocument || iframe.contentWindow.document
+
+        // Ahora buscamos DENTRO del documento del iframe
+        // Nota: Usamos '?.' (optional chaining) por seguridad, por si el iframe no ha cargado
+        const cardNumber = iframeDoc.getElementById('cardNumber')?.value
+        const cardExpiry = iframeDoc.getElementById('cardExpiry')?.value
+        const cardCvc = iframeDoc.getElementById('cardCvc')?.value
+
+        console.log('Validando:', { email, billingName, cardNumber }) // Para debug en consola
+
+        // Validación simple
+        if (
+          !email.includes('@') ||
+          !billingName ||
+          !cardNumber ||
+          !cardExpiry ||
+          !cardCvc
+        ) {
+          const error = document.getElementById('error-message')
+          error.textContent = 'Campos inválidos o incompletos'
+          error.style.display = 'block'
+        } else {
+          // Simulamos éxito
+          window.location.href = 'success.html'
+        }
+      }
+    </script>
+  </body>
+</html>
