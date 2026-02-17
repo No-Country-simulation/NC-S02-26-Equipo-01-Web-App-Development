@@ -25,3 +25,9 @@ export interface Testimonial {
   quote: string;
   avatar: string;
 }
+
+export interface FAQItemProps {
+  id?: string;
+  question: string;
+  answer: string;
+}

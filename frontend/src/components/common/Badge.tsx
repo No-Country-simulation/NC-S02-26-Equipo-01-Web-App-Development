@@ -9,7 +9,7 @@ const Badge = ({ text, dataTestId = "badge", icon, color }: BadgeProps) => {
   return (
     <span
       data-testid={dataTestId}
-      className={`inline-block bg-${color || "accent"} text-white text-xs text-center whitespace-nowrap font-semibold px-3 py-3 rounded-full`}
+      className={`inline-block ${color ? `bg-${color}` : "bg-accent"} text-white text-xs text-center whitespace-nowrap font-semibold px-3 py-3 rounded-full`}
     >
       {icon && <span className="mr-1">{icon}</span>}
       {text}

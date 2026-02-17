@@ -17,7 +17,7 @@ const Hero = ({ dataTestId = "hero" }: { dataTestId?: string }) => {
       </div>
 
       <div className="container mx-auto pt-10 px-4 text-center relative">
-        <p className="mb-4 text-sm font-light">
+        <p className="mb-4 text-sm font-light pt-16 md:pt-0">
           Trusted by 2.500+ International founders
         </p>
         <h1
@@ -32,7 +32,17 @@ const Hero = ({ dataTestId = "hero" }: { dataTestId?: string }) => {
           international entrepreneurs.
         </p>
 
-        <Button data-testid="hero-cta-start">
+        <Button
+          data-testid="hero-cta-start"
+          onClick={() => {
+            const pricingSection = document.getElementById(
+              "app-section-pricing",
+            );
+            if (pricingSection) {
+              pricingSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+        >
           Start Your U.S. Business Today →
         </Button>
 

@@ -1,4 +1,10 @@
-import type { Problem, Service, ICard } from "../types";
+import type {
+  Problem,
+  Service,
+  ICard,
+  FAQItemProps,
+  Testimonial,
+} from "../types";
 
 export const theProblems: Problem[] = [
   {
@@ -152,4 +158,66 @@ export const pricingPlans: Service[] = [
       "Priority support ",
     ],
   },
+];
+
+export const faqList: FAQItemProps[] = [
+  {
+    id: "1",
+    question: "Who is this service for?",
+    answer:
+      "This service is for international founders who want to start and operate a U.S. business without the complexity and legal challenges of navigating U.S. tax and compliance laws on their own.",
+  },
+
+  {
+    id: "2",
+    question: "Do I need to live in the U.S. to form a company?",
+    answer:
+      "No, you do not need to live in the U.S. to form a U.S. company. Our service is specifically designed for international founders.",
+  },
+  {
+    id: "3",
+    question: "How long does incorporation take?",
+    answer:
+      "Incorporation typically takes 1-2 business days once all required documents are submitted.",
+  },
+  {
+    id: "4",
+    question: "What's the difference between an LLC and a C-Corp?",
+    answer:
+      "An LLC (Limited Liability Company) is a simpler structure with fewer formalities and more flexibility in management and taxation. A C-Corp (Corporation) is a more complex structure that offers greater scalability and is often preferred by investors.",
+  },
+  {
+    id: "5",
+    question: "Are there any hidden fees?",
+    answer:
+      "No, there are no hidden fees. Our pricing is transparent and includes all costs upfront.",
+  },
+  {
+    id: "6",
+    question: "Can I cancel the monthly service?",
+    answer:
+      "Yes, you can cancel the monthly service at any time. We offer a 30-day money-back guarantee.",
+  },
+];
+
+export const testimonials: Testimonial[] = [
+  {
+    name: "Maria G.",
+    title: "E-Comerce Founder - México",
+    quote: "CorpPath made it incredibly easy to form my LLC from Mexico. I didn't have to worry about a single compliance issue — they handled everything.",
+    avatar: "maria-avatar.png",
+  },
+  {
+    name: "Ahmed R.",
+    title: "SaaS Founder — UAE",
+    quote: "I tried doing it myself and got overwhelmed. CorpPath's team set up my C-Corp, handled my ITIN, and now manages my books monthly. It's seamless.",
+    avatar: "ahmed-avatar.png",
+  },
+  {
+    name: "Lena K.",
+    title: "Freelance Consultant — Germany",
+    quote: "The transparent pricing was a huge plus. No hidden fees, no surprises. I know exactly what I'm paying for and my books are always clean.",
+    avatar: "lena-avatar.png",
+  },
+
 ];

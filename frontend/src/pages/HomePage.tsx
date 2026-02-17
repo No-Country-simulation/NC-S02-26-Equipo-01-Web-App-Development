@@ -5,13 +5,16 @@ import Hero from "@components/layout/Hero";
 import SectionContainer from "@components/layout/SectionContainer";
 import Button from "@components/common/Button";
 import {
+  faqList,
   pricingPlans,
   smarterWay,
+  testimonials,
   theProblems,
   theServices,
   threeSteps,
 } from "@data/data";
 import Card from "@components/common/Card";
+import FAQList from "@components/common/FAQList";
 
 export default function HomePage() {
   useScrollToSection();
@@ -41,7 +44,18 @@ export default function HomePage() {
               ))}
           </div>
 
-          <Button className="mt-14" dataTestId="app-button-one-team">
+          <Button
+            className="mt-14"
+            dataTestId="app-button-one-team"
+            onClick={() => {
+              const pricingSection = document.getElementById(
+                "app-section-pricing",
+              );
+              if (pricingSection) {
+                pricingSection.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
             → One team. One checkout. Everything handled{" "}
           </Button>
         </SectionContainer>
@@ -187,7 +201,47 @@ export default function HomePage() {
           title="Trusted by Founders Worldwide"
           dataTestId="app-section-trusted-worldwide"
           badge={{ text: "Testimonials", icon: "💬" }}
-        ></SectionContainer>
+        >
+          <div className="flex flex-row flex-wrap gap-6 justify-evenly mt-10">
+            {testimonials &&
+              testimonials.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col items-center gap-4 text-center max-w-xs mx-auto mt-10 py-5 bg-gray-50"
+                >
+                  <div className="flex gap-1 text-3xl">
+                    <span className="text-gold">★</span>
+                    <span className="text-gold">★</span>
+                    <span className="text-gold">★</span>
+                    <span className="text-gold">★</span>
+                    <span className="text-gray-300">★</span>
+                  </div>
+                  <blockquote className="text-md italic text-gray-800 px-10">
+                    “{testimonial.quote}”
+                  </blockquote>
+                  <div className="flex flex-row items-center gap-2 mt-3">
+                    <img
+                      src={testimonial.avatar}
+                      alt={`${testimonial.name} avatar`}
+                      className="w-16 h-16 rounded-full object-cover"
+                      data-testid={`app-testimonial-avatar-${index}`}
+                    />
+                    <div>
+                      <h3 className="mt-2 text-xl text-left font-bold" data-testid={`app-testimonial-name-${index}`}>
+                        {testimonial.name}
+                      </h3>
+                      <p className="text-xs text-gray-500">
+                        {testimonial.title}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+          
+          
+
+        </SectionContainer>
 
         <SectionContainer
           id="app-section-faq"
@@ -197,9 +251,7 @@ export default function HomePage() {
           badge={{ text: "FAQ", icon: "❓" }}
           color="blue"
         >
-
-
-
+          <FAQList FAQs={faqList}></FAQList>
         </SectionContainer>
         <SectionContainer
           id="app-section-cta"
@@ -208,10 +260,16 @@ export default function HomePage() {
           dataTestId="app-section-ready-launch"
           color="dark"
         >
-          <Button className="mt-4 bg-gold hover:bg-gold-hover" dataTestId="app-button-cta">
+          <Button
+            className="mt-4 bg-gold hover:bg-gold-hover"
+            dataTestId="app-button-cta"
+          >
             Start Now It Takes 5 minutes →
           </Button>
-          <p className="text-sm text-slate-50 mt-5" data-testid="app-text-cta-disclaimer">
+          <p
+            className="text-sm text-slate-50 mt-5"
+            data-testid="app-text-cta-disclaimer"
+          >
             No credit card required to get started. Secure checkout via Stripe.
           </p>
         </SectionContainer>
