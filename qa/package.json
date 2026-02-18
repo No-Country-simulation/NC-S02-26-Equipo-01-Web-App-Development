@@ -1,0 +1,37 @@
+{
+  "name": "team-01-tax-service-web-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "serve-mocks": "dotenv -e .env -- http-server ./mocks -p 3000",
+    "test": "cucumber-js && node ./generate.report.js",
+    "test:junit": "cucumber-js --format junit:reports/junit.xml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lopezandres07/qa-tax-service.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Lopezandres07/qa-tax-service/issues"
+  },
+  "homepage": "https://github.com/Lopezandres07/qa-tax-service#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.6.0",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.2.2",
+    "axios": "^1.4.0",
+    "cucumber-html-reporter": "^7.2.0",
+    "playwright": "^1.58.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6",
+    "http-server": "^14.1.1",
+    "dotenv": "^16.0.3",
+    "dotenv-cli": "^6.0.0"
+  }
+}

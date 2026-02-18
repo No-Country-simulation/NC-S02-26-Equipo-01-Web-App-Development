@@ -1,0 +1,944 @@
+[
+  {
+    "description": "  Como usuario quiero completar el checkout \n  Para efectuar una compra del servicio",
+    "elements": [
+      {
+        "description": "",
+        "id": "realizar-compra-del-servicio;efectuar-compra-del-servicio-solicitado-con-todos-los-campos-ingresados",
+        "keyword": "Scenario",
+        "line": 12,
+        "name": "Efectuar compra del servicio solicitado con todos los campos ingresados",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 3155664100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 44508599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 32803200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "el usuario ha seleccionado un servicio de \"$499\"",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 91428700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "se valida que el usuario se encuentra en la pasarela de pago",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28810999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 13,
+            "name": "el precio total a pagar \"$499\" sea igual al servicio solicitado",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8501899
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "email",
+                      "card_number",
+                      "expiry",
+                      "cvc",
+                      "name"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "test@example.com",
+                      "4242424242424242",
+                      "12/26",
+                      "123",
+                      "Juan Perez"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "When ",
+            "line": 14,
+            "name": "el usuario rellena el formulario con los siguientes datos:",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:30"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 78595300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "hace click en el botón \"Finalizar compra\"",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:39"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 59061400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 18,
+            "name": "el sistema debe procesar el pago y enviar los IDs \"g_123\" y \"f_456\" al servidor",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:47"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8934699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "el usuario es redirigido a la página de pago exitoso",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:56"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15920299
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 15510000
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 11
+          },
+          {
+            "name": "@HU3",
+            "line": 11
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "realizar-compra-del-servicio;validar-error-en-el-formulario-por-email-inválido",
+        "keyword": "Scenario",
+        "line": 22,
+        "name": "Validar error en el formulario por email inválido",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1590604499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 19197500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 30684599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "el usuario ha seleccionado un servicio de \"$499\"",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 65044200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "se valida que el usuario se encuentra en la pasarela de pago",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 17585300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 23,
+            "name": "el usuario rellena el formulario con un email con formato incorrecto \"usuario@test\"",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:63"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12799500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 24,
+            "name": "hace click en el botón \"Finalizar compra\"",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:39"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 41022899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 25,
+            "name": "el sistema debe mostrar un mensaje de alerta \"Campos inválidos o incompletos\"",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 16944799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 26,
+            "name": "no debe permitir el progreso a la página de éxito",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:82"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3668100
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 14016099
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 21
+          },
+          {
+            "name": "@Negative",
+            "line": 21
+          },
+          {
+            "name": "@HU3",
+            "line": 21
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "realizar-compra-del-servicio;validar-campos-obligatorios-vacíos",
+        "keyword": "Scenario",
+        "line": 29,
+        "name": "Validar campos obligatorios vacíos",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1291481000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 16228300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 27871499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "el usuario ha seleccionado un servicio de \"$499\"",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 72917400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "se valida que el usuario se encuentra en la pasarela de pago",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 19837199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 30,
+            "name": "el usuario deja todos los campos del formulario en blanco",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:89"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 267200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 31,
+            "name": "hace click en el botón \"Finalizar compra\"",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:39"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 46220300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 32,
+            "name": "el sistema debe resaltar los campos obligatorios en rojo",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:96"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4106900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 33,
+            "name": "no debe permitir el progreso a la página de éxito",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:82"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4375100
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 12194500
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 28
+          },
+          {
+            "name": "@Negative",
+            "line": 28
+          },
+          {
+            "name": "@HU3",
+            "line": 28
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "realizar-compra-del-servicio",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Realizar compra del servicio",
+    "tags": [],
+    "uri": "features\\checkout.feature"
+  },
+  {
+    "description": "  Como usuario quiero seleccionar un servicio\n  Para iniciar el proceso de compra",
+    "elements": [
+      {
+        "description": "",
+        "id": "selección-de-servicio;elegir-un-servicio-para-ingresar-al-proceso-de-pago",
+        "keyword": "Scenario",
+        "line": 10,
+        "name": "Elegir un servicio para ingresar al proceso de pago",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1193370999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 19374299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 26414300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 11,
+            "name": "el usuario navega hasta la sección de planes",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 43101200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 12,
+            "name": "se deben visualizar los precios de los servicios",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4892799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 13,
+            "name": "el usuario hace click en el botón \"Start Now\" del plan \"$499\"",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 54457300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 14,
+            "name": "el usuario es redirigido a la página de pago",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:30"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 17013199
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 13643200
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 9
+          },
+          {
+            "name": "@HU2",
+            "line": 9
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "selección-de-servicio;error-de-inconsistencia-de-precios-en-la-selección",
+        "keyword": "Scenario",
+        "line": 17,
+        "name": "Error de inconsistencia de precios en la selección",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1076109599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 18553499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 34481999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 18,
+            "name": "el usuario visualiza un plan sin precio definido",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:37"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 23401600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "el usuario hace click en el botón \"Start Now\" del plan \"\"",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 30750500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 20,
+            "name": "el sistema debe bloquear la redirección al checkout",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:50"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 5511300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "debe mostrar un aviso de \"Precio no disponible, contacte a soporte\"",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:57"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 7445999
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 8534599
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 16
+          },
+          {
+            "name": "@Negative",
+            "line": 16
+          },
+          {
+            "name": "@HU2",
+            "line": 16
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "selección-de-servicio",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Selección de servicio",
+    "tags": [],
+    "uri": "features\\service_selection.feature"
+  },
+  {
+    "description": "  Como usuario interesado en servicios legales\n  Quiero navegar por la landing y completar el checkout\n  Para adquirir un servicio de Incorporation o Tax",
+    "elements": [
+      {
+        "description": "",
+        "id": "interfaz-de-usuario-y-checkout;carga-de-landing-para-conocer-los-servicios-ofrecidos",
+        "keyword": "Scenario",
+        "line": 11,
+        "name": "Carga de landing para conocer los servicios ofrecidos",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1098188799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 7,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15415600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28213999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 12,
+            "name": "el usuario visualiza las opciones del menú",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22239799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 13,
+            "name": "el usuario hace click en la opción \"Services\" del menú",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22943699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 14,
+            "name": "se deben visualizar los detalles de \"Incorporation\", \"Tax\" y \"Bookkeeping\"",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 40003699
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 8896799
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 10
+          },
+          {
+            "name": "@HU1",
+            "line": 10
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "interfaz-de-usuario-y-checkout;error-en-la-visualización-de-los-servicios",
+        "keyword": "Scenario",
+        "line": 17,
+        "name": "Error en la visualización de los servicios",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1021610100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 7,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14427800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 23792199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 18,
+            "name": "el usuario visualiza las opciones del menú",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 20098600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "el usuario hace click en la opción \"Services\" del menú",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 35548499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 20,
+            "name": "no se visualizan los servicios \"Incorporation\", \"Tax\" y \"Bookkeeping\"",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:42"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 4133000,
+              "error_message": "Error: Existe los servicios\n    at MyWorld.<anonymous> (C:\\Dev\\Simulaciones\\NC-S02-26-Equipo-01-Web-App-Development\\qa\\step_definitions\\services_steps.ts:52:15)"
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 57147200
+            },
+            "embeddings": [
+              {
+                "data": "iVBORw0KGgoAAAANSUhEUgAABQAAAALQCAIAAABAH0oBAAAQAElEQVR4nOzdTWyd9Z3o8ceoUpwF4KwwqipOBJJPVCTcmQUO0gVnUeVEumqdxdSnuh3FCPXizIbjFWak0bga6WJWPmwGc2eB0fQKu13EoCvlwAanVxVGYmacRZVjqZUPqlCdVUxZxFmd+zznzcdveXFiSPL7fBbNc57zvLqrL//n+Z/v1ev1BAAAAB5230sAAAAgAAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACOFmAfzWW29tbGxcuXIleZCdOHGir6/v9ddfTwAAAAisp16v7/lFWr+9vb1/93d/lzz4fvvb325ubmpgAACAyB7Z74tr1649HPWbSm8kvZ0EAACAwPZ9BLparSYPkYfsdgAAALhTJsECAAAghEeSg/jzv734/Y7znyZ36dPz+x8lO9WL//bnBAAAAO7GAQI4TdKhqR/++quWXye/uAcNDAAAAIfqAI9A//E//5T85Fen2h9P/ePU00O/+fSdU6eSgzr1zldf7ffdD375u69+mQAAAMDdOcAI8DN/83Ty0W+2xnyzRH2nU7/Z48zbH43OHmI+f76x+vxvtj3Q3H70ufsR6J37b3sEevfBtz2ObSAaAACA/RwggH/wy/8z9fRHv2g25/bXc9MY/cUfppazJ6OXp/7wi60vP/rD32Rr3/lZ4e+f/tO/V5qrP/3NR8lPfnbqdvbf8eWvf/JR68s//9v/aD+One0hgQEAANjbgSbBysZ8m8n59J+mhraGXv9c+fc//eRXv/xBc5tf/aSTusnTf1/4QXPXrQJO+/fpqX/c1r/p/u0ts3P8rnmo3V9mj11vHfyjf2608PaRaAAAAOh2sFmgW5ohvJyNBzcSOHs7uD00/P3v/+Kj5E//+cfd+7TC+M9//EMni1uy/X/4zA/2PtneX6aXsDyVNCp813g0AAAAdNx5AH96fkdn/uCZH7aWsreDf9KZHjqz14jsqZ9lBfxp5d+THf3b2P8Pf9ynYff9sj0e/dWvf/Knqf8hgQEAANjLnQdw1q9TQ92TUP1z+1Xe7Pnm1vPIzQmr9h6RbRzhF1M//NUvd4zn/mDbG8I7fhy4+8tP/9dU63Ho7q2yRN53ABkAAIDYDvAzSKfe+Wr5b14c+v73W5+fnlr+qpWy6WDsr//z+0Pfn2p8SgeDs/W7Gzgt4OSj5Ge7R4e37Z8e93enkj//cc8vW8dOL2Z5auta0rVeAgYAAGAvPfV6fc8vRkZG/vVf/zV5WPzDP/zD4uJiAgAAQFQHGAEGAACAB48ABgAAIIR9AzifzycPkYfsdgAAALhT+84CfezYsd/+9rfJQyG9kfR2EgAAAALbdxKs1FtvvbWxsXHlypXkQXbixIm+vr7XX389AQAAILCbBTAAAAA8NEyCBQAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIIRHbrnFxvJscbCvp6kvP1yaW1nfTJZLhXIt+TZtVMb6s0voH6ts3O4+1fJQb7pL71C5mgAAABDazQN4Y3ly8NjJ88uDc1eu11PXa4uljekfPXm05+TbteRbVZubfP9qtnD1/cm52u3tU5me+PxG+u+NzyemKwkAAACR3TSAlycLb11Onnh9cW4k35ut6O3Lj8xVr10cfTz5tuXGps89kS08cW56LHd7+xQmZ54/kv575PmZyUICAABAZD3puO5+31XGes68nxbna5+tl4e2f7U83jeWX6mWcgkAAAA8CG46ArzZ+N+rb4+MLe547XZocmowAQAAgAfGzQK4r+9Ic+Hq+2eP9Q+VFqubne9ypfkdw79dk2X15kbKy51krpXzPVuKlWzT8khjQqv89Eql2LNdvjm51tb6dMX2Q+S3Tb+1a5KuxfVk+wHap917n95cukttc9u9bFZnR3K9jSm3RmarmyuTI9/yjF8AAADcazcL4KGp2Zc6H65+/vbZE0d7B8fmVvaYhLlaHjp28vxCrXDxWv36laneDydO5oqt2Zpzpeq19053Nt1YLg2enPiwMaHV6txSfm7tvdNH2l8OvHml9Vx1Yf76Z689kTz35pWVUm7HIfY474X0vBfPHfl69dLbZ58cmd/MDlDPDrDbRqWYS/e5nHvzyvXsYvvSXY73F7fmlt6YHzlx/sPN8c+u1+u16f7p/I/eMok0AADAg+6mj0D3jy1++upT3WtuXH7/5R8d6y/MVruHTFcmCxOfp/8+P10u9CW9+eL4QJJ8vTAyudTaoK+/r71tZXyyv3L9+pWZ59MPT40M53pzY/Pzo60EXq0sr3cOW6vm3qlMNqff6j7E1gblkcZ5nxifHEnPWyhNDWSrn2hv2p/bvc/GfPHMwtfpwunJUnro3vzk1GiSXe2ZkbnmqdcXZz/ONlxfT++xNz8yt3JxtD8BAADgwXaL3wHuG56tXfts5vT2kdSrH58/kdv6Od7K9FtfNhZyuW2heGNufnnXEb8uTKZN25svLdez8dXGm8R9I1OlVmdfmmr/ZG91aqq3NHaz8lyanlxtLAwPNV9IHpysZj/WtD5b6N1vn9rc1MetW+trbZQfHNh26s2Nxo3dWDibG248yd1XmF8y3RcAAMAD7pFbb9I3VKqsX79y4bXnuzP46vvtAd6VpaXWuoUzzddqj080w/RGtbq+82gvFfaaPStfmny+ufRlubzUOOrc4nCpuG/IZltUFm8kd2h9abF5acnAYK61rrd9ki+XG8PPuWKp9eT315cmTh7Ljy2uJwAAADzobhbAlfHxzghub36kvLx+fe3CuYH2qhvvzjVmllqvXW2tOf3B9fo2S7tHcPv79xzU7R8r/bR92PL8ZrI0WxkpDSc3s3XelertvqO7udGJ2d7dcb2+sdm8lu4nv1ffP/tkbnxpIwEAAOBBdtMR4I25uaVtK3pzI3PVKzPPtT623gPulOTS0kpyUL3F0qutF4E/LM/OzlbHS/lb7dJeWF1cus1B2t6+mz1T3d9+Kjp78vsvXa3/5buFzvvMAAAAPJBu/gj0jXen53cNfeZLjWmjkuSpXC77Z3C4PVf0jbly1w8GbyxOlu8kiIdL7ReBP584vzk+dquJp4YLnXmhP5/uPtNGrbrfeG3/0FDrHLXO09nV5dZT0U8MDXadsz9t/Wufvd56MvvG0kotAQAA4MF1q3eAP/758HR1+4/kJuvrteyfl6aaY7T9hbFOAS+cHZ5cymZP3lyZLS4Ojg0md2DrReAjr9789d+G3pFSe/Lo5Mu3htNezc67vjRZ6PpJo93nmGpe7I32w9CtOa/S+5kuNS63Vh4utjq+b2h66YNmZndGhwEAAHgg3XoSrMtvnMgVJivV5vuxm9XFsaHznydPvfrpYnuMtn9s7p3nO5u/derJoz09R4eXSuVi+1eINta3fmS3tr6536naLwI/Vdr9+m/XIZLN5hF6C7OLo4+31n394csnsvM+OVKbqjTnbN5cr21s7bLZudj3Xsp2WpjKyn6zWp7OpoV+/KX3Zlv3k8v3L5zNF8rNkK/VatnX5yaLfgoJAADgQXbTAO597s0r1+vXr8wVapPD/UezCZ6PDo6vDL3z2bXa7HDXb+zmxpevfTbz04FmjR556qXXL9bmC60NauX8sZc/bm/68fknj+bLtX1O2HgR+PnJna//bj/E6hsnWkfoK8yvr10491yrgh9/bvSdz9onrhSPnny7PU1W8uHZo8VK62LHlmqfvTP6XO2NtJiPnnij1thraWzrnH2vflqbzVfGc+n9npjazO5mrmAAGAAA4IHWU6/XEwAAAHjYfS8BAACAAAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhPBIcp+plfM9HflyLXmQVYo9PcVKAgAAwHevp16vJ/edNBzPrMysVUu5BAAAAO6F+24EuGMwn0seQJWiIV8AAID70f0bwA+kSvHMQgIAAMB96NADeHV19fTp04899tipU6fS5eTONd4KTodVsxdqM10jrF0vDHetbW+47SXibGW+XC6212a7pv+2t+1+2/i299++VbZFlr8LZ9qX0zrH7ovdutqb3BwAAAD30qEH8CuvvPLJJ5988803S0tL586dS+5QGojHJ1YbVTk3Vq/XL44mC6VmU2ZfzY6v1VtrzzTbMXt9OLlYrzdXr04czwo0W5mm6erEcnaMejU/2ZMdNf22cdC1mYF08Q72LyXlwkQy0zh3Y+fJdN/CfLacJKPZ3vOF9pVv3UfrYrOt0ttJT3eTmwMAAOAeO/QA/uKLLzrLKysryR3KlartqpwvpJ/zQwOtbyqTaYJWmtNkpe1Zb3xfK5cWBmamC81NCvNpUq7OLtbS79OlpPNN5/Na46C5UiU9x8Jc5Xb3zy6rnk3RlZZxV+XueeXti10dLbfm9Oqcbv+bAwAA4F479AB+9tlnO8vPPPNMcq/UqnvFdHV5e41mSbm6XE1uJZcfvMP9mw80ZwO3WRrf4cU2TrdSrSUAAAB8Ww49gN98880XX3zx0UcffeGFF2ZmZpJ7JWvI3WnaCNZ0yLZ73cBQ/pZHywo12+52968Uj08MXmyOOt/mxTZGmLs9oNNcAwAAPKAOPYB//OMfX7p06a9//evvf//7dDm5ZwpjWy/+JtmIbLFcS3Kl8miyOlFovUi77cnj3Tqp29nuTvZvjeBW5rbmfW4PJNfK5fZ1NSO9MJ099Ny+2u0PWgMAAPBt6KnX68n9ZNvcUQMz/2989r+1Po5eXBsqHe98yEZfW5NTda3JdK1trdxaMzCzVm0EbbZqZTRt6IXV7tW3u//WmtHR0YWFhdY3SfPqs+WRxfz2i+26s9ZRutbscXMAAADcS/ddAH9bGgHcnb0AAAA81L6XAAAAQACH/g7wfanzu76NX/kFAAAggLCPQAMAABCLR6ABAAAIQQADAAAQggAGAAAghPtvEqxKsWcfxUoCAAAAB3PfBXCtujIws1bPrM0MJO3l+sXRBAAAAA7sPvwZpPFyKbd7bWF6ZigBAACAA7rv3gHOlfbK35t9AQAAALd26CPAq6urp0+ffuyxx06dOpUuJ3en+wXhxivBnRX5cq1WzneWEwAAAOh26AH8yiuvfPLJJ998883S0tK5c+eSu1EpnlkYvdh+JXihlHZuYb7xqnCSDOZzufxg0nhpuGqsGAAAgB0O/RHoPy9QEAAAEABJREFUL774orO8srKS3I20duvpP+lI7/GJdCx5oLk2V6quJfnjZ3oWsvidzyUAAACwy6GPAD/77LOd5WeeeSa5O40nngtJpTXs25YrVbLPq7OLtQQAAAD2cOgB/Oabb7744ouPPvroCy+8MDMzk9yFdOT3zMqeTzhXiseXy/WLo6sTx/1YMAAAAHs59Eegf9yQHNTqcjUd4N31ubY425lPKx0VnhurzxeSpFC/mPSc6UkuNj4BAADAlp5647Xa+05atWcW2h9GW0Xbfvk3SQZGR5OFhXTxxReT3/2uvcnWTgMza2bCAgAAoMv9GsAAAABwTx36I9AAAABwPxDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAiPJPeXWjnfs1u+XEsOrlLc+wj7rb8Xsvs4rGMDAABwAPdbAOdK1Xr94miSjF6st10cXZ043lOsJAeRVu6ZhTtYf49k91Et5RIAAADuE/dbAO+lMJ8V8cLcgQq4MN/o6dteDwAAwMPpQQjgJMkPDSTJSrWWAAAAwMEcegCvrq6ePn36scceO3XqVLqcHECtXJhYTUbLXU8UZ6/v7vV+8H7rO0fK7/nlrvVbx+l68nqPldmqYqWz+9bGzS+2Dp4ut3ff84i7zwYAAMA9degB/Morr3zyySfffPPN0tLSuXPnbnu/hTOdKjw+kcys1ecL7a+y13eTi13vB7eydb/1HbXF2dXmu8XbX8/dsT49ztxY8zBrMytnmkfZvTIL2+w14oUzhaTSOGW62Ni46/3idKPjab1nt9PYPduo1Lys9KszC83Trs2kI9wD224SAACAe+vQA/iLL77oLK+srNz2fl2TYK3NJBPHO6OztXJpYWBmulWKjfeDV2cXa/uub1ss9mShuisxd67PjtPJ7yxes6PstTIpVRvhOnqxmdNbp+x6vzjX2ah5hsbD3E3V5XRYe6xx2tzI+ECyulxNAAAAOCyHHsDPPvtsZ/mZZ55JDqAVkasTk9kDwlk3dsuSMmvH/dY3rU5MLGwP4put76rvreHiPVfuOuXtK0zPDLRHg7tiGAAAgENx6AH85ptvvvjii48++ugLL7wwMzOT3LVG2O4o1oGh/L7rW0sza83Hone8Zbv3+j3n27r1JFxZxg7mc8ltypXKjR94Sp1ZmVnz+DMAAMBhOvQA/vGPf3zp0qW//vWvv//979Pl5CAqxcZ7tM0h0iwb04HbQnu6qsmJ1cb8WPut31KYTweSF87smmhq+/pWlna2qpXLlb1XtrR/n2n7M9jJLYu5Vs6XhtZuMqAMAADAPdSTxldyH2lPGrVTOlJb3T4LdHuaqfbbtfus31qTHqKSFFpHH/if/331f//fPdY3ztN9FZ0z77GysWpwdHRhYaH7UrrO+U//lPzLv6y2LmhtqNQ+QrZpsnWxe94kAAAA99D9FsAPlmYAXzzY5M21cnFxZL47eNNx5Wqp5EloAACAw3Doj0Czt+zHjVd2rJlMRtQvAADAITECfGBdj0SPHmQQeOfT3h6ABgAAOEwCGAAAgBC+lwAAAEAAAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGCABACACAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAGAAAgBAEMAABACAIYAACAEAQwAAAAIQhgAAAAQhDAAAAAhCCAAQAACEEAAwAAEIIABgAAIAQBDAAAQAgCGAAAgBAEMAAAACEIYAAAAEIQwAAAAIQggAEAAAhBAAMAABCCAAYAACAEAQwAAEAIAhgAAIAQBDAAAAAhCGAAAABCEMAAAACEIIABAAAIQQADAAAQggAG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",
+                "mime_type": "image/png"
+              }
+            ]
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 16
+          },
+          {
+            "name": "@Negative",
+            "line": 16
+          },
+          {
+            "name": "@HU1",
+            "line": 16
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "interfaz-de-usuario-y-checkout",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Interfaz de Usuario y Checkout",
+    "tags": [],
+    "uri": "features\\services.feature"
+  }
+]
