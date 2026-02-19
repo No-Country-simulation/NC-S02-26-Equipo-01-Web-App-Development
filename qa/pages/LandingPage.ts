@@ -1,10 +1,22 @@
 import { BasePage } from './BasePage'
 
 export class LandingPage extends BasePage {
-  private navMenu = this.page.locator('[data-testid="main-nav"]')
-  private btnServices = this.page.locator('[data-testid="nav-services"]')
-  private planesSection = this.page.locator('[data-testid="pricing-section"]')
-  private priceErrorMessage = this.page.locator('[data-testid="price-error"]')
+  private readonly navMenu = this.page.locator('[data-testid="app-navbar"]')
+  private readonly btnServices = this.page.locator(
+    '[data-testid="nav-link-services"]',
+  )
+  private readonly servicesSection = this.page.locator(
+    '[data-testid="app-section-everything-business"]',
+  )
+  private readonly pricingSection = this.page.locator(
+    '[data-testid="app-section-simple-pricing"]',
+  )
+  private readonly priceErrorMessage = this.page.locator(
+    '[data-testid="price-error"]',
+  )
+  private readonly buttonPricingLocator = this.page.locator(
+    '[data-testid^="app-button-pricing-"]',
+  )
 
   get menuNavegacion() {
     return this.navMenu
@@ -15,39 +27,39 @@ export class LandingPage extends BasePage {
   }
 
   obtenerCardServicio(nombreServicio: string) {
-    return this.page.locator(
-      `[data-testid="services-section"]:has-text("${nombreServicio}")`,
-    )
+    return this.servicesSection.filter({ hasText: nombreServicio })
   }
 
   get seccionPlanes() {
-    return this.planesSection
+    return this.pricingSection
   }
 
   obtenerPrecioPlan(monto: string) {
-    if (monto === '') {
-      return this.page
-        .locator('[data-testid="price-amount"]')
-        .filter({ hasText: /^$/ })
-    }
-    return this.page.locator(
-      `[data-testid="price-amount"]:has-text("${monto}")`,
+    const cards = this.pricingSection.locator(
+      'div[data-testid^="app-card-pricing-"]',
     )
+    if (monto === '') {
+      return cards.filter({ hasNotText: /[0-9]/ })
+    }
+    return cards.filter({ hasText: new RegExp(monto) })
   }
 
   async clickEnStartNow(precio: string) {
-    // Usamos un Regex para que la coincidencia sea exacta.
-    // Si precio es "$499", buscará exactamente "$499".
-    // Si precio es "", buscará una card que tenga un elemento con texto vacío.
+    const card =
+      precio === ''
+        ? this.pricingSection
+            .locator('div[data-testid^="app-card-pricing-"]')
+            .filter({ hasNotText: '' })
+        : this.obtenerPrecioPlan(precio)
 
-    const card = this.page.locator('[data-testid="plan-card"]').filter({
-      has: this.page.locator('[data-testid="price-amount"]', {
-        hasText: precio === '' ? /^$/ : precio,
-      }),
-    })
+    const btnByTestId = card.locator(this.buttonPricingLocator)
+    await card.first().waitFor()
 
-    // Ahora 'card' es única, y podemos hacer click en su botón
-    await card.locator('[data-testid="btn-start"]').click()
+    if ((await btnByTestId.count()) > 0) {
+      await btnByTestId.first().click()
+    } else {
+      await card.locator('button:has-text("Start Now")').first().click()
+    }
   }
 
   get mensajeErrorPrecio() {

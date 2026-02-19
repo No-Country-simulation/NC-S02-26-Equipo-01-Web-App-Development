@@ -1,61 +1,70 @@
 <?xml version="1.0"?>
-<testsuite name="Cucumber" time="13.706" tests="7" skipped="0" failures="1" errors="0" timestamp="2026-02-16T17:44:30.803Z">
-  <testcase classname="Realizar compra del servicio" name="Efectuar compra del servicio solicitado con todos los campos ingresados" time="3.549">
+<testsuite name="Cucumber" time="37.581" tests="7" skipped="0" failures="6" errors="0" timestamp="2026-02-19T15:21:00.030Z">
+  <testcase classname="Realizar compra del servicio" name="Efectuar compra del servicio solicitado con todos los campos ingresados" time="12.736">
+    <failure type="Error" message="[2mexpect([22m[31mpage[39m[2m).[22mtoHaveURL[2m([22m[32mexpected[39m[2m)[22m failed&#xA;&#xA;Expected pattern: [32m/.*checkout/[39m&#xA;Received string:  [31m&quot;http://localhost:5173/?gclid=g_123&amp;fbclid=f_456&quot;[39m&#xA;Timeout: 5000ms&#xA;&#xA;Call log:&#xA;[2m  - Expect &quot;to.have.url&quot; with timeout 5000ms[22m&#xA;[2m    9 × unexpected value &quot;http://localhost:5173/?gclid=g_123&amp;fbclid=f_456&quot;[22m&#xA;"><![CDATA[    at Proxy.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\node_modules\playwright\lib\matchers\expect.js:213:24)
+    at MyWorld.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\step_definitions\checkout_steps.ts:18:30)]]></failure>
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
-And el usuario ha seleccionado un servicio de "$499"........................passed
-And se valida que el usuario se encuentra en la pasarela de pago............passed
-Then el precio total a pagar "$499" sea igual al servicio solicitado........passed
-When el usuario rellena el formulario con los siguientes datos:.............passed
-And hace click en el botón "Finalizar compra"...............................passed
-Then el sistema debe procesar el pago y enviar los IDs "g_123" y "f_456" al servidor..passed
-And el usuario es redirigido a la página de pago exitoso....................passed]]></system-out>
+And el usuario ha seleccionado un servicio de "499".........................passed
+And se valida que el usuario se encuentra en la pasarela de pago............failed
+Then el precio total a pagar "499" sea igual al servicio solicitado.........skipped
+When el usuario rellena el formulario con los siguientes datos:.............skipped
+And hace click en el botón "Finalizar compra"...............................skipped
+Then el sistema debe procesar el pago y enviar los IDs "g_123" y "f_456" al servidor..skipped
+And el usuario es redirigido a la página de pago exitoso....................skipped]]></system-out>
   </testcase>
-  <testcase classname="Realizar compra del servicio" name="Validar error en el formulario por email inválido" time="1.817">
+  <testcase classname="Realizar compra del servicio" name="Validar error en el formulario por email inválido" time="6.313">
+    <failure type="Error" message="[2mexpect([22m[31mpage[39m[2m).[22mtoHaveURL[2m([22m[32mexpected[39m[2m)[22m failed&#xA;&#xA;Expected pattern: [32m/.*checkout/[39m&#xA;Received string:  [31m&quot;http://localhost:5173/?gclid=g_123&amp;fbclid=f_456&quot;[39m&#xA;Timeout: 5000ms&#xA;&#xA;Call log:&#xA;[2m  - Expect &quot;to.have.url&quot; with timeout 5000ms[22m&#xA;[2m    9 × unexpected value &quot;http://localhost:5173/?gclid=g_123&amp;fbclid=f_456&quot;[22m&#xA;"><![CDATA[    at Proxy.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\node_modules\playwright\lib\matchers\expect.js:213:24)
+    at MyWorld.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\step_definitions\checkout_steps.ts:18:30)]]></failure>
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
-And el usuario ha seleccionado un servicio de "$499"........................passed
-And se valida que el usuario se encuentra en la pasarela de pago............passed
-When el usuario rellena el formulario con un email con formato incorrecto "usuario@test"..passed
-And hace click en el botón "Finalizar compra"...............................passed
-Then el sistema debe mostrar un mensaje de alerta "Campos inválidos o incompletos"..passed
-And no debe permitir el progreso a la página de éxito.......................passed]]></system-out>
+And el usuario ha seleccionado un servicio de "499".........................passed
+And se valida que el usuario se encuentra en la pasarela de pago............failed
+When el usuario rellena el formulario con un email con formato incorrecto "usuario@test"..skipped
+And hace click en el botón "Finalizar compra"...............................skipped
+Then el sistema debe mostrar un mensaje de alerta "Campos inválidos o incompletos"..skipped
+And no debe permitir el progreso a la página de éxito.......................skipped]]></system-out>
   </testcase>
-  <testcase classname="Realizar compra del servicio" name="Validar campos obligatorios vacíos" time="1.5">
+  <testcase classname="Realizar compra del servicio" name="Validar campos obligatorios vacíos" time="6.291">
+    <failure type="Error" message="[2mexpect([22m[31mpage[39m[2m).[22mtoHaveURL[2m([22m[32mexpected[39m[2m)[22m failed&#xA;&#xA;Expected pattern: [32m/.*checkout/[39m&#xA;Received string:  [31m&quot;http://localhost:5173/?gclid=g_123&amp;fbclid=f_456&quot;[39m&#xA;Timeout: 5000ms&#xA;&#xA;Call log:&#xA;[2m  - Expect &quot;to.have.url&quot; with timeout 5000ms[22m&#xA;[2m    9 × unexpected value &quot;http://localhost:5173/?gclid=g_123&amp;fbclid=f_456&quot;[22m&#xA;"><![CDATA[    at Proxy.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\node_modules\playwright\lib\matchers\expect.js:213:24)
+    at MyWorld.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\step_definitions\checkout_steps.ts:18:30)]]></failure>
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
-And el usuario ha seleccionado un servicio de "$499"........................passed
-And se valida que el usuario se encuentra en la pasarela de pago............passed
-When el usuario deja todos los campos del formulario en blanco..............passed
-And hace click en el botón "Finalizar compra"...............................passed
-Then el sistema debe resaltar los campos obligatorios en rojo...............passed
-And no debe permitir el progreso a la página de éxito.......................passed]]></system-out>
+And el usuario ha seleccionado un servicio de "499".........................passed
+And se valida que el usuario se encuentra en la pasarela de pago............failed
+When el usuario deja todos los campos del formulario en blanco..............skipped
+And hace click en el botón "Finalizar compra"...............................skipped
+Then el sistema debe resaltar los campos obligatorios en rojo...............skipped
+And no debe permitir el progreso a la página de éxito.......................skipped]]></system-out>
   </testcase>
-  <testcase classname="Selección de servicio" name="Elegir un servicio para ingresar al proceso de pago" time="1.376">
+  <testcase classname="Selección de servicio" name="Elegir un servicio para ingresar al proceso de pago" time="6.355">
+    <failure type="Error" message="[2mexpect([22m[31mpage[39m[2m).[22mtoHaveURL[2m([22m[32mexpected[39m[2m)[22m failed&#xA;&#xA;Expected pattern: [32m/.*checkout/[39m&#xA;Received string:  [31m&quot;http://localhost:5173/?gclid=g_123&amp;fbclid=f_456&quot;[39m&#xA;Timeout: 5000ms&#xA;&#xA;Call log:&#xA;[2m  - Expect &quot;to.have.url&quot; with timeout 5000ms[22m&#xA;[2m    9 × unexpected value &quot;http://localhost:5173/?gclid=g_123&amp;fbclid=f_456&quot;[22m&#xA;"><![CDATA[    at Proxy.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\node_modules\playwright\lib\matchers\expect.js:213:24)
+    at MyWorld.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\step_definitions\service_selection_steps.ts:34:30)]]></failure>
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
 When el usuario navega hasta la sección de planes...........................passed
 Then se deben visualizar los precios de los servicios.......................passed
-And el usuario hace click en el botón "Start Now" del plan "$499"...........passed
-Then el usuario es redirigido a la página de pago...........................passed]]></system-out>
+And el usuario hace click en el botón "Start Now" del plan "499"............passed
+Then el usuario es redirigido a la página de pago...........................failed]]></system-out>
   </testcase>
-  <testcase classname="Selección de servicio" name="Error de inconsistencia de precios en la selección" time="1.209">
+  <testcase classname="Selección de servicio" name="Error de inconsistencia de precios en la selección" time="1.366">
+    <failure type="Error" message="❌ TEST FALLIDO: Se esperaba encontrar al menos un plan sin precio para probar la validación, pero todos los planes tienen precio en el frontend."><![CDATA[    at MyWorld.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\step_definitions\service_selection_steps.ts:45:13)]]></failure>
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
-When el usuario visualiza un plan sin precio definido.......................passed
-And el usuario hace click en el botón "Start Now" del plan ""...............passed
-Then el sistema debe bloquear la redirección al checkout....................passed
-And debe mostrar un aviso de "Precio no disponible, contacte a soporte".....passed]]></system-out>
+When el usuario visualiza un plan sin precio definido.......................failed
+And el usuario hace click en el botón "Start Now" del plan ""...............skipped
+Then el sistema debe bloquear la redirección al checkout....................skipped
+And debe mostrar un aviso de "Precio no disponible, contacte a soporte".....skipped]]></system-out>
   </testcase>
-  <testcase classname="Interfaz de Usuario y Checkout" name="Carga de landing para conocer los servicios ofrecidos" time="1.24">
+  <testcase classname="Interfaz de Usuario y Checkout" name="Carga de landing para conocer los servicios ofrecidos" time="1.248">
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
 When el usuario visualiza las opciones del menú.............................passed
 And el usuario hace click en la opción "Services" del menú..................passed
 Then se deben visualizar los detalles de "Incorporation", "Tax" y "Bookkeeping"..passed]]></system-out>
   </testcase>
-  <testcase classname="Interfaz de Usuario y Checkout" name="Error en la visualización de los servicios" time="1.183">
-    <failure type="Error" message="Existe los servicios"><![CDATA[    at MyWorld.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\step_definitions\services_steps.ts:52:15)]]></failure>
+  <testcase classname="Interfaz de Usuario y Checkout" name="Error en la visualización de los servicios" time="1.472">
+    <failure type="Error" message="Existen los servicios"><![CDATA[    at MyWorld.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\step_definitions\services_steps.ts:52:15)]]></failure>
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
 When el usuario visualiza las opciones del menú.............................passed

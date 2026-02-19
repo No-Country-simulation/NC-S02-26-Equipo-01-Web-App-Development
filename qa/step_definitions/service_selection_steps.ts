@@ -15,7 +15,8 @@ Then(
   'se deben visualizar los precios de los servicios',
   async function (this: CustomWorld) {
     const landing = new LandingPage(this.page!)
-    await expect(landing.obtenerPrecioPlan('$499')).toContainText('$')
+    const card = landing.obtenerPrecioPlan('499')
+    await expect(card).toBeVisible()
   },
 )
 
@@ -38,7 +39,19 @@ When(
   'el usuario visualiza un plan sin precio definido',
   async function (this: CustomWorld) {
     const landing = new LandingPage(this.page!)
-    await expect(landing.obtenerPrecioPlan('')).toHaveText('')
+    const selectorSinPrecio = landing.obtenerPrecioPlan('')
+    const cantidad = await selectorSinPrecio.count()
+    if (cantidad === 0) {
+      throw new Error(
+        '❌ TEST FALLIDO: Se esperaba encontrar al menos un plan sin precio para probar la validación, pero todos los planes tienen precio en el frontend.',
+      )
+    }
+    if (cantidad > 1) {
+      console.warn(
+        `⚠️ Advertencia: Se encontraron ${cantidad} elementos. Validando solo el primero...`,
+      )
+    }
+    await expect(selectorSinPrecio.first()).toBeVisible()
   },
 )
 
