@@ -6,17 +6,9 @@ import path from 'path'
 Given(
   'que el usuario navega a la landing principal con {string}',
   async function (this: CustomWorld, query) {
-    // Soporte para mocks servidos por HTTP local (MOCK_BASE_URL) o fallback a file://
-    const mockBase = process.env.MOCK_BASE_URL
-
-    if (mockBase) {
-      // Esperamos que MOCK_BASE_URL incluya el path al recurso (por ejemplo: http://localhost:3000/landing.html)
-      await this.page!.goto(`${mockBase}${query}`)
-    } else {
-      // Fallback: abrir el HTML local directamente
-      const rutaArchivo = path.resolve(__dirname, '../mocks/landing.html')
-      await this.page!.goto(`file://${rutaArchivo}${query}`)
-    }
+    const localBase = process.env.LOCAL_BASE_URL || 'http://localhost:5173/'
+    await this.page!.goto(`${localBase}${query}`)
+    console.log(`🚀 Navegando a: ${localBase}${query}`)
   },
 )
 
