@@ -33,3 +33,8 @@ export interface FAQItemProps {
 }
 
 export type PaymentStatus = "loading" | "confirmed" | "error";
+
+export interface CheckoutPayload {
+  amount: number;
+  plan: string;
+}

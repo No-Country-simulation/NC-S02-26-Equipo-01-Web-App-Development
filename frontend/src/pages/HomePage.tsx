@@ -15,9 +15,11 @@ import {
 } from "@data/data";
 import Card from "@components/common/Card";
 import FAQList from "@components/common/FAQList";
+import useCheckout from "@hooks/useCheckout";
 
 export default function HomePage() {
   useScrollToSection();
+  const { handleCheckoutSuccess } = useCheckout();
   return (
     <>
       <header>
@@ -174,6 +176,12 @@ export default function HomePage() {
                   <Button
                     dataTestId={`app-button-pricing-${index}`}
                     className={`w-full mx-auto mt-4 ${service.title === "Growth" ? "bg-gold hover:bg-gold-hover" : "bg-black hover:bg-gray-800"}`}
+                    onClick={() =>
+                      handleCheckoutSuccess({
+                        amount: service.price?.amount || 0,
+                        plan: service.title,
+                      })
+                    }
                   >
                     Start Now →
                   </Button>
@@ -227,7 +235,10 @@ export default function HomePage() {
                       data-testid={`app-testimonial-avatar-${index}`}
                     />
                     <div>
-                      <h3 className="mt-2 text-xl text-left font-bold" data-testid={`app-testimonial-name-${index}`}>
+                      <h3
+                        className="mt-2 text-xl text-left font-bold"
+                        data-testid={`app-testimonial-name-${index}`}
+                      >
                         {testimonial.name}
                       </h3>
                       <p className="text-xs text-gray-500">
@@ -238,7 +249,6 @@ export default function HomePage() {
                 </div>
               ))}
           </div>
-          
         </SectionContainer>
 
         <SectionContainer
