@@ -3,10 +3,12 @@ import RootLayout from "@components/layout/RootLayout";
 import HomePage from "@/pages/HomePage";
 import CancelPage from "@/pages/checkout/CancelPage";
 import SuccessPage from "@/pages/checkout/SuccessPage";
+import ScrollToTop from "./../components/layout/ScrollToTop";
 
 function AppRouter() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route element={<RootLayout />}>
           <Route path="/" element={<HomePage />} />
