@@ -239,8 +239,6 @@ export default function HomePage() {
               ))}
           </div>
           
-          
-
         </SectionContainer>
 
         <SectionContainer
