@@ -8,7 +8,7 @@ interface SectionProps {
     text: string;
     icon?: React.ReactNode;
   };
-  title: string;
+  title?: string;
   description?: string;
   children?: ReactNode;
   className?: string;

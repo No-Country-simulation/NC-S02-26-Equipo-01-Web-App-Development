@@ -31,3 +31,5 @@ export interface FAQItemProps {
   question: string;
   answer: string;
 }
+
+export type PaymentStatus = "loading" | "confirmed" | "error";
