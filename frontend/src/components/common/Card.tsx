@@ -34,6 +34,7 @@ const Card = ({
     xl: "text-xl md:text-2xl",
     "2xl": "text-2xl md:text-3xl",
   };
+  const IconComponent = data.icon;
 
   return (
     <div
@@ -47,12 +48,12 @@ const Card = ({
     >
       {data.badged && (
         <span className="mb-4">
-          <Badge text={data.badged.text} color={data.badged.color} />
+          <Badge text={data.badged.text} Icon={data.badged.icon} color={data.badged.color} />
         </span>
       )}
       {data.icon && (
-        <span className="w-8 h-8 flex items-center justify-center mb-4 mx-auto">
-          <img src={data.icon} alt={data.title} className="w-5 h-5" />
+        <span className="h-13 flex items-center justify-center mb-1 mx-auto">
+          {IconComponent ? <IconComponent className={"w-full h-full fill-current " + (color === "transparent" ? "text-white" : "text-gray-900")} /> : null}
         </span>
       )}
 
