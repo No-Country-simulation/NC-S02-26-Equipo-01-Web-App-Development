@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ComponentType, type ReactNode, type SVGProps } from "react";
 import { twMerge } from "tailwind-merge";
 import Badge from "../common/Badge";
 
@@ -6,9 +6,9 @@ interface SectionProps {
   id?: string;
   badge?: {
     text: string;
-    icon?: React.ReactNode;
+    icon?: ComponentType<SVGProps<SVGSVGElement>>;
   };
-  title: string;
+  title?: string;
   description?: string;
   children?: ReactNode;
   className?: string;
@@ -45,7 +45,7 @@ const SectionContainer = ({
             <div className="inline-block mb-4">
               <Badge
                 text={badge.text}
-                icon={badge.icon}
+                Icon={badge.icon}
                 dataTestId={`${dataTestId}-badge`}
               />
             </div>

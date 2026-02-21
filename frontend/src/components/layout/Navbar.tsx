@@ -5,28 +5,47 @@ const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav data-testid={dataTestId} className="fixed w-full z-50 bg-white backdrop-blur-md border-b border-slate-100">
+    <nav
+      data-testid={dataTestId}
+      className="fixed w-full z-50 bg-white backdrop-blur-md border-b border-slate-100"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center">
-          <div className="flex items-center shrink-0">
-            <img src={logoTax} className="w-8" alt="Tax Services Logo" />
-            <span className="ml-2 text-xl font-extrabold text-primary-hover">
+        <div className="flex h-17 items-center">
+          <div className="flex flex-col items-center shrink-0">
+            <img src={logoTax} className="w-10" alt="Tax Services Logo" />
+            <div className="text-xl font-extrabold text-primary-hover">
               TAX
-              <span className="text-primary-hover font-light ">Services</span>
-            </span>
+              <span className="text-primary-hover font-light">Services</span>
+            </div>
           </div>
 
           <div className="hidden md:flex items-center flex-1 justify-center gap-8">
-            <a href="#app-section-services" data-testid="nav-link-services" className="nav-link">
+            <a
+              href="#app-section-services"
+              data-testid="nav-link-services"
+              className="nav-link"
+            >
               Services
             </a>
-            <a href="#app-section-steps" data-testid="nav-link-how" className="nav-link">
+            <a
+              href="#app-section-steps"
+              data-testid="nav-link-how"
+              className="nav-link"
+            >
               How it Works
             </a>
-            <a href="#app-section-pricing" data-testid="nav-link-pricing" className="nav-link">
+            <a
+              href="#app-section-pricing"
+              data-testid="nav-link-pricing"
+              className="nav-link"
+            >
               Pricing
             </a>
-            <a href="#app-section-faq" data-testid="nav-link-faq" className="nav-link">
+            <a
+              href="#app-section-faq"
+              data-testid="nav-link-faq"
+              className="nav-link"
+            >
               FAQ
             </a>
           </div>
@@ -59,16 +78,36 @@ const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
 
       {isOpen && (
         <div className="md:hidden bg-white border-b border-slate-100 p-4 gap-4 flex flex-col">
-          <a href="#app-section-services" data-testid="nav-link-services-mobile" className="block nav-link" onClick={() => setIsOpen(false)}>
+          <a
+            href="#app-section-services"
+            data-testid="nav-link-services-mobile"
+            className="block nav-link"
+            onClick={() => setIsOpen(false)}
+          >
             Services
           </a>
-          <a href="#app-section-steps" data-testid="nav-link-how-mobile" className="block nav-link" onClick={() => setIsOpen(false)}>
+          <a
+            href="#app-section-steps"
+            data-testid="nav-link-how-mobile"
+            className="block nav-link"
+            onClick={() => setIsOpen(false)}
+          >
             How it Works
           </a>
-          <a href="#app-section-pricing" data-testid="nav-link-pricing-mobile" className="block nav-link" onClick={() => setIsOpen(false)}>
+          <a
+            href="#app-section-pricing"
+            data-testid="nav-link-pricing-mobile"
+            className="block nav-link"
+            onClick={() => setIsOpen(false)}
+          >
             Pricing
           </a>
-          <a href="#app-section-faq" data-testid="nav-link-faq-mobile" className="block nav-link" onClick={() => setIsOpen(false)}>
+          <a
+            href="#app-section-faq"
+            data-testid="nav-link-faq-mobile"
+            className="block nav-link"
+            onClick={() => setIsOpen(false)}
+          >
             FAQ
           </a>
         </div>

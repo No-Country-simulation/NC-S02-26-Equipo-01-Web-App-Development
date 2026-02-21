@@ -1,5 +1,6 @@
-import heroImage from "@assets/img/Hero.jpg";
+import heroImage from "@assets/img/hero.jpg";
 import Button from "../common/Button";
+import { CheckIcon, RewardedIcon, SecurityIcon, WwwIcon } from "@/assets/icons";
 
 const Hero = ({ dataTestId = "hero" }: { dataTestId?: string }) => {
   return (
@@ -17,7 +18,8 @@ const Hero = ({ dataTestId = "hero" }: { dataTestId?: string }) => {
       </div>
 
       <div className="container mx-auto pt-10 px-4 text-center relative">
-        <p className="mb-4 text-sm font-light">
+        <p className="mb-4 text-sm font-light pt-16 md:pt-0">
+          <RewardedIcon className="inline-block w-7 h-7 fill-current" />
           Trusted by 2.500+ International founders
         </p>
         <h1
@@ -32,7 +34,17 @@ const Hero = ({ dataTestId = "hero" }: { dataTestId?: string }) => {
           international entrepreneurs.
         </p>
 
-        <Button data-testid="hero-cta-start">
+        <Button
+          data-testid="hero-cta-start"
+          onClick={() => {
+            const pricingSection = document.getElementById(
+              "app-section-pricing",
+            );
+            if (pricingSection) {
+              pricingSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+        >
           Start Your U.S. Business Today →
         </Button>
 
@@ -41,14 +53,14 @@ const Hero = ({ dataTestId = "hero" }: { dataTestId?: string }) => {
         </Button>
 
         <ul className="mt-10 mx-auto flex flex-col md:flex-row justify-center gap-5 items-center">
-          <li className="text-sm font-bold text-blue-50 whitespace-nowrap">
-            <span>✅</span> IRS-Compliant
+          <li className="text-sm font-bold inline-flex items-center gap-1 text-blue-50 whitespace-nowrap">
+            <span><CheckIcon className="fill-current"/></span> IRS-Compliant
           </li>
-          <li className="text-sm font-bold text-blue-50 whitespace-nowrap">
-            <span>🔒</span> Secure Payments via Stripe
+          <li className="text-sm font-bold inline-flex items-center gap-1 text-blue-50 whitespace-nowrap">
+            <span><SecurityIcon className="fill-current"/></span> Secure Payments via Stripe
           </li>
-          <li className="text-sm font-bold text-blue-50 whitespace-nowrap">
-            <span>🌐</span> Available World Wide
+          <li className="text-sm font-bold inline-flex items-center gap-1 text-blue-50 whitespace-nowrap">
+            <span><WwwIcon className="fill-current"/></span> Available World Wide
           </li>
         </ul>
       </div>
