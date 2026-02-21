@@ -1,4 +1,4 @@
-import heroImage from "@assets/img/Hero.jpg";
+import heroImage from "@assets/img/hero.jpg";
 import Button from "../common/Button";
 import { CheckIcon, RewardedIcon, SecurityIcon, WwwIcon } from "@/assets/icons";
 
