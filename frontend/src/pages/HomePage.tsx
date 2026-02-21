@@ -17,6 +17,7 @@ import Card from "@components/common/Card";
 import FAQList from "@components/common/FAQList";
 import useCheckout from "@hooks/useCheckout";
 import {
+  CheckIcon,
   FinanceIcon,
   GroupIcon,
   ManufacturingIcon,
@@ -94,9 +95,11 @@ export default function HomePage() {
                         <li
                           key={idx}
                           data-testid={`app-card-service-${index}-list-item-${idx}`}
-                          className="list-none"
+                          className="list-none inline-flex items-center gap-2 text-sm"
                         >
-                          <span className="mr-2">✅</span>
+                          <span>
+                            <CheckIcon className="fill-secondary" />
+                          </span>
                           {item}
                         </li>
                       ))}
@@ -199,9 +202,17 @@ export default function HomePage() {
                         <li
                           key={idx}
                           data-testid={`app-card-pricing-${index}-list-item-${idx}`}
-                          className="list-none text-sm"
+                          className="list-none inline-flex items-center gap-2 text-sm"
                         >
-                          <span className="mr-2">✅</span>
+                          <span>
+                            <CheckIcon
+                              className={
+                                service.title === "Growth"
+                                  ? "fill-gold"
+                                  : "fill-secondary"
+                              }
+                            />
+                          </span>
                           {item}
                         </li>
                       ))}
