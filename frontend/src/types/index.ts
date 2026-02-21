@@ -1,10 +1,12 @@
+import type { ComponentType, SVGProps } from "react";
+
 export interface ICard {
   title: string;
   description: string;
-  icon?: string;
+  icon?:  ComponentType<SVGProps<SVGSVGElement>>;
   badged?: {
     text: string;
-    icon?: string;
+    icon?: ComponentType<SVGProps<SVGSVGElement>>;
     color?: "gold" | "accent";
   };
 }

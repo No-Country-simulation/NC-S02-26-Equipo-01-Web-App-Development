@@ -16,6 +16,14 @@ import {
 import Card from "@components/common/Card";
 import FAQList from "@components/common/FAQList";
 import useCheckout from "@hooks/useCheckout";
+import {
+  FinanceIcon,
+  GroupIcon,
+  ManufacturingIcon,
+  QuestionIcon,
+  SecurityIcon,
+  WarningIcon,
+} from "@/assets/icons";
 
 export default function HomePage() {
   useScrollToSection();
@@ -32,7 +40,7 @@ export default function HomePage() {
           title="Starting a U.S.Business Shouldn’t Be this hard"
           description="International founders face a fragmented system that wastes time, money and peace of mind."
           dataTestId="app-section-starting-business"
-          badge={{ text: "The Problem", icon: "⚠️" }}
+          badge={{ text: "The Problem", icon: WarningIcon }}
         >
           <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
             {theProblems &&
@@ -67,7 +75,7 @@ export default function HomePage() {
           title="Everything Your U.S. Business Needs"
           description="Three critical services, one integrated bundle. No gaps, no overlaps, no confusion."
           dataTestId="app-section-everything-business"
-          badge={{ text: "OUR SERVICES", icon: "🛡️" }}
+          badge={{ text: "OUR SERVICES", icon: SecurityIcon }}
           color="blue"
         >
           <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
@@ -104,7 +112,7 @@ export default function HomePage() {
           title="Three Simple Steps to Get Started"
           description="We've streamlined the entire process so you can go from idea to legally operating U.S. business."
           dataTestId="app-section-three-steps"
-          badge={{ text: "How It Works", icon: "🛡️" }}
+          badge={{ text: "How It Works", icon: SecurityIcon }}
           color="dark"
         >
           <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
@@ -130,7 +138,7 @@ export default function HomePage() {
           id="app-section-why-corppath"
           title="The Smarter Way to Start Your U.S. Business"
           dataTestId="app-section-smarter-way"
-          badge={{ text: "Why CorpPath", icon: "⚙️" }}
+          badge={{ text: "Why CorpPath", icon: ManufacturingIcon }}
         >
           <div className="flex  gap-6 justify-center mt-10 flex-wrap">
             {smarterWay &&
@@ -151,7 +159,7 @@ export default function HomePage() {
           title="Simple, Transparent Pricing"
           description="Choose the plan that fits your needs. No hidden fees, no surprises."
           dataTestId="app-section-simple-pricing"
-          badge={{ text: "Pricing", icon: "📈" }}
+          badge={{ text: "Pricing", icon: FinanceIcon }}
           color="blue"
         >
           <div className="flex flex-row gap-6 items-center justify-center mt-10 flex-wrap">
@@ -208,7 +216,7 @@ export default function HomePage() {
           id="app-section-testimonials"
           title="Trusted by Founders Worldwide"
           dataTestId="app-section-trusted-worldwide"
-          badge={{ text: "Testimonials", icon: "💬" }}
+          badge={{ text: "Testimonials", icon: GroupIcon }}
         >
           <div className="flex flex-row flex-wrap gap-6 justify-evenly mt-10">
             {testimonials &&
@@ -256,7 +264,7 @@ export default function HomePage() {
           title="Frequently Asked Questions"
           description="Everything you need to know about starting your U.S. business."
           dataTestId="app-section-faq"
-          badge={{ text: "FAQ", icon: "❓" }}
+          badge={{ text: "FAQ", icon: QuestionIcon }}
           color="blue"
         >
           <FAQList FAQs={faqList}></FAQList>
