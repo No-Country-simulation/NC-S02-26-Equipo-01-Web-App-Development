@@ -16,10 +16,7 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-          # Si tienes el package.json en la raíz, deja esto así.
-          # Si está dentro de /qa, cambia el path.
-
-        # Ejecutamos el servidor en segundo plano con &
+          cache-dependency-path: qa/package-lock.json
 
       - name: Install QA dependencies
         run: |
@@ -34,14 +31,16 @@ jobs:
       - name: Run Cucumber Tests
         run: |
           cd qa
+          npm test
 
         env:
           FRONTEND_URL: https://taxservices.vercel.app/
 
       - name: Upload Test Report
-        uses: actions/upload-artifact@v4
         if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: cucumber-report
-          path: qa/cucumber-report/
-          retention-days: 7
+          path: |
+            qa/reports/
+            qa/cucumber-report.html

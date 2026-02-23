@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<testsuite name="Cucumber" time="97.955" tests="7" skipped="0" failures="5" errors="0" timestamp="2026-02-23T15:12:10.243Z">
-  <testcase classname="Realizar compra del servicio" name="Efectuar compra del servicio solicitado con todos los campos ingresados" time="22.871">
+<testsuite name="Cucumber" time="101.752" tests="7" skipped="0" failures="5" errors="0" timestamp="2026-02-23T17:38:16.644Z">
+  <testcase classname="Realizar compra del servicio" name="Efectuar compra del servicio solicitado con todos los campos ingresados" time="22.675">
     <failure type="Error" message="[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed&#xA;&#xA;Locator: locator('.Checkout-totalAmount, [data-testid=&quot;total-amount-text&quot;]')&#xA;Expected: [32m&quot;499&quot;[39m&#xA;Timeout: 5000ms&#xA;Error: element(s) not found&#xA;&#xA;Call log:&#xA;[2m  - Expect &quot;to.have.text&quot; with timeout 5000ms[22m&#xA;[2m  - waiting for locator('.Checkout-totalAmount, [data-testid=&quot;total-amount-text&quot;]')[22m&#xA;"><![CDATA[    at Proxy.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\node_modules\playwright\lib\matchers\expect.js:213:24)
     at MyWorld.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\step_definitions\checkout_steps.ts:26:40)]]></failure>
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
@@ -13,7 +13,7 @@ And hace click en el botón "Finalizar compra"...............................ski
 Then el sistema debe procesar el pago y enviar los IDs "g_123" y "f_456" al servidor..skipped
 And el usuario es redirigido a la página de pago exitoso....................skipped]]></system-out>
   </testcase>
-  <testcase classname="Realizar compra del servicio" name="Validar error en el formulario por email inválido" time="32.265">
+  <testcase classname="Realizar compra del servicio" name="Validar error en el formulario por email inválido" time="35.061">
     <failure type="Error" message="function timed out, ensure the promise resolves within 30000 milliseconds"><![CDATA[    at Timeout.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\node_modules\@cucumber\cucumber\src\time.ts:52:14)
     at listOnTimeout (node:internal/timers:605:17)
     at processTimers (node:internal/timers:541:7)]]></failure>
@@ -26,7 +26,7 @@ And hace click en el botón "Finalizar compra"...............................ski
 Then el sistema debe mostrar un mensaje de alerta "Campos inválidos o incompletos"..skipped
 And no debe permitir el progreso a la página de éxito.......................skipped]]></system-out>
   </testcase>
-  <testcase classname="Realizar compra del servicio" name="Validar campos obligatorios vacíos" time="32.329">
+  <testcase classname="Realizar compra del servicio" name="Validar campos obligatorios vacíos" time="32.434">
     <failure type="Error" message="function timed out, ensure the promise resolves within 30000 milliseconds"><![CDATA[    at Timeout.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\node_modules\@cucumber\cucumber\src\time.ts:52:14)
     at listOnTimeout (node:internal/timers:605:17)
     at processTimers (node:internal/timers:541:7)]]></failure>
@@ -39,7 +39,7 @@ And hace click en el botón "Finalizar compra"...............................fai
 Then el sistema debe resaltar los campos obligatorios en rojo...............skipped
 And no debe permitir el progreso a la página de éxito.......................skipped]]></system-out>
   </testcase>
-  <testcase classname="Selección de servicio" name="Elegir un servicio para ingresar al proceso de pago" time="4.416">
+  <testcase classname="Selección de servicio" name="Elegir un servicio para ingresar al proceso de pago" time="4.524">
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
 When el usuario navega hasta la sección de planes...........................passed
@@ -47,8 +47,8 @@ Then se deben visualizar los precios de los servicios.......................pass
 And el usuario hace click en el botón "Start Now" del plan "499"............passed
 Then el usuario es redirigido a la página de pago...........................passed]]></system-out>
   </testcase>
-  <testcase classname="Selección de servicio" name="Error de inconsistencia de precios en la selección" time="1.582">
-    <failure type="Error" message="⚠️ Fallo Esperado:  Se esperaba encontrar al menos un plan sin precio para probar la validación, pero todos los planes tienen precio en el frontend."><![CDATA[    at MyWorld.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\step_definitions\service_selection_steps.ts:45:13)]]></failure>
+  <testcase classname="Selección de servicio" name="Error de inconsistencia de precios en la selección" time="1.816">
+    <failure type="Error" message="⚠️ Fallo Esperado: Se esperaba encontrar al menos un plan sin precio para probar la validación, pero todos los planes tienen precio en el frontend."><![CDATA[    at MyWorld.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\step_definitions\service_selection_steps.ts:45:13)]]></failure>
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
 When el usuario visualiza un plan sin precio definido.......................failed
@@ -56,14 +56,14 @@ And el usuario hace click en el botón "Start Now" del plan ""...............ski
 Then el sistema debe bloquear la redirección al checkout....................skipped
 And debe mostrar un aviso de "Precio no disponible, contacte a soporte".....skipped]]></system-out>
   </testcase>
-  <testcase classname="Interfaz de Usuario y Checkout" name="Carga de landing para conocer los servicios ofrecidos" time="1.351">
+  <testcase classname="Interfaz de Usuario y Checkout" name="Carga de landing para conocer los servicios ofrecidos" time="1.486">
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
 When el usuario visualiza las opciones del menú.............................passed
 And el usuario hace click en la opción "Services" del menú..................passed
 Then se deben visualizar los detalles de "Incorporation", "Tax" y "Bookkeeping"..passed]]></system-out>
   </testcase>
-  <testcase classname="Interfaz de Usuario y Checkout" name="Error en la visualización de los servicios" time="1.533">
+  <testcase classname="Interfaz de Usuario y Checkout" name="Error en la visualización de los servicios" time="1.64">
     <failure type="Error" message="⚠️ Fallo Esperado: Existen los servicios"><![CDATA[    at MyWorld.<anonymous> (C:\Dev\Simulaciones\NC-S02-26-Equipo-01-Web-App-Development\qa\step_definitions\services_steps.ts:52:15)]]></failure>
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
