@@ -7,7 +7,7 @@ module.exports = {
     format: [
       'progress-bar',
       'json:reports/cucumber-report.json',
-      'html:cucumber-report.html',
+      'html:reports/cucumber-report.html',
       'junit:reports/junit_report.xml',
     ],
   },
