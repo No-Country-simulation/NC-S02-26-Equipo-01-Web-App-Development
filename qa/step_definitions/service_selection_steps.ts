@@ -43,12 +43,12 @@ When(
     const cantidad = await selectorSinPrecio.count()
     if (cantidad === 0) {
       throw new Error(
-        '❌ TEST FALLIDO: Se esperaba encontrar al menos un plan sin precio para probar la validación, pero todos los planes tienen precio en el frontend.',
+        '⚠️ Fallo Esperado: Se esperaba encontrar al menos un plan sin precio para probar la validación, pero todos los planes tienen precio en el frontend.',
       )
     }
     if (cantidad > 1) {
       console.warn(
-        `⚠️ Advertencia: Se encontraron ${cantidad} elementos. Validando solo el primero...`,
+        `❌ Advertencia: Se encontraron ${cantidad} elementos. Validando solo el primero...`,
       )
     }
     await expect(selectorSinPrecio.first()).toBeVisible()
