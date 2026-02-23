@@ -46,10 +46,10 @@ When(
 
 Then(
   'el sistema debe procesar el pago y enviar los IDs {string} y {string} al servidor',
-  async function (this: CustomWorld, gclid, fbclid) {
+  async function (this: CustomWorld) {
     // Nota: Se valida que los datos de tracking se envían correctamente al servidor, lo cual se puede simular validando que se almacenan en localStorage o que se incluyen en la URL de redirección
     const checkout = new CheckoutPage(this.page!)
-    await checkout.validarTracking(gclid, fbclid)
+    await checkout.validarTracking()
   },
 )
 
