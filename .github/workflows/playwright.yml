@@ -1,0 +1,47 @@
+name: QA Automation Tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          # Si tienes el package.json en la raíz, deja esto así.
+          # Si está dentro de /qa, cambia el path.
+
+        # Ejecutamos el servidor en segundo plano con &
+
+      - name: Install QA dependencies
+        run: |
+          cd qa
+          npm install
+
+      - name: Install Playwright Browsers
+        run: |
+          cd qa
+          npx playwright install --with-deps chromium
+
+      - name: Run Cucumber Tests
+        run: |
+          cd qa
+
+        env:
+          FRONTEND_URL: https://taxservices.vercel.app/
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cucumber-report
+          path: qa/cucumber-report/
+          retention-days: 7
