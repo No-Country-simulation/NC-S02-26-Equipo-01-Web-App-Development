@@ -10,7 +10,7 @@ Background:
   Scenario: Elegir un servicio para ingresar al proceso de pago
     When el usuario navega hasta la sección de planes
     Then se deben visualizar los precios de los servicios
-    And el usuario hace click en el botón "Start Now" del plan "$499"
+    And el usuario hace click en el botón "Start Now" del plan "499"
     Then el usuario es redirigido a la página de pago
 
     @UI @Negative @HU2

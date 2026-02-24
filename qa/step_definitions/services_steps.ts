@@ -30,7 +30,7 @@ Then(
       const count = await card.count()
       if (count === 0) {
         throw new Error(
-          `Se esperaba ver la card del servicio "${nombre}" pero no existe en el DOM`,
+          `❌ Advertencia: Se esperaba ver la card del servicio "${nombre}" pero no existe en el DOM`,
         )
       }
       await expect(card).toHaveCount(1)
@@ -49,7 +49,7 @@ Then(
       const card = landing.obtenerCardServicio(nombre)
       const count = await card.count()
       if (count !== 0) {
-        throw new Error('Existen los servicios')
+        throw new Error('⚠️ Fallo Esperado: Existen los servicios')
       } else {
         await expect(card).not.toBeVisible()
       }

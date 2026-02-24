@@ -10,6 +10,7 @@ Mapeo de Metadata: Captura de gclid, campaign, source y product_id.
 
 Trazabilidad de Sesión: Almacenamiento del session_id de Stripe para reconciliación de datos.
 
+
 Ingesta de Webhooks: Procesamiento robusto del evento checkout.session.completed.
 
 Sincronización CRM: Creación automática de deals en Pipedrive.
@@ -29,8 +30,7 @@ Persistencia Atómica: Uso de Spring Data JPA para asegurar que cada venta se re
 
 Limpieza de Binarios: Pipeline de despliegue basado en mvn clean install para garantizar la ejecución de código fresco.
 
-🔌 Especificaciones de la API
-📥 Webhook de Stripe
+🔌 Especificaciones de la API (Endpoints) 📥 Webhook de Stripe
 POST /api/v1/webhooks/stripe
 
 Auth: Stripe-Signature.
