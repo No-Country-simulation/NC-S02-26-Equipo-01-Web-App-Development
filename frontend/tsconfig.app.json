@@ -35,7 +35,8 @@
       "@utils/*": ["./utils/*"],
       "@data/*": ["./data/*"],
       "@types/*": ["./types/*"],
-      "@router/*": ["./router/*"]
+      "@router/*": ["./router/*"],
+      "@/providers/*": ["./providers/*"]
     }
   },
   "include": ["src"]

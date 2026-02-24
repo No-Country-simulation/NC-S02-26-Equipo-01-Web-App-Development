@@ -40,3 +40,19 @@ export interface CheckoutPayload {
   amount: number;
   plan: string;
 }
+
+export interface TrackingData {
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_content?: string;
+  utm_term?: string;
+  fbclid?: string;
+  gclid?: string;
+}
+
+export interface StoredTracking {
+  tracking: TrackingData;
+  firstSeenAt: number;
+  landingPath: string;
+}
