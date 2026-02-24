@@ -1,4 +1,4 @@
-package com.tuempresa.tracking.runner;
+package com.tuempresa.tracking.config;
 
 import com.tuempresa.tracking.service.integration.GoogleAdsService;
 import org.springframework.boot.CommandLineRunner;
