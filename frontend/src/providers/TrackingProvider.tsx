@@ -33,8 +33,10 @@ const initializeTracking = (): TrackingData | null => {
   }
 };
 
-export const TrackingProvider: React.FC<{ children: React.ReactNode }> = ({
+export const TrackingProvider = ({
   children,
+}: {
+  children: React.ReactNode;
 }) => {
   const [tracking] = useState<TrackingData | null>(initializeTracking);
 
