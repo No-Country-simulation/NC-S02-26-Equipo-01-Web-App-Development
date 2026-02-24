@@ -1,15 +1,15 @@
-🚀 Multi-Channel Tracking & Attribution Engine (Backend)
+# 🚀 Multi-Channel Tracking & Attribution Engine (Backend)
+
 Este servicio es un motor de orquestación de alto rendimiento diseñado para la atribución de conversiones en tiempo real. Actúa como un middleware crítico que procesa eventos financieros de Stripe y los propaga hacia Google Ads, Meta CAPI, Pipedrive CRM y PostgreSQL (Neon).
 
-✅ Hitos de Trazabilidad Cumplidos (8/8)
-Hemos implementado con éxito los 8 requisitos de arquitectura solicitados para el MVP:
+## ✅ Hitos de Trazabilidad Cumplidos (9/9)
+Hemos implementado con éxito los requisitos de arquitectura solicitados para el MVP, incluyendo la reciente integración del flujo de Checkout:
 
 Persistencia en Neon: Esquema relacional extendido para analítica.
 
 Mapeo de Metadata: Captura de gclid, campaign, source y product_id.
 
 Trazabilidad de Sesión: Almacenamiento del session_id de Stripe para reconciliación de datos.
-
 
 Ingesta de Webhooks: Procesamiento robusto del evento checkout.session.completed.
 
@@ -21,16 +21,14 @@ Google Ads Offline: Pipeline de subida de conversiones vía gRPC.
 
 Data Seeding: Generador de datos históricos para dashboards de Grafana.
 
-🏗️ Arquitectura y Resiliencia
-El sistema implementa patrones de SRE (Site Reliability Engineering) para garantizar la integridad de la data:
+## 🏗️ Arquitectura y Resiliencia
+El sistema implementa patrones de **SRE (Site Reliability Engineering)**:
+* **Aislamiento de Fallos:** Ejecución independiente de integraciones.
+* **Persistencia Atómica:** Registro íntegro de metadata publicitaria en cada venta.
+* **Validación de Build:** Pipeline basado en `mvn clean install` para asegurar la integridad de los binarios.
 
-Aislamiento de Fallos: Bloques de ejecución independientes. Si falla Meta CAPI, Neon y Pipedrive siguen recibiendo la información.
-
-Persistencia Atómica: Uso de Spring Data JPA para asegurar que cada venta se registre con su metadata publicitaria completa.
-
-Limpieza de Binarios: Pipeline de despliegue basado en mvn clean install para garantizar la ejecución de código fresco.
-
-🔌 Especificaciones de la API (Endpoints) 📥 Webhook de Stripe
+🔌 Especificaciones de la API
+📥 Webhook de Stripe
 POST /api/v1/webhooks/stripe
 
 Auth: Stripe-Signature.
@@ -71,15 +69,8 @@ Para asegurar que los cambios en los modelos y servicios se apliquen correctamen
 PowerShell
 mvn clean install
 mvn spring-boot:run
-Pruebas de Integración (Stripe CLI)
-Para simular una venta real con trazabilidad completa:
-
-PowerShell
-./stripe trigger checkout.session.completed `
-  --override checkout_session:metadata.gclid="TEST_GCLID" `
-  --override checkout_session:metadata.campaign="LANZAMIENTO_2026"
 📈 Observabilidad
-El sistema utiliza prefijos de logs para monitoreo rápido:
+El sistema utiliza prefijos de logs para monitoreo:
 
 [SRE MONITOR]: Entrada de señales externas.
 
