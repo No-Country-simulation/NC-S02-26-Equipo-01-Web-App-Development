@@ -179,7 +179,10 @@ export default function HomePage() {
                   titleSize="2xl"
                 >
                   <p className="mt-4 text-left font-bold text-xs text-text">
-                    <span className="text-2xl text-black">
+                    <span
+                      className="text-2xl text-black"
+                      data-testid="total-amount-text"
+                    >
                       {service.price?.amount}
                     </span>{" "}
                     one-time + <span>${service.price?.PayMonthly}/mo</span>
