@@ -1,110 +1,88 @@
 🚀 Multi-Channel Tracking & Attribution Engine (Backend)
-Este servicio es un motor de orquestación de alto rendimiento diseñado para la atribución de conversiones en tiempo real. Actúa como un middleware crítico que procesa eventos financieros de Stripe y los propaga hacia Google Ads, Meta CAPI y Pipedrive CRM.
+Este servicio es un motor de orquestación de alto rendimiento diseñado para la atribución de conversiones en tiempo real. Actúa como un middleware crítico que procesa eventos financieros de Stripe y los propaga hacia Google Ads, Meta CAPI, Pipedrive CRM y PostgreSQL (Neon).
 
-🏗️ Arquitectura y Patrones de Diseño
-El sistema se basa en un patrón de Orquestación de Servicios con un fuerte enfoque en la Resiliencia (SRE):
+✅ Hitos de Trazabilidad Cumplidos (8/8)
+Hemos implementado con éxito los 8 requisitos de arquitectura solicitados para el MVP:
 
-Aislamiento de Fallos (Fault Isolation): Implementamos bloques try-catch independientes para cada integración. Si una API externa (ej. Pipedrive) experimenta latencia o 5xx, el flujo principal no se bloquea, garantizando la entrega de datos a los demás destinos.
+Persistencia en Neon: Esquema relacional extendido para analítica.
 
-Desacoplamiento: El uso de servicios especializados (GoogleAdsService, MetaCapiService) permite que la lógica de negocio del Webhook sea agnóstica a las implementaciones de bajo nivel de cada proveedor.
+Mapeo de Metadata: Captura de gclid, campaign, source y product_id.
 
-Seguridad Criptográfica: Validación de integridad de datos mediante el SDK oficial de Stripe (Webhook.constructEvent), asegurando que solo los eventos firmados por Stripe sean procesados.
+Trazabilidad de Sesión: Almacenamiento del session_id de Stripe para reconciliación de datos.
 
-🔌 Especificaciones de la API (Endpoints)
+Ingesta de Webhooks: Procesamiento robusto del evento checkout.session.completed.
+
+Sincronización CRM: Creación automática de deals en Pipedrive.
+
+Meta CAPI: Envío de eventos de servidor con hashing de datos.
+
+Google Ads Offline: Pipeline de subida de conversiones vía gRPC.
+
+Data Seeding: Generador de datos históricos para dashboards de Grafana.
+
+🏗️ Arquitectura y Resiliencia
+El sistema implementa patrones de SRE (Site Reliability Engineering) para garantizar la integridad de la data:
+
+Aislamiento de Fallos: Bloques de ejecución independientes. Si falla Meta CAPI, Neon y Pipedrive siguen recibiendo la información.
+
+Persistencia Atómica: Uso de Spring Data JPA para asegurar que cada venta se registre con su metadata publicitaria completa.
+
+Limpieza de Binarios: Pipeline de despliegue basado en mvn clean install para garantizar la ejecución de código fresco.
+
+🔌 Especificaciones de la API
 📥 Webhook de Stripe
 POST /api/v1/webhooks/stripe
 
-Recibe y procesa eventos asíncronos del ciclo de vida de pagos.
+Auth: Stripe-Signature.
 
-Auth: Validación vía Stripe-Signature.
+Metadata Requerida: gclid, campaign, source, product_id.
 
-Payload: JSON crudo (deserializado de forma segura).
+🛠️ Herramientas de Administración
+GET /api/v1/admin/seed?days=30
 
-Eventos Target: checkout.session.completed y charge.succeeded.
+Función: Puebla la base de datos con datos sintéticos para pruebas de carga y visualización en Grafana.
 
-🧪 Requisito para Frontend (Metadata Schema)
-Para una atribución exitosa, el objeto de sesión de Stripe debe contener el siguiente esquema en sus metadatos:
+Parámetros: days (Cantidad de días históricos a simular).
 
-JSON
-{
-  "metadata": {
-    "gclid": "string",     // Google Click ID capturado de URL
-    "fbp": "string",       // Facebook Browser ID (cookie _fbp)
-    "fbc": "string",       // Facebook Click ID (cookie _fbc)
-    "source_url": "string" // URL donde se originó la conversión
-  }
-}
-🛠️ Detalle de Integraciones Técnicas
-🎯 Google Ads (Offline Conversions)
-Mecanismo: Conversiones Offline vía gRPC/SDK de Google Ads.
+🛠️ Detalle de Integraciones
+🐘 PostgreSQL (Neon.tech)
+Utilizamos Neon como base de datos serverless para el almacenamiento de StripeEventRecord. El esquema soporta:
 
-Servicio: ConversionUploadService.
+Traceability: session_id y created_at para análisis de embudos.
 
-Lógica: Transforma el gclid y el monto de la transacción en un objeto ClickConversion. Soporta el envío de valores de conversión dinámicos y códigos de moneda configurables.
+Marketing Data: Columnas específicas para atribución (GCLID/FBCLID).
 
-🎯 Meta Conversions API (CAPI)
-Mecanismo: API de servidor (REST) para mitigar la pérdida de datos por AdBlockers y cambios de privacidad (iOS 14+).
+🎯 Google Ads & Meta CAPI
+Google Ads: Integración mediante el SDK v21 para UploadClickConversions.
 
-Implementación: Uso de WebClient para comunicación no bloqueante.
-
-Data Hashing: Procesamiento de PII (Personally Identifiable Information) antes del envío.
-
-🎯 Pipedrive CRM
-Mecanismo: Sincronización automática de ventas.
-
-Acción: Generación de un nuevo "Deal" asignado al cliente, con el valor de la transacción y etiquetas de seguimiento.
+Meta: Envío de eventos vía Conversions API (CAPI) para mitigar bloqueos de cookies de terceros.
 
 ⚙️ Configuración y Despliegue
-Requisitos Previos
+Requisitos
 Java 21 (LTS)
 
-Maven 3.9+
+Stripe CLI (Para pruebas locales)
 
-Google Ads Developer Token
+Neon Database URL
 
-Variables de Entorno Clave
-Configurar en src/main/resources/application.properties o mediante variables de entorno:
+Instalación y Ejecución
+Para asegurar que los cambios en los modelos y servicios se apliquen correctamente:
 
-Properties
-# Google Ads
-google.ads.customerId=123-456-7890
-google.ads.developerToken=${ADS_DEV_TOKEN}
+PowerShell
+mvn clean install
+mvn spring-boot:run
+Pruebas de Integración (Stripe CLI)
+Para simular una venta real con trazabilidad completa:
 
-# Stripe
-stripe.webhook.secret=whsec_...
+PowerShell
+./stripe trigger checkout.session.completed `
+  --override checkout_session:metadata.gclid="TEST_GCLID" `
+  --override checkout_session:metadata.campaign="LANZAMIENTO_2026"
+📈 Observabilidad
+El sistema utiliza prefijos de logs para monitoreo rápido:
 
-# CRM & Meta
-pipedrive.api.token=${PIPEDRIVE_TOKEN}
-meta.access.token=${META_TOKEN}
-📈 Observabilidad (SRE)
-El backend está configurado con logging detallado para trazabilidad:
+[SRE MONITOR]: Entrada de señales externas.
 
-[SRE MONITOR]: Seguimiento de la entrada de eventos.
+[SRE SUCCESS]: Confirmación de persistencia y envíos a APIs.
 
-[SRE DEBUG]: Detalle del procesamiento y extracción de datos.
-
-[SRE ERROR]: Captura de excepciones con stacktrace para debugging rápido en producción.
-
-🗺️ Roadmap de Evolución Técnica
-Para la fase de escalado (Scale-up) del proyecto, se proponen las siguientes mejoras arquitectónicas:
-
-🟢 Fase 1: Resiliencia Avanzada y Manejo de Errores
-Implementación de Idempotencia: Evitar el procesamiento duplicado de eventos de Stripe mediante un registro de Event-ID en una base de datos distribuida (Redis).
-
-Colas de Mensajería (RabbitMQ/Kafka): Desacoplar el Webhook de los servicios de integración. El Webhook solo recibirá y encolará el mensaje, y un worker procesará las llamadas a las APIs externas de forma asíncrona.
-
-Estrategias de Retry (Spring Retry): Configurar reintentos automáticos con Exponential Backoff para errores transitorios (503/504) en las APIs de Google y Meta.
-
-🟡 Fase 2: Observabilidad y Monitoreo (SRE Stack)
-Métricas con Micrometer/Prometheus: Exponer métricas de latencia de las APIs externas y tasas de éxito/error de conversiones.
-
-Tracing Distribuido (Zipkin/Jaeger): Rastrear el flujo de una venta desde que entra el Webhook hasta que impacta en los 3 servicios externos para identificar cuellos de botella.
-
-Dashboard de Control (Grafana): Visualización en tiempo real de las conversiones atribuidas vs. fallidas.
-
-🔴 Fase 3: Seguridad y Escalabilidad
-Secrets Management: Migrar las API Keys del application.properties a un gestor de secretos seguro (AWS Secrets Manager o HashiCorp Vault).
-
-Caching de Atribución (Redis): Almacenar mapeos temporales de User-Session a GCLID para reducir la carga en la base de datos principal durante picos de tráfico.
-
-Containerización (Docker/K8s): Dockerizar el microservicio para despliegues elásticos y orquestación en la nube.
+[SRE DEBUG]: Trazabilidad interna de variables.

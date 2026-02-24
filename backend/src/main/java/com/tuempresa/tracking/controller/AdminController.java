@@ -1,6 +1,8 @@
 package com.tuempresa.tracking.controller;
 
-import com.tuempresa.tracking.service.DataSeederService;
+// CAMBIÁ ESTA LÍNEA:
+import com.tuempresa.tracking.service.integration.DataSeederService; 
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +17,6 @@ public class AdminController {
     @GetMapping("/seed")
     public String seed(@RequestParam(defaultValue = "20") int days) {
         seederService.seedHistoricalData(days);
-        return "SimulaciÃ³n completada. Revisa Grafana y Pipedrive.";
+        return "Simulación completada. Revisa Grafana y Pipedrive.";
     }
 }
