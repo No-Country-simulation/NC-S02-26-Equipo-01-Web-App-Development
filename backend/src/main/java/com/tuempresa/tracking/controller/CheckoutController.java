@@ -21,33 +21,49 @@ public class CheckoutController {
     public Map<String, String> createSession(@RequestBody CheckoutRequest request) throws Exception {
         Stripe.apiKey = stripeApiKey;
 
-        // Construimos la metadata que el Frontend nos envía
+        // 1. Resolvemos el ID de Stripe según el productId recibido
+        String stripePriceId = resolvePriceId(request.productId());
+
+        // 2. Construimos la metadata para la trazabilidad (Atribución)
         Map<String, String> metadata = new HashMap<>();
         metadata.put("gclid", request.gclid());
         metadata.put("campaign", request.campaign());
         metadata.put("source", request.source());
 
+        // 3. Configuramos los parámetros de la sesión de Checkout
         SessionCreateParams params = SessionCreateParams.builder()
-    .setMode(SessionCreateParams.Mode.PAYMENT)
-    .setSuccessUrl(request.successUrl())
-    .setCancelUrl(request.cancelUrl())
-    .putAllMetadata(metadata) 
-    .addLineItem(
-        SessionCreateParams.LineItem.builder()
-            .setQuantity(1L)
-            .setPrice(request.priceId())
-            .build()
-    )
-    .build();
+            .setMode(SessionCreateParams.Mode.PAYMENT)
+            .setSuccessUrl(request.successUrl())
+            .setCancelUrl(request.cancelUrl())
+            .putAllMetadata(metadata) 
+            .addLineItem(
+                SessionCreateParams.LineItem.builder()
+                    .setQuantity(1L)
+                    .setPrice(stripePriceId) // Aquí inyectamos el ID ya resuelto
+                    .build()
+            )
+            .build();
 
         Session session = Session.create(params);
 
-        // Devolvemos la URL generada por Stripe
+        // 4. Devolvemos la URL y el ID al Frontend
         Map<String, String> response = new HashMap<>();
         response.put("sessionId", session.getId());
         response.put("url", session.getUrl()); 
         
-        System.out.println(">>> [SRE INFO] Sesión de Checkout creada. URL: " + session.getUrl());
+        System.out.println(">>> [SRE SUCCESS] Checkout creado para " + request.productId() + ". URL: " + session.getUrl());
         return response;
+    }
+
+    /**
+     * Mapeo de productos del negocio a IDs técnicos de Stripe.
+     * Requerimiento del equipo Frontend.
+     */
+    private String resolvePriceId(String productId) {
+        return switch (productId) {
+            case "pro_plan" -> "price_1T4PWa12wkAy9LpKp618g9Cd"; // Tu ID real de Stripe
+            case "basic_plan" -> "price_1T4P... (poner_otro_id_real)"; 
+            default -> throw new IllegalArgumentException("Invalid productId: " + productId);
+        };
     }
 }

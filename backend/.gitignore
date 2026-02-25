@@ -4,3 +4,6 @@ target/
 *.zip
 .idea/
 .mvn/
+# Secretos locales
+.env
+credenciales_tracking.txt

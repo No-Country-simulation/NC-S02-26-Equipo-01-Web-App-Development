@@ -1,7 +1,7 @@
 package com.tuempresa.tracking.dto;
 
 public record CheckoutRequest(
-    String priceId,
+    String productId,
     String gclid,
     String campaign,
     String source,
