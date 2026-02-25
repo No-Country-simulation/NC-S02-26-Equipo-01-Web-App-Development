@@ -65,7 +65,7 @@ export class LandingPage extends BasePage {
         }
       }
     }
-    return true // Todo en orden
+    return true
   }
 
   obtenerPrecioPlan(monto: string) {
@@ -94,9 +94,5 @@ export class LandingPage extends BasePage {
     } else {
       await card.locator('button:has-text("Start Now")').first().click()
     }
-  }
-
-  get mensajeErrorPrecio() {
-    return this.priceErrorMessage
   }
 }

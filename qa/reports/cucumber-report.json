@@ -1,85 +1,98 @@
 [
   {
-    "description": "  Como usuario interesado en servicios legales\n  Quiero navegar por la landing y completar el checkout\n  Para adquirir un servicio de Incorporation o Tax",
+    "description": "  Como usuario quiero seleccionar un servicio\n  Para iniciar el proceso de compra",
     "elements": [
       {
         "description": "",
-        "id": "interfaz-de-usuario-y-checkout;carga-de-landing-para-conocer-los-servicios-ofrecidos",
+        "id": "selección-de-servicio;elegir-un-servicio-para-ingresar-al-proceso-de-pago",
         "keyword": "Scenario",
-        "line": 11,
-        "name": "Carga de landing para conocer los servicios ofrecidos",
+        "line": 10,
+        "name": "Elegir un servicio para ingresar al proceso de pago",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 2395586400
+              "duration": 3667861499
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 7,
+            "line": 6,
             "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
             "match": {
               "location": "step_definitions\\common_steps.ts:6"
             },
             "result": {
               "status": "passed",
-              "duration": 2556531600
+              "duration": 3226464499
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
-            "line": 8,
+            "line": 7,
             "name": "los datos de tráfico se almacenan correctamente en el sistema",
             "match": {
               "location": "step_definitions\\common_steps.ts:16"
             },
             "result": {
               "status": "passed",
-              "duration": 150313100
+              "duration": 197298700
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 12,
-            "name": "el usuario visualiza las opciones del menú",
+            "line": 11,
+            "name": "el usuario navega hasta la sección de planes",
             "match": {
-              "location": "step_definitions\\services_steps.ts:7"
+              "location": "step_definitions\\service_selection_steps.ts:6"
             },
             "result": {
               "status": "passed",
-              "duration": 37036000
+              "duration": 95812699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 12,
+            "name": "se deben visualizar los precios de los servicios",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 26753199
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 13,
-            "name": "el usuario hace click en la opción \"Services\" del menú",
+            "name": "el usuario hace click en el botón \"Start Now\" del plan \"499\"",
             "match": {
-              "location": "step_definitions\\services_steps.ts:15"
+              "location": "step_definitions\\service_selection_steps.ts:23"
             },
             "result": {
               "status": "passed",
-              "duration": 36746300
+              "duration": 125070199
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
             "line": 14,
-            "name": "se deben visualizar los detalles de \"Incorporation\", \"Tax\" y \"Bookkeeping\"",
+            "name": "el usuario es redirigido a la pasarela de pago",
             "match": {
-              "location": "step_definitions\\services_steps.ts:23"
+              "location": "step_definitions\\service_selection_steps.ts:31"
             },
             "result": {
               "status": "passed",
-              "duration": 34777100
+              "duration": 520990000
             }
           },
           {
@@ -87,146 +100,28 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 10035599
+              "duration": 17131499
             }
           }
         ],
         "tags": [
           {
             "name": "@UI",
-            "line": 10
+            "line": 9
           },
           {
-            "name": "@HU1",
-            "line": 10
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "interfaz-de-usuario-y-checkout;visualización-correcta-en-dispositivos-móviles",
-        "keyword": "Scenario",
-        "line": 17,
-        "name": "Visualización correcta en dispositivos móviles",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 914665199
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 7,
-            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
-            "match": {
-              "location": "step_definitions\\common_steps.ts:6"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 380256400
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 8,
-            "name": "los datos de tráfico se almacenan correctamente en el sistema",
-            "match": {
-              "location": "step_definitions\\common_steps.ts:16"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 145752899
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 18,
-            "name": "el usuario accede desde un dispositivo \"iPhone 13\"",
-            "match": {
-              "location": "step_definitions\\services_steps.ts:43"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 262985199
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 19,
-            "name": "el usuario hace click en el menú hamburguesa",
-            "match": {
-              "location": "step_definitions\\services_steps.ts:54"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 80337600
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 20,
-            "name": "el usuario hace click en la opción \"Services\" del menú",
-            "match": {
-              "location": "step_definitions\\services_steps.ts:15"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 51510200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 21,
-            "name": "los servicios deben estar apilados verticalmente y ser legibles",
-            "match": {
-              "location": "step_definitions\\services_steps.ts:62"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 89254800
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 5940699
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@UI",
-            "line": 16
-          },
-          {
-            "name": "@HU1",
-            "line": 16
-          },
-          {
-            "name": "@Responsive",
-            "line": 16
+            "name": "@HU2",
+            "line": 9
           }
         ],
         "type": "scenario"
       }
     ],
-    "id": "interfaz-de-usuario-y-checkout",
+    "id": "selección-de-servicio",
     "line": 1,
     "keyword": "Feature",
-    "name": "Interfaz de Usuario y Checkout",
+    "name": "Selección de servicio",
     "tags": [],
-    "uri": "features\\services.feature"
+    "uri": "features\\service_selection.feature"
   }
 ]
