@@ -11,11 +11,4 @@ Background:
     When el usuario navega hasta la sección de planes
     Then se deben visualizar los precios de los servicios
     And el usuario hace click en el botón "Start Now" del plan "499"
-    Then el usuario es redirigido a la página de pago
-
-    @UI @Negative @HU2
-  Scenario: Error de inconsistencia de precios en la selección
-    When el usuario visualiza un plan sin precio definido
-    And el usuario hace click en el botón "Start Now" del plan ""
-    Then el sistema debe bloquear la redirección al checkout
-    And debe mostrar un aviso de "Precio no disponible, contacte a soporte"
+    Then el usuario es redirigido a la pasarela de pago

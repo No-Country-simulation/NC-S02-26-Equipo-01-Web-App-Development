@@ -1,18 +1,11 @@
 <?xml version="1.0"?>
-<testsuite name="Cucumber" time="8.702" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-02-25T14:42:33.276Z">
-  <testcase classname="Interfaz de Usuario y Checkout" name="Carga de landing para conocer los servicios ofrecidos" time="5.226">
+<testsuite name="Cucumber" time="9.614" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-02-25T19:24:01.710Z">
+  <testcase classname="Selección de servicio" name="Elegir un servicio para ingresar al proceso de pago" time="7.885">
     <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
 And los datos de tráfico se almacenan correctamente en el sistema...........passed
-When el usuario visualiza las opciones del menú.............................passed
-And el usuario hace click en la opción "Services" del menú..................passed
-Then se deben visualizar los detalles de "Incorporation", "Tax" y "Bookkeeping"..passed]]></system-out>
-  </testcase>
-  <testcase classname="Interfaz de Usuario y Checkout" name="Visualización correcta en dispositivos móviles" time="1.937">
-    <system-out><![CDATA[Given que el usuario navega a la landing principal con "?gclid=g_123&fbclid=f_456"..passed
-And los datos de tráfico se almacenan correctamente en el sistema...........passed
-When el usuario accede desde un dispositivo "iPhone 13".....................passed
-And el usuario hace click en el menú hamburguesa............................passed
-And el usuario hace click en la opción "Services" del menú..................passed
-Then los servicios deben estar apilados verticalmente y ser legibles........passed]]></system-out>
+When el usuario navega hasta la sección de planes...........................passed
+Then se deben visualizar los precios de los servicios.......................passed
+And el usuario hace click en el botón "Start Now" del plan "499"............passed
+Then el usuario es redirigido a la pasarela de pago.........................passed]]></system-out>
   </testcase>
 </testsuite>
