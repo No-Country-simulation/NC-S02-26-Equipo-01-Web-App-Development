@@ -13,8 +13,9 @@ Background:
     And el usuario hace click en la opción "Services" del menú
     Then se deben visualizar los detalles de "Incorporation", "Tax" y "Bookkeeping"
 
-@UI @Negative @HU1
-  Scenario: Error en la visualización de los servicios
-    When el usuario visualiza las opciones del menú
+  @UI @HU1 @Responsive
+  Scenario: Visualización correcta en dispositivos móviles
+    When el usuario accede desde un dispositivo "iPhone 13"
+    And el usuario hace click en el menú hamburguesa
     And el usuario hace click en la opción "Services" del menú
-    Then no se visualizan los servicios "Incorporation", "Tax" y "Bookkeeping"
+    Then los servicios deben estar apilados verticalmente y ser legibles
