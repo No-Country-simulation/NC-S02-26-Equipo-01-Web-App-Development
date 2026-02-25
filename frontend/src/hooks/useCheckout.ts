@@ -1,12 +1,16 @@
+import { TrackingContext } from "@/providers/TrackingContext";
 import type { CheckoutPayload } from "@/types";
+import { useContext } from "react";
 import { useNavigate } from "react-router";
 
 const useCheckout = () => {
   const navigate = useNavigate();
+  const { tracking } = useContext(TrackingContext);
 
   const handleCheckoutSuccess = async ({ amount, plan }: CheckoutPayload) => {
     try {
-      console.log("Checkout iniciado:", { amount, plan });
+
+      console.log("Checkout iniciado:", { amount, plan, tracking });
 
       await new Promise((resolve) => setTimeout(resolve, 500));
 
