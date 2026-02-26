@@ -66,7 +66,13 @@ public class StripeWebhookController {
                     crmService.registrarVenta(email, amount);
 
                     // B. Atribución en Meta CAPI
-                    metaCapiService.sendPurchaseEvent(email, amount);
+                    if (metadata != null) {
+                        String fbclid = metadata.get("fbclid");
+
+                        if (email != null){
+                            metaCapiService.sendPurchaseEvent(email, amount, fbclid);
+                        }
+                    }
 
                     // C. Atribución en Google Ads (Usando el GCLID de la metadata)
                     if (metadata != null && metadata.containsKey("gclid")) {
@@ -79,6 +85,7 @@ public class StripeWebhookController {
 
                 } else {
                     System.err.println(">>> [SRE ERROR] No se pudo deserializar la sesión de Stripe.");
+                    return ResponseEntity.badRequest().build();
                 }
             }
             

@@ -5,7 +5,11 @@ import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.tuempresa.tracking.dto.CheckoutRequest;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,17 +22,25 @@ public class CheckoutController {
     private String stripeApiKey;
 
     @PostMapping("/create-session")
-    public Map<String, String> createSession(@RequestBody CheckoutRequest request) throws Exception {
+    public ResponseEntity<Map<String, String>> createSession(@RequestBody CheckoutRequest request) throws Exception {
+        try {
         Stripe.apiKey = stripeApiKey;
+
+        if (request.productId() == null || request.productId().isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "productId is required"));
+        }
 
         // 1. Resolvemos el ID de Stripe según el productId recibido
         String stripePriceId = resolvePriceId(request.productId());
 
         // 2. Construimos la metadata para la trazabilidad (Atribución)
         Map<String, String> metadata = new HashMap<>();
-        metadata.put("gclid", request.gclid());
-        metadata.put("campaign", request.campaign());
-        metadata.put("source", request.source());
+        putIfValid(metadata, "productId", request.productId());
+        putIfValid(metadata, "gclid", request.gclid());
+        putIfValid(metadata, "fbclid", request.fbclid());
+        putIfValid(metadata, "campaign", request.campaign());
+        putIfValid(metadata, "source", request.source());
+
 
         // 3. Configuramos los parámetros de la sesión de Checkout
         SessionCreateParams params = SessionCreateParams.builder()
@@ -52,7 +64,12 @@ public class CheckoutController {
         response.put("url", session.getUrl()); 
         
         System.out.println(">>> [SRE SUCCESS] Checkout creado para " + request.productId() + ". URL: " + session.getUrl());
-        return response;
+        return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of("error", "Stripe session creation failed"));
+        }
     }
 
     /**
@@ -65,5 +82,11 @@ public class CheckoutController {
             case "basic_plan" -> "price_1T4P... (poner_otro_id_real)"; 
             default -> throw new IllegalArgumentException("Invalid productId: " + productId);
         };
+    }
+
+    private void putIfValid(Map<String, String> map, String key, String value) {
+        if (value != null && !value.isBlank() && value.length() <= 255) {
+            map.put(key, value);
+        }
     }
 }
