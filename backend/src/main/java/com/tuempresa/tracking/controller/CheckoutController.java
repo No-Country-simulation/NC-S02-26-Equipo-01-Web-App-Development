@@ -6,10 +6,7 @@ import com.stripe.param.checkout.SessionCreateParams;
 import com.tuempresa.tracking.dto.CheckoutRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +42,7 @@ public class CheckoutController {
         // 3. Configuramos los parámetros de la sesión de Checkout
         SessionCreateParams params = SessionCreateParams.builder()
             .setMode(SessionCreateParams.Mode.PAYMENT)
-            .setSuccessUrl(request.successUrl())
+            .setSuccessUrl(request.successUrl() + "?session_id={CHECKOUT_SESSION_ID}")
             .setCancelUrl(request.cancelUrl())
             .putAllMetadata(metadata) 
             .addLineItem(
@@ -70,6 +67,26 @@ public class CheckoutController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(Map.of("error", "Stripe session creation failed"));
         }
+    }
+
+    @GetMapping("/session/{sessionId}")
+    public ResponseEntity<?> getSession(@PathVariable String sessionId) throws Exception {
+        Stripe.apiKey = stripeApiKey;
+
+        Session session = Session.retrieve(sessionId);
+
+        Map<String, Object> response = Map.of(
+                "id", session.getId(),
+                "email", session.getCustomerDetails() != null
+                        ? session.getCustomerDetails().getEmail()
+                        : null,
+                "amount", session.getAmountTotal() != null
+                        ? session.getAmountTotal() / 100.0
+                        : 0.0,
+                "status", session.getPaymentStatus()
+        );
+
+        return ResponseEntity.ok(response);
     }
 
     /**

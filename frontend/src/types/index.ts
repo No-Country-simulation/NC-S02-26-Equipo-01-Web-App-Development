@@ -3,7 +3,7 @@ import type { ComponentType, SVGProps } from "react";
 export interface ICard {
   title: string;
   description: string;
-  icon?:  ComponentType<SVGProps<SVGSVGElement>>;
+  icon?: ComponentType<SVGProps<SVGSVGElement>>;
   badged?: {
     text: string;
     icon?: ComponentType<SVGProps<SVGSVGElement>>;
@@ -14,6 +14,7 @@ export interface ICard {
 export type Problem = ICard;
 
 export interface Service extends ICard {
+  productId?: string;
   price?: {
     amount: number;
     PayMonthly: number;
@@ -37,7 +38,6 @@ export interface FAQItemProps {
 export type PaymentStatus = "loading" | "confirmed" | "error";
 
 export interface CheckoutPayload {
-  amount: number;
   plan: string;
 }
 
@@ -55,4 +55,11 @@ export interface StoredTracking {
   tracking: TrackingData;
   firstSeenAt: number;
   landingPath: string;
+}
+
+export interface CheckoutSessionResponse {
+  id: string;
+  email: string | null;
+  amount: number;
+  status: string;
 }

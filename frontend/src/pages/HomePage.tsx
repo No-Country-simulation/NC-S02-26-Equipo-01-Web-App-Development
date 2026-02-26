@@ -28,7 +28,7 @@ import {
 
 export default function HomePage() {
   useScrollToSection();
-  const { handleCheckoutSuccess } = useCheckout();
+  const { handleCheckout } = useCheckout();
   return (
     <>
       <header>
@@ -191,9 +191,8 @@ export default function HomePage() {
                     dataTestId={`app-button-pricing-${index}`}
                     className={`w-full mx-auto mt-4 ${service.title === "Growth" ? "bg-gold hover:bg-gold-hover" : "bg-black hover:bg-gray-800"}`}
                     onClick={() =>
-                      handleCheckoutSuccess({
-                        amount: service.price?.amount || 0,
-                        plan: service.title,
+                      handleCheckout({
+                        plan: service.productId || "",
                       })
                     }
                   >
