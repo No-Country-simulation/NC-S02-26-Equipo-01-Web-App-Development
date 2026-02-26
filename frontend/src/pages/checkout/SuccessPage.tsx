@@ -7,7 +7,6 @@ import Header from "@/components/common/Header";
 
 const SuccessPage = () => {
   const navigate = useNavigate();
-  //TODO: Cambiar el ID de transacción y el email del usuario por los datos reales de la transacción exitosa, hacer petición al backend para obtener esta información.
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
 
@@ -46,7 +45,7 @@ const SuccessPage = () => {
   if (loading) {
     return (
       <div className="success-page mb-12 flex flex-col items-center min-h-[80vh]">
-        <Header />
+        <Header dataTestId="app-success-header-loading" />
         <div className="flex flex-col items-center justify-center flex-1 w-full">
           <div className="w-14 h-14 border-4 border-gray-300 border-t-primary-hover rounded-full animate-spin"></div>
           <p className="mt-6 text-gray-600">Processing your transaction...</p>
@@ -57,7 +56,7 @@ const SuccessPage = () => {
   if (error || !data) {
     return (
       <div className="success-page mb-12 flex flex-col items-center min-h-[80vh]">
-        <Header />
+        <Header dataTestId="app-success-header-error" />
 
         <div className="flex flex-1 w-full items-center justify-center px-6">
           <div className="bg-white shadow-lg rounded-2xl p-10 max-w-md w-full text-center border border-gray-100">
@@ -82,7 +81,7 @@ const SuccessPage = () => {
 
   return (
     <div className="success-page mb-12 flex flex-col items-center min-h-[80vh]">
-      <Header />
+      <Header dataTestId="app-success-header" />
       <div className="flex flex-col items-center justify-center flex-1 w-full transition-all duration-300">
         <CheckIcon className="w-26 h-26 fill-green-500 mt-8 mb-4 animate-bounce [animation-duration:0.9s] [animation-iteration-count:2.5]" />
 
@@ -102,7 +101,9 @@ const SuccessPage = () => {
         <div className="bg-gray-100 p-7 rounded-lg my-8">
           <p className="text-lg mb-4 max-w-md">
             Transactional ID:{" "}
-            <span className="font-mono text-sm text-gray-500 wrap-break-word">{data.id}</span>
+            <span className="font-mono text-sm text-gray-500 wrap-break-word">
+              {data.id}
+            </span>
           </p>
 
           <p className="text-lg mb-4 max-w-md">
