@@ -1,6 +1,7 @@
 import type { ComponentType, SVGProps } from "react";
 
 export interface ICard {
+  id?: string;
   title: string;
   description: string;
   icon?: ComponentType<SVGProps<SVGSVGElement>>;
@@ -23,6 +24,7 @@ export interface Service extends ICard {
 }
 
 export interface Testimonial {
+  id: string;
   name: string;
   title: string;
   quote: string;

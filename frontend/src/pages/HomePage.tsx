@@ -47,7 +47,7 @@ export default function HomePage() {
             {theProblems &&
               theProblems.map((problem, index) => (
                 <Card
-                  key={index}
+                  key={problem.id}
                   dataTestId={`app-card-problem-${index}`}
                   data={problem}
                   color="blue"
@@ -83,7 +83,7 @@ export default function HomePage() {
             {theServices &&
               theServices.map((service, index) => (
                 <Card
-                  key={index}
+                  key={service.id}
                   dataTestId={`app-card-service-${index}`}
                   data={service}
                   color="light"
@@ -126,7 +126,7 @@ export default function HomePage() {
                     0{index + 1}
                   </span>
                   <Card
-                    key={index}
+                    key={step.id}
                     dataTestId={`app-card-step-${index}`}
                     data={step}
                     color="transparent"
@@ -147,7 +147,7 @@ export default function HomePage() {
             {smarterWay &&
               smarterWay.map((item, index) => (
                 <Card
-                  key={index}
+                  key={item.id}
                   dataTestId={`app-card-smarter-way-${index}`}
                   data={item}
                   color="blue"
@@ -169,7 +169,7 @@ export default function HomePage() {
             {pricingPlans &&
               pricingPlans.map((service, index) => (
                 <Card
-                  key={index}
+                  key={service.id}
                   dataTestId={`app-card-pricing-${index}`}
                   data={service}
                   color="light"
