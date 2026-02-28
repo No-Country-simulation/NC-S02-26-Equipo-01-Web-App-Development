@@ -1,48 +1,37 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router";
 import Button from "@/components/common/Button";
+import Header from "@/components/common/Header";
 import { CheckIcon, ErrorIcon } from "@/assets/icons";
 import type { CheckoutSessionResponse } from "@/types";
-import Header from "@/components/common/Header";
 
 const SuccessPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
 
-  const [data, setData] = useState<CheckoutSessionResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        if (!sessionId) {
-          setError(true);
-          return;
-        }
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/v1/checkout/session/${sessionId}`,
-        );
-
-        if (!res.ok) {
-          throw new Error("Error fetching session");
-        }
-
-        const json: CheckoutSessionResponse = await res.json();
-        setData(json);
-      } catch (err) {
-        console.error("Error fetching session:", err);
-        setError(true);
-      } finally {
-        setLoading(false);
+  const { data, isLoading, isError } = useQuery<CheckoutSessionResponse>({
+    queryKey: ["checkout-session", sessionId],
+    queryFn: async () => {
+      if (!sessionId) {
+        throw new Error("Missing session_id");
       }
-    };
 
-    fetchSession();
-  }, [sessionId]);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/checkout/session/${sessionId}`,
+      );
 
-  if (loading) {
+      if (!res.ok) {
+        throw new Error("Failed to fetch session");
+      }
+
+      return res.json();
+    },
+    enabled: !!sessionId,
+    retry: 1, 
+  });
+
+  if (isLoading) {
     return (
       <div className="success-page mb-12 flex flex-col items-center min-h-[80vh]">
         <Header dataTestId="app-success-header-loading" />
@@ -53,9 +42,10 @@ const SuccessPage = () => {
       </div>
     );
   }
-  if (error || !data) {
+
+  if (isError || !data) {
     return (
-      <div className="success-page mb-12 flex flex-col items-center min-h-[80vh]">
+      <div className="success-page mb-12 flex flex-col items-center min-h-[80vh] bg-gray-50">
         <Header dataTestId="app-success-header-error" />
 
         <div className="flex flex-1 w-full items-center justify-center px-6">
@@ -72,6 +62,7 @@ const SuccessPage = () => {
               We couldn’t locate your transaction. This may happen if the
               session expired or the payment process was interrupted.
             </p>
+
             <Button onClick={() => navigate("/")}>Return Home</Button>
           </div>
         </div>

@@ -24,18 +24,21 @@ import type {
 
 export const theProblems: Problem[] = [
   {
+    id: "1",
     title: "Complex Legal Requirements",
     description:
       "U.S. tax law and compliance rules are difficult to navigate — especially for founders based outside the United States.",
     icon: GroupIcon,
   },
   {
+    id: "2",
     title: "Too Many Providers",
     description:
       "Juggling multiple vendors for incorporation, taxes, and bookkeeping leads to confusion, miscommunication, and missed deadlines.",
     icon: UnknownIcon,
   },
   {
+    id: "3",
     title: "Hidden Fees & Surprises",
     description:
       "Unclear pricing from multiple services means unexpected costs that eat into your business budget every quarter.",
@@ -45,6 +48,7 @@ export const theProblems: Problem[] = [
 
 export const theServices: Service[] = [
   {
+    id: "1",
     title: "Incorporation",
     description: "LLC & C-Corp Formation",
     icon: ApartmentIcon,
@@ -57,6 +61,7 @@ export const theServices: Service[] = [
     ],
   },
   {
+    id: "2",
     title: "Tax & Compliance",
     description: "Stay Compliant Year-Round",
     icon: CalculateIcon,
@@ -69,6 +74,7 @@ export const theServices: Service[] = [
     ],
   },
   {
+    id: "3",
     title: "Monthly Bookkeeping",
     description: "Clean Books, Always",
     icon: BookIcon,
@@ -84,18 +90,21 @@ export const theServices: Service[] = [
 
 export const threeSteps = [
   {
+    id: "1",
     title: "Choose Your Entity",
     description:
       "Select between an LLC or C-Corp based on your business goals. Our team will guide you through the best option for your situation.",
     icon: FileIcon,
   },
   {
+    id: "2",
     title: "We Incorporate & Set Up Compliance",
     description:
       "We handle all the paperwork — state filing, EIN, registered agent, operating agreements, and initial compliance setup.",
     icon: ManufacturingIcon,
   },
   {
+    id: "3",
     title: "Ongoing Tax & Bookkeeping Support",
     description:
       "From day one, your books are maintained and taxes are filed on time. Focus on growth while we handle the numbers.",
@@ -105,24 +114,28 @@ export const threeSteps = [
 
 export const smarterWay: ICard[] = [
   {
+    id: "1",
     title: "Complex Legal Requirements",
     description:
       "U.S. tax law and compliance rules are difficult to navigate — especially for founders based outside the United States.",
     icon: FileIcon,
   },
   {
+    id: "2",
     title: "Complex Legal Requirements",
     description:
       "U.S. tax law and compliance rules are difficult to navigate — especially for founders based outside the United States.",
     icon: GroupIcon,
   },
   {
+    id: "3",
     title: "Complex Legal Requirements",
     description:
       "U.S. tax law and compliance rules are difficult to navigate — especially for founders based outside the United States.",
     icon: BookIcon,
   },
   {
+    id: "4",
     title: "Complex Legal Requirements",
     description:
       "U.S. tax law and compliance rules are difficult to navigate — especially for founders based outside the United States.",
@@ -132,6 +145,7 @@ export const smarterWay: ICard[] = [
 
 export const pricingPlans: Service[] = [
   {
+    id: "1",
     productId: "basic_plan",
     title: "Starter",
     description: "Perfect for solo founders launching their first U.S. entity.",
@@ -150,6 +164,7 @@ export const pricingPlans: Service[] = [
     ],
   },
   {
+    id: "2",
     productId: "pro_plan",
     title: "Growth",
     description:
@@ -221,6 +236,7 @@ export const faqList: FAQItemProps[] = [
 
 export const testimonials: Testimonial[] = [
   {
+    id: "1",
     name: "Maria G.",
     title: "E-commerce Founder - México",
     quote:
@@ -228,6 +244,7 @@ export const testimonials: Testimonial[] = [
     avatar: AvatarMG,
   },
   {
+    id: "2",
     name: "Ahmed R.",
     title: "SaaS Founder — UAE",
     quote:
@@ -235,6 +252,7 @@ export const testimonials: Testimonial[] = [
     avatar: AvatarAR,
   },
   {
+    id: "3",
     name: "Lena K.",
     title: "Freelance Consultant — Germany",
     quote:
