@@ -2,10 +2,10 @@ import type { FAQItemProps } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
-const FAQItem: React.FC<FAQItemProps> = ({ id, question, answer }) => {
+const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <li key={id} className="mb-2 max-w-125 md:w-125 lg:w-125 w-full ">
+    <li className="mb-2 max-w-125 md:w-125 lg:w-125 w-full ">
       <div className="w-full text-black border-b border-black">
         <button
           onClick={() => setIsOpen((prev) => !prev)}

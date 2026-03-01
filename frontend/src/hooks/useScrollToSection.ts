@@ -19,11 +19,22 @@ const useScrollToSection = () => {
 
     if (!section) return;
 
-    const y =
-      section.getBoundingClientRect().top +
-      window.pageYOffset -
-      window.innerHeight / 2 +
-      section.offsetHeight / 2;
+    const navbarOffset = 80;
+    let y: number;
+
+    if (sectionId === "app-section-pricing") {
+      // Centrado exacto
+      y =
+        section.getBoundingClientRect().top +
+        15 +
+        window.pageYOffset -
+        window.innerHeight / 2 +
+        section.offsetHeight / 2;
+    } else {
+      // Scroll normal con offset navbar
+      y =
+        section.getBoundingClientRect().top + window.pageYOffset - navbarOffset;
+    }
 
     window.scrollTo({
       top: y,

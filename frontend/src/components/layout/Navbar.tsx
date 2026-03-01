@@ -21,7 +21,7 @@ const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-17 items-center">
-          <div
+          <button 
             className="flex flex-col items-center shrink-0 cursor-pointer"
             onClick={handleClick}
           >
@@ -30,7 +30,7 @@ const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
               TAX
               <span className="text-primary-hover font-light">Services</span>
             </div>
-          </div>
+          </button>
 
           <div className="hidden md:flex items-center flex-1 justify-center gap-8">
             <a
@@ -114,7 +114,7 @@ const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
             className="block nav-link"
             onClick={(e) => handleNavigation(e, () => setIsOpen(false))}
           >
-            Pricing
+            Pricing 
           </a>
           <a
             href="#app-section-faq"
