@@ -17,4 +17,8 @@ Background:
     And hace click en el botón "Finalizar compra"
     Then el usuario es redirigido a la página de pago exitoso
 
-  
+  @UI @Negative @HU3
+  Scenario: Cancelación voluntaria del pago
+    When el usuario hace click en el botón para volver o cancela la transacción
+    Then el sistema debe redirigirlo a la página de cancel de la landing
+    And debe mostrar un mensaje informando que el pago no se procesó
