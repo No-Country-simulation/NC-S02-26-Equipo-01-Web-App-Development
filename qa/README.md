@@ -101,3 +101,17 @@ Criterios de aceptación
 - Se puede verificar el evento en Google y Meta
 - Se valida que cada conversión corresponde a una acción real
 - No se detectan conversiones falsas o incompletas
+
+@UI @Negative @HU3
+Scenario: Validar error en el formulario por email inválido
+When el usuario rellena el formulario con un email con formato incorrecto "usuario@test"
+And hace click en el botón "Finalizar compra"
+Then el sistema debe mostrar un mensaje de alerta "El correo electrónico está incompleto."
+And no debe permitir el progreso a la página de éxito
+
+@UI @Negative @HU3
+Scenario: Validar campos obligatorios vacíos
+When el usuario deja todos los campos del formulario en blanco
+And hace click en el botón "Finalizar compra"
+Then el sistema debe resaltar los campos obligatorios en rojo
+And no debe permitir el progreso a la página de éxito

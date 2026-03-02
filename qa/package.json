@@ -6,7 +6,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "serve-mocks": "dotenv -e .env -- http-server ./mocks -p 3000",
-    "test": "cucumber-js && node ./generate.report.js",
+    "test": "cucumber-js --format json:reports/cucumber_report.json && node ./generate.report.js",
     "test:junit": "cucumber-js --format junit:reports/junit.xml"
   },
   "repository": {

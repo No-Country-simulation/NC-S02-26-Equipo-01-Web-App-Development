@@ -15,7 +15,9 @@ Given(
 Then(
   'se valida que el usuario se encuentra en la pasarela de pago',
   async function (this: CustomWorld) {
-    await expect(this.page!).toHaveURL(/.*checkout/)
+    await expect(this.page!).toHaveURL(/.*checkout.stripe.com/, {
+      timeout: 15000,
+    })
   },
 )
 
@@ -45,18 +47,18 @@ When(
 )
 
 Then(
+  'el usuario es redirigido a la página de pago exitoso',
+  async function (this: CustomWorld) {
+    await expect(this.page!).toHaveURL(/.*success/, { timeout: 20000 })
+  },
+)
+
+Then(
   'el sistema debe procesar el pago y enviar los IDs {string} y {string} al servidor',
   async function (this: CustomWorld) {
     // Nota: Se valida que los datos de tracking se envían correctamente al servidor, lo cual se puede simular validando que se almacenan en localStorage o que se incluyen en la URL de redirección
     const checkout = new CheckoutPage(this.page!)
     await checkout.validarTracking()
-  },
-)
-
-Then(
-  'el usuario es redirigido a la página de pago exitoso',
-  async function (this: CustomWorld) {
-    await expect(this.page!).toHaveURL(/.*success/)
   },
 )
 
@@ -72,8 +74,6 @@ Then(
   'el sistema debe mostrar un mensaje de alerta {string}',
   async function (this: CustomWorld, mensajeEsperado) {
     const checkout = new CheckoutPage(this.page!)
-
-    // Nota: Esperamos a que el mensaje de Stripe aparezca
     await expect(checkout.mensajeErrorStripe).toBeVisible()
     await expect(checkout.mensajeErrorStripe).toContainText(mensajeEsperado)
   },
