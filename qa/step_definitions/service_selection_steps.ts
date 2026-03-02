@@ -15,7 +15,7 @@ Then(
   'se deben visualizar los precios de los servicios',
   async function (this: CustomWorld) {
     const landing = new LandingPage(this.page!)
-    const card = landing.obtenerPrecioPlan('499')
+    const card = landing.obtenerPrecioPlan('899')
     await expect(card).toBeVisible()
   },
 )
@@ -31,15 +31,8 @@ When(
 Then(
   'el usuario es redirigido a la pasarela de pago',
   async function (this: CustomWorld) {
-    await this.page!.waitForURL(/(checkout\.stripe\.com|.*checkout)/, {
+    await expect(this.page!).toHaveURL(/.*checkout.stripe.com/, {
       timeout: 15000,
     })
-
-    const currentUrl = this.page!.url()
-
-    const isStripe = currentUrl.includes('stripe.com')
-    const isInternalCheckout = currentUrl.includes('/checkout')
-
-    expect(isStripe || isInternalCheckout).toBe(true)
   },
 )

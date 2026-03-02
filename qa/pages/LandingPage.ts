@@ -17,12 +17,7 @@ export class LandingPage extends BasePage {
   private readonly pricingSection = this.page.locator(
     '[data-testid="app-section-simple-pricing"]',
   )
-  private readonly priceErrorMessage = this.page.locator(
-    '[data-testid="price-error"]',
-  )
-  private readonly buttonPricingLocator = this.page.locator(
-    '[data-testid^="app-button-pricing-"]',
-  )
+  private readonly buttonPricingLocator = '[data-testid^="app-button-pricing-"]'
 
   get menuNavegacion() {
     return this.navMenu
@@ -69,30 +64,14 @@ export class LandingPage extends BasePage {
   }
 
   obtenerPrecioPlan(monto: string) {
-    const cards = this.pricingSection.locator(
-      'div[data-testid^="app-card-pricing-"]',
-    )
-    if (monto === '') {
-      return cards.filter({ hasNotText: /[0-9]/ })
-    }
-    return cards.filter({ hasText: new RegExp(monto) })
+    return this.pricingSection
+      .locator('div[data-testid^="app-card-pricing-"]')
+      .filter({ hasText: monto })
   }
 
   async clickEnStartNow(precio: string) {
-    const card =
-      precio === ''
-        ? this.pricingSection
-            .locator('div[data-testid^="app-card-pricing-"]')
-            .filter({ hasNotText: '' })
-        : this.obtenerPrecioPlan(precio)
-
-    const btnByTestId = card.locator(this.buttonPricingLocator)
-    await card.first().waitFor()
-
-    if ((await btnByTestId.count()) > 0) {
-      await btnByTestId.first().click()
-    } else {
-      await card.locator('button:has-text("Start Now")').first().click()
-    }
+    const card = this.obtenerPrecioPlan(precio).first()
+    const button = card.locator(this.buttonPricingLocator)
+    await button.click()
   }
 }
