@@ -10,7 +10,7 @@ const Hero = ({ dataTestId = "hero" }: { dataTestId?: string }) => {
       data-testid={dataTestId}
       className="relative py-5 text-white min-h-150 flex items-center justify-center overflow-hidden"
     >
-      <div className="absolute inset-0 z-0 bg-black h-[417]">
+      <div className="absolute inset-0 z-0 bg-black">
         <img
           src={heroImage}
           width={626}
