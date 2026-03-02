@@ -1,8 +1,18 @@
 import { useState } from "react";
 import logoTax from "@assets/img/logo_taxServices.png";
+import { useLocation, useNavigate } from "react-router";
+import { handleNavigation } from "@/hooks/useScrollToSection";
 
 const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleClick = () => {
+    if (location.pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      navigate("/", { replace: true });
+    }
+  };
 
   return (
     <nav
@@ -11,13 +21,16 @@ const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-17 items-center">
-          <div className="flex flex-col items-center shrink-0">
+          <button 
+            className="flex flex-col items-center shrink-0 cursor-pointer"
+            onClick={handleClick}
+          >
             <img src={logoTax} className="w-10" alt="Tax Services Logo" />
             <div className="text-xl font-extrabold text-primary-hover">
               TAX
               <span className="text-primary-hover font-light">Services</span>
             </div>
-          </div>
+          </button>
 
           <div className="hidden md:flex items-center flex-1 justify-center gap-8">
             <a
@@ -37,6 +50,7 @@ const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
             <a
               href="#app-section-pricing"
               data-testid="nav-link-pricing"
+              onClick={(e) => handleNavigation(e, () => setIsOpen(false))}
               className="nav-link"
             >
               Pricing
@@ -98,9 +112,9 @@ const Navbar = ({ dataTestId = "navbar" }: { dataTestId?: string }) => {
             href="#app-section-pricing"
             data-testid="nav-link-pricing-mobile"
             className="block nav-link"
-            onClick={() => setIsOpen(false)}
+            onClick={(e) => handleNavigation(e, () => setIsOpen(false))}
           >
-            Pricing
+            Pricing 
           </a>
           <a
             href="#app-section-faq"
