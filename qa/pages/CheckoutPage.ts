@@ -19,12 +19,26 @@ export class CheckoutPage extends BasePage {
   private btnSubscribe = this.page.locator(
     'button[data-testid="hosted-payment-submit-button"]',
   )
+  private btnBack = this.page.locator('[data-testid="business-link"]')
+  private titleCanceled = this.page.locator('h1', {
+    hasText: 'Payment Canceled',
+  })
 
   get precioTotal() {
     return this.stripeTotalAmount
   }
   get mensajeErrorStripe() {
     return this.stripeErrorMessage
+  }
+
+  async cancelarPagoEnStripe() {
+    await this.btnBack.waitFor({ state: 'visible', timeout: 10000 })
+    await this.btnBack.click()
+  }
+
+  async canceledPaymentMessage() {
+    await this.titleCanceled.waitFor({ state: 'visible', timeout: 5000 })
+    return await this.titleCanceled.isVisible()
   }
 
   async llenarFormulario(datos: any) {

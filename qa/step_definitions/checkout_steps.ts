@@ -100,3 +100,27 @@ Then(
     await expect(checkout.mensajeErrorStripe).toBeVisible()
   },
 )
+
+When(
+  'el usuario hace click en el botón para volver o cancela la transacción',
+  async function (this: CustomWorld) {
+    const checkout = new CheckoutPage(this.page!)
+    await checkout.cancelarPagoEnStripe()
+  },
+)
+
+Then(
+  'el sistema debe redirigirlo a la página de cancel de la landing',
+  async function (this: CustomWorld) {
+    await expect(this.page!).toHaveURL(/.*cancel/, { timeout: 15000 })
+  },
+)
+
+Then(
+  'debe mostrar un mensaje informando que el pago no se procesó',
+  async function (this: CustomWorld) {
+    const checkout = new CheckoutPage(this.page!)
+    const message = await checkout.canceledPaymentMessage()
+    expect(message).toBeTruthy()
+  },
+)
