@@ -1,28 +1,60 @@
+version: '3.8'
+
 services:
-  # --- Monitoreo ---
+  # --- TU BACKEND (SPRING BOOT) ---
+  backend:
+    build:
+      context: . # El contexto es la raíz para ver todas las carpetas
+      dockerfile: Dockerfile # Docker usará el archivo que está en la raíz
+    container_name: tracking-backend
+    ports:
+      - '8080:8080'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-app:5432/tracking
+      - SPRING_DATASOURCE_USERNAME=qa_user
+      - SPRING_DATASOURCE_PASSWORD=qa_password
+      # Estas variables se toman de tu archivo .env local
+      - STRIPE_API_KEY=${STRIPE_API_KEY}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+    depends_on:
+      db-app:
+        condition: service_healthy
+
+  # --- BASE DE DATOS EXCLUSIVA PARA LA APP ---
+  db-app:
+    image: postgres:15-alpine
+    container_name: tracking-db-app
+    environment:
+      - POSTGRES_DB=tracking
+      - POSTGRES_USER=qa_user
+      - POSTGRES_PASSWORD=qa_password
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U qa_user -d tracking']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # --- MONITOREO (GRAFANA) ---
   grafana:
     image: grafana/grafana:latest
     container_name: tracking-grafana
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - grafana-data:/var/lib/grafana
 
-  # --- Twenty CRM (Alternativa Open Source) ---
+  # --- CRM (TWENTY) Y SUS DEPENDENCIAS ---
   twenty:
     image: twentycrm/twenty:latest
     container_name: tracking-twenty
     ports:
-      - "3001:3000"
+      - '3001:3000'
     environment:
-      - PORT=3000
       - PG_DATABASE_URL=postgres://twenty:twenty@twenty-db:5432/default
       - REDIS_URL=redis://twenty-redis:6379
-      - SERVER_URL=http://localhost:3001
-      - FRONTEND_URL=http://localhost:3001
-      # 🚩 Llaves de seguridad obligatorias
       - SECRET_KEY=f6e8b9a2c3d4e5f6a7b8c9d0e1f2a3b4
-      - APP_SECRET=f6e8b9a2c3d4e5f6a7b8c9d0e1f2a3b4
     depends_on:
       twenty-db:
         condition: service_healthy
@@ -35,16 +67,9 @@ services:
     environment:
       - POSTGRES_USER=twenty
       - POSTGRES_PASSWORD=twenty
-      - POSTGRES_DB=default
-    volumes:
-      - twenty-db-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U twenty -d default"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      test: ['CMD-SHELL', 'pg_isready -U twenty -d default']
 
-  # --- Redis (Caché para Twenty) ---
   twenty-redis:
     image: redis:7-alpine
     container_name: tracking-twenty-redis

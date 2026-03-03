@@ -52,7 +52,7 @@ const SectionContainer = ({
           )}
           <h2
             data-testid={`${dataTestId}-title`}
-            className={`text-4xl md:text-5xl font-bold ${color === "dark" ? "text-white" : "text-slate-900"} mb-6`}
+            className={`text-3xl md:text-[2.6rem] font-bold ${color === "dark" ? "text-white" : "text-slate-900"} mb-6`}
           >
             {title}
           </h2>

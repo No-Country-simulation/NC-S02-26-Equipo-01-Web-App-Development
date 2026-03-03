@@ -1,44 +1,61 @@
 import { BasePage } from './BasePage'
 
 export class CheckoutPage extends BasePage {
-  private inputEmail = this.page.locator('#email')
-  private inputName = this.page.locator('#billingName')
-  private btnSubscribe = this.page.locator(
-    'button:has-text("Finalizar compra"), button:has-text("Subscribe"), [data-testid="btn-finalizar"], [data-testid="btn-subscribe"]',
-  )
-  private stripeTotalAmount = this.page.locator(
-    '.Checkout-totalAmount, [data-testid="total-amount-text"]',
-  )
-
-  // Selector del IFRAME de Stripe (el contenedor)
-  private stripeFrame = this.page.frameLocator(
-    'iframe[title*="Secure card payment input frame"]',
-  )
+  private inputEmail = this.page.locator('input#email')
+  private inputName = this.page.locator('input#billingName')
   private stripeErrorMessage = this.page.locator(
-    '#error-message, .ErrorMessage, [role="alert"]',
+    '[data-qa="EmptyFieldError"], [role="alert"]',
   )
 
-  // Selectores DENTRO del iframe
-  private inputCardNumber = this.stripeFrame.locator('#cardNumber')
-  private inputCardExpiry = this.stripeFrame.locator('#cardExpiry')
-  private inputCardCvc = this.stripeFrame.locator('#cardCvc')
+  private stripeTotalAmount = this.page.locator('#ProductSummary-totalAmount')
+
+  private inputCardNumber = this.page.locator(
+    '#cardNumber, input[name="cardnumber"]',
+  )
+  private inputCardExpiry = this.page.locator(
+    '#cardExpiry, input[name="exp-date"]',
+  )
+  private inputCardCvc = this.page.locator('#cardCvc, input[name="cvc"]')
+  private btnSubscribe = this.page.locator(
+    'button[data-testid="hosted-payment-submit-button"]',
+  )
+  private btnBack = this.page.locator('[data-testid="business-link"]')
+  private titleCanceled = this.page.locator('h1', {
+    hasText: 'Payment Canceled',
+  })
 
   get precioTotal() {
     return this.stripeTotalAmount
   }
+  get mensajeErrorStripe() {
+    return this.stripeErrorMessage
+  }
+
+  async cancelarPagoEnStripe() {
+    await this.btnBack.waitFor({ state: 'visible', timeout: 10000 })
+    await this.btnBack.click()
+  }
+
+  async canceledPaymentMessage() {
+    await this.titleCanceled.waitFor({ state: 'visible', timeout: 5000 })
+    return await this.titleCanceled.isVisible()
+  }
 
   async llenarFormulario(datos: any) {
+    await this.inputEmail.waitFor({ state: 'visible' })
+
     if (datos.email) await this.inputEmail.fill(datos.email)
     if (datos.name) await this.inputName.fill(datos.name)
 
-    // Nota: Stripe a veces requiere que escribas los números con un pequeño delay
-    if (datos.card_number) await this.inputCardNumber.fill(datos.card_number)
+    if (datos.card_number) {
+      await this.inputCardNumber.click()
+      await this.inputCardNumber.pressSequentially(datos.card_number, {
+        delay: 50,
+      })
+    }
+
     if (datos.expiry) await this.inputCardExpiry.fill(datos.expiry)
     if (datos.cvc) await this.inputCardCvc.fill(datos.cvc)
-  }
-
-  get mensajeErrorStripe() {
-    return this.stripeErrorMessage
   }
 
   async finalizarCompra() {

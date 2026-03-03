@@ -1,5 +1,5 @@
 import "../App.css";
-import { useScrollToSection } from "@hooks/useScrollToSection";
+import useScrollToSection, { handleNavigation } from "@hooks/useScrollToSection";
 import Navbar from "@components/layout/Navbar";
 import Hero from "@components/layout/Hero";
 import SectionContainer from "@components/layout/SectionContainer";
@@ -25,17 +25,22 @@ import {
   SecurityIcon,
   WarningIcon,
 } from "@/assets/icons";
+import AnimatedSection from "@components/animation/AnimatedSection";
+import { motion } from "framer-motion";
+
+
 
 export default function HomePage() {
   useScrollToSection();
-  const { handleCheckoutSuccess } = useCheckout();
+  const { handleCheckout } = useCheckout();
   return (
     <>
       <header>
         <Navbar dataTestId="app-navbar" />
       </header>
-      <main>
+      <main id="home">
         <Hero dataTestId="app-hero"></Hero>
+
         <SectionContainer
           id="app-section-problems"
           title="Starting a U.S.Business Shouldn’t Be this hard"
@@ -46,28 +51,23 @@ export default function HomePage() {
           <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
             {theProblems &&
               theProblems.map((problem, index) => (
-                <Card
-                  key={index}
-                  dataTestId={`app-card-problem-${index}`}
-                  data={problem}
-                  color="blue"
-                ></Card>
+                <AnimatedSection key={problem.id} delay={index * 0.15}>
+                  <Card
+                    key={problem.id}
+                    dataTestId={`app-card-problem-${index}`}
+                    data={problem}
+                    color="blue"
+                  ></Card>
+                </AnimatedSection>
               ))}
           </div>
 
           <Button
             className="mt-14"
             dataTestId="app-button-one-team"
-            onClick={() => {
-              const pricingSection = document.getElementById(
-                "app-section-pricing",
-              );
-              if (pricingSection) {
-                pricingSection.scrollIntoView({ behavior: "smooth" });
-              }
-            }}
+            onClick={handleNavigation}
           >
-            → One team. One checkout. Everything handled{" "}
+            → One team. One checkout. Everything handled
           </Button>
         </SectionContainer>
 
@@ -79,35 +79,37 @@ export default function HomePage() {
           badge={{ text: "OUR SERVICES", icon: SecurityIcon }}
           color="blue"
         >
-          <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
-            {theServices &&
-              theServices.map((service, index) => (
-                <Card
-                  key={index}
-                  dataTestId={`app-card-service-${index}`}
-                  data={service}
-                  color="light"
-                  className="text-center"
-                >
-                  {service.list && (
-                    <ul className="mt-4 list-disc list-inside text-left">
-                      {service.list.map((item, idx) => (
-                        <li
-                          key={idx}
-                          data-testid={`app-card-service-${index}-list-item-${idx}`}
-                          className="list-none inline-flex items-center gap-2 text-sm"
-                        >
-                          <span>
-                            <CheckIcon className="fill-secondary" />
-                          </span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </Card>
-              ))}
-          </div>
+          <AnimatedSection>
+            <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
+              {theServices &&
+                theServices.map((service, index) => (
+                  <Card
+                    key={service.id}
+                    dataTestId={`app-card-service-${index}`}
+                    data={service}
+                    color="light"
+                    className="text-center"
+                  >
+                    {service.list && (
+                      <ul className="mt-4 list-disc list-inside text-left">
+                        {service.list.map((item, idx) => (
+                          <li
+                            key={idx}
+                            data-testid={`app-card-service-${index}-list-item-${idx}`}
+                            className="list-none inline-flex items-center gap-2 text-sm"
+                          >
+                            <span>
+                              <CheckIcon className="fill-secondary" />
+                            </span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </Card>
+                ))}
+            </div>
+          </AnimatedSection>
         </SectionContainer>
 
         <SectionContainer
@@ -121,18 +123,20 @@ export default function HomePage() {
           <div className="flex flex-row gap-6 justify-center mt-10 flex-wrap">
             {threeSteps &&
               threeSteps.map((step, index) => (
-                <div key={index} className="relative">
-                  <span className="mx-auto w-16 h-16 rounded-full border-4 border-secondary text-white flex items-center justify-center text-2xl font-light tracking-widest">
-                    0{index + 1}
-                  </span>
-                  <Card
-                    key={index}
-                    dataTestId={`app-card-step-${index}`}
-                    data={step}
-                    color="transparent"
-                    className="text-center"
-                  ></Card>
-                </div>
+                <AnimatedSection key={step.id} delay={index * 0.15}>
+                  <div key={step.id} className="relative">
+                    <span className="mx-auto w-16 h-16 rounded-full border-4 border-secondary text-white flex items-center justify-center text-2xl font-light tracking-widest">
+                      0{index + 1}
+                    </span>
+                    <Card
+                      key={step.id}
+                      dataTestId={`app-card-step-${index}`}
+                      data={step}
+                      color="transparent"
+                      className="text-center"
+                    ></Card>
+                  </div>
+                </AnimatedSection>
               ))}
           </div>
         </SectionContainer>
@@ -146,13 +150,15 @@ export default function HomePage() {
           <div className="flex  gap-6 justify-center mt-10 flex-wrap">
             {smarterWay &&
               smarterWay.map((item, index) => (
-                <Card
-                  key={index}
-                  dataTestId={`app-card-smarter-way-${index}`}
-                  data={item}
-                  color="blue"
-                  isHorizontal
-                ></Card>
+                <AnimatedSection key={item.id} delay={index * 0.15}>
+                  <Card
+                    key={item.id}
+                    dataTestId={`app-card-smarter-way-${index}`}
+                    data={item}
+                    color="blue"
+                    isHorizontal
+                  ></Card>
+                </AnimatedSection>
               ))}
           </div>
         </SectionContainer>
@@ -168,60 +174,74 @@ export default function HomePage() {
           <div className="flex flex-row gap-6 items-center justify-center mt-10 flex-wrap">
             {pricingPlans &&
               pricingPlans.map((service, index) => (
-                <Card
-                  key={index}
-                  dataTestId={`app-card-pricing-${index}`}
-                  data={service}
-                  color="light"
-                  className={
-                    service.title === "Growth" ? "border-2 border-gold" : ""
-                  }
-                  titleSize="2xl"
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: index * 0.2, duration: 0.6 }}
+                  key={service.id}
                 >
-                  <p className="mt-4 text-left font-bold text-xs text-text">
-                    <span
-                      className="text-2xl text-black"
-                      data-testid="total-amount-text"
-                    >
-                      {service.price?.amount}
-                    </span>{" "}
-                    one-time + <span>${service.price?.PayMonthly}/mo</span>
-                  </p>
-                  <Button
-                    dataTestId={`app-button-pricing-${index}`}
-                    className={`w-full mx-auto mt-4 ${service.title === "Growth" ? "bg-gold hover:bg-gold-hover" : "bg-black hover:bg-gray-800"}`}
-                    onClick={() =>
-                      handleCheckoutSuccess({
-                        amount: service.price?.amount || 0,
-                        plan: service.title,
-                      })
+                  <Card
+                    dataTestId={`app-card-pricing-${index}`}
+                    data={service}
+                    color="light"
+                    className={
+                      service.title === "Growth"
+                        ? "border-2 border-gold gold-aura"
+                        : ""
                     }
+                    titleSize="2xl"
                   >
-                    Start Now →
-                  </Button>
-                  {service.list && (
-                    <ul className="mt-4 text-left list-disc list-inside flex flex-col gap-2 mx-auto w-fit">
-                      {service.list.map((item, idx) => (
-                        <li
-                          key={idx}
-                          data-testid={`app-card-pricing-${index}-list-item-${idx}`}
-                          className="list-none inline-flex items-center gap-2 text-sm"
-                        >
-                          <span>
-                            <CheckIcon
-                              className={
-                                service.title === "Growth"
-                                  ? "fill-gold"
-                                  : "fill-secondary"
-                              }
-                            />
-                          </span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </Card>
+                    {service.title === "Growth" && (
+                      <div className="particles-container">
+                        {Array.from({ length: 12 }).map((_, i) => (
+                          <span key={i} className="gold-particle" />
+                        ))}
+                      </div>
+                    )}
+                    <p className="mt-4 text-left font-bold text-xs text-text">
+                      <span
+                        className="text-2xl text-black"
+                        data-testid="total-amount-text"
+                      >
+                        {service.price?.amount}
+                      </span>{" "}
+                      one-time + <span>${service.price?.PayMonthly}/mo</span>
+                    </p>
+                    <Button
+                      dataTestId={`app-button-pricing-${index}`}
+                      className={`w-full mx-auto mt-4 ${service.title === "Growth" ? "bg-gold hover:bg-gold-hover" : "bg-black hover:bg-gray-800"}`}
+                      onClick={() =>
+                        handleCheckout({
+                          plan: service.productId || "",
+                        })
+                      }
+                    >
+                      Start Now →
+                    </Button>
+                    {service.list && (
+                      <ul className="mt-4 text-left list-disc list-inside flex flex-col gap-2 mx-auto w-fit">
+                        {service.list.map((item, idx) => (
+                          <li
+                            key={idx}
+                            data-testid={`app-card-pricing-${index}-list-item-${idx}`}
+                            className="list-none inline-flex items-center gap-2 text-sm"
+                          >
+                            <span>
+                              <CheckIcon
+                                className={
+                                  service.title === "Growth"
+                                    ? "fill-gold"
+                                    : "fill-secondary"
+                                }
+                              />
+                            </span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </Card>
+                </motion.div>
               ))}
           </div>
         </SectionContainer>

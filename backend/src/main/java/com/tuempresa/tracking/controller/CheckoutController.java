@@ -54,6 +54,7 @@ public class CheckoutController {
             // 5. Creación de la sesión en Stripe
             Session session = Session.create(paramsBuilder.build());
 
+
             // 6. PERSISTENCIA EN NEON DB (SRE Tracking)
             Transaction transaction = new Transaction();
             transaction.setStripeSessionId(session.getId());
@@ -78,6 +79,7 @@ public class CheckoutController {
         }
     }
 
+
     private void addPlanItems(SessionCreateParams.Builder builder, String productId) {
         if ("STARTER".equalsIgnoreCase(productId)) {
             // Setup Fee ($499 puntual) + Monthly Fee ($150 mensual)
@@ -91,6 +93,26 @@ public class CheckoutController {
             throw new IllegalArgumentException("Plan no reconocido: " + productId);
         }
     }
+
+    @GetMapping("/session/{sessionId}")
+    public ResponseEntity<?> getSession(@PathVariable String sessionId) throws Exception {
+        Stripe.apiKey = stripeApiKey;
+
+        Session session = Session.retrieve(sessionId);
+
+        Map<String, Object> response = Map.of(
+                "id", session.getId(),
+                "email", session.getCustomerDetails() != null
+                        ? session.getCustomerDetails().getEmail()
+                        : null,
+                "amount", session.getAmountTotal() != null
+                        ? session.getAmountTotal() / 100.0
+                        : 0.0,
+                "status", session.getPaymentStatus()
+        );
+
+        return ResponseEntity.ok(response);
+    }    
 
     private SessionCreateParams.LineItem createItem(String priceId) {
         return SessionCreateParams.LineItem.builder()
