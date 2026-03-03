@@ -146,7 +146,7 @@ export const smarterWay: ICard[] = [
 export const pricingPlans: Service[] = [
   {
     id: "1",
-    productId: "basic_plan",
+    productId: "STARTER",
     title: "Starter",
     description: "Perfect for solo founders launching their first U.S. entity.",
     price: {
@@ -165,7 +165,7 @@ export const pricingPlans: Service[] = [
   },
   {
     id: "2",
-    productId: "pro_plan",
+    productId: "GROWTH",
     title: "Growth",
     description:
       "For scaling businesses that need full-service tax & compliance.",
