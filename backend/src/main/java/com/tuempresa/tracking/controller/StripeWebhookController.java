@@ -49,7 +49,6 @@ public class StripeWebhookController {
             trackingService.routeEvent(event);
 
             if ("checkout.session.completed".equals(event.getType())) {
-<<<<<<< Updated upstream
                 System.out.println(">>> [SRE INFO] 🎯 Venta confirmada. Iniciando pipeline de atribución...");
 
                 Session session = (Session) event.getDataObjectDeserializer().deserializeUnsafe();
@@ -89,12 +88,10 @@ public class StripeWebhookController {
                     System.err.println(">>> [SRE ERROR] No se pudo deserializar la sesión de Stripe.");
                     return ResponseEntity.badRequest().build();
                 }
-=======
                 handleSuccess(event);
             } 
             else if ("checkout.session.async_payment_failed".equals(event.getType())) {
                 handleFailure(event);
->>>>>>> Stashed changes
             }
             
             return ResponseEntity.ok("ACK");
