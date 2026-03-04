@@ -1,0 +1,17 @@
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\config\AppConfig.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\config\GoogleAdsConfig.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\config\TestRunner.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\controller\AdminController.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\controller\StripeWebhookController.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\dto\MetaEventDTO.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\dto\PipedriveDealDTO.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\GoogleAdsTest.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\model\StripeEventRecord.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\repository\StripeEventRepository.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\service\integration\CRMIntegrationService.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\service\integration\DataSeederService.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\service\integration\GoogleAdsService.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\service\integration\MetaCapiService.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\service\integration\PipedriveCRMServiceImpl.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\tracking\service\TrackingRouterService.java
+C:\Users\User\Documents\stripe-tracking-mvp\src\main\java\com\tuempresa\TrackingApplication.java

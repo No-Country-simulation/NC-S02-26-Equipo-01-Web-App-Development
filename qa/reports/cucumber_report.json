@@ -1,0 +1,662 @@
+[
+  {
+    "description": "  Como usuario quiero completar el checkout \n  Para efectuar una compra del servicio",
+    "elements": [
+      {
+        "description": "",
+        "id": "realizar-compra-del-servicio;efectuar-compra-del-servicio-solicitado-con-todos-los-campos-ingresados",
+        "keyword": "Scenario",
+        "line": 12,
+        "name": "Efectuar compra del servicio solicitado con todos los campos ingresados",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 2922146899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3437819199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 234656699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "el usuario ha seleccionado un servicio de \"899\"",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 95527900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "se valida que el usuario se encuentra en la pasarela de pago",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2414458900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 13,
+            "name": "el precio total a pagar \"15,00 US$\" sea igual al servicio solicitado",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:24"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2972738100
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "email",
+                      "card_number",
+                      "expiry",
+                      "cvc",
+                      "name"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "test@example.com",
+                      "4242424242424242",
+                      "12/26",
+                      "123",
+                      "Juan Perez"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "When ",
+            "line": 14,
+            "name": "el usuario rellena el formulario con los siguientes datos:",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:32"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1580796200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "hace click en el botón \"Finalizar compra\"",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:41"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 100169599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 18,
+            "name": "el usuario es redirigido a la página de pago exitoso",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:49"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3945735499
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 17621999
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 11
+          },
+          {
+            "name": "@HU3",
+            "line": 11
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "realizar-compra-del-servicio;cancelación-voluntaria-del-pago",
+        "keyword": "Scenario",
+        "line": 21,
+        "name": "Cancelación voluntaria del pago",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1206720799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 386503600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 158635200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "el usuario ha seleccionado un servicio de \"899\"",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 67043400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "se valida que el usuario se encuentra en la pasarela de pago",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1833598300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 22,
+            "name": "el usuario hace click en el botón para volver o cancela la transacción",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:104"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4580377000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 23,
+            "name": "el sistema debe redirigirlo a la página de cancel de la landing",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:112"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 34942699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 24,
+            "name": "debe mostrar un mensaje informando que el pago no se procesó",
+            "match": {
+              "location": "step_definitions\\checkout_steps.ts:119"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 163771699
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 12843300
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 20
+          },
+          {
+            "name": "@Negative",
+            "line": 20
+          },
+          {
+            "name": "@HU3",
+            "line": 20
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "realizar-compra-del-servicio",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Realizar compra del servicio",
+    "tags": [],
+    "uri": "features\\checkout.feature"
+  },
+  {
+    "description": "  Como usuario quiero seleccionar un servicio\n  Para iniciar el proceso de compra",
+    "elements": [
+      {
+        "description": "",
+        "id": "selección-de-servicio;elegir-un-servicio-para-ingresar-al-proceso-de-pago",
+        "keyword": "Scenario",
+        "line": 10,
+        "name": "Elegir un servicio para ingresar al proceso de pago",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1922338000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 408019699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 276199599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 11,
+            "name": "el usuario navega hasta la sección de planes",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 111556499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 12,
+            "name": "se deben visualizar los precios de los servicios",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 20037199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 13,
+            "name": "el usuario hace click en el botón \"Start Now\" del plan \"899\"",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 56808799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 14,
+            "name": "el usuario es redirigido a la pasarela de pago",
+            "match": {
+              "location": "step_definitions\\service_selection_steps.ts:31"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2773564099
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 29944199
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 9
+          },
+          {
+            "name": "@HU2",
+            "line": 9
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "selección-de-servicio",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Selección de servicio",
+    "tags": [],
+    "uri": "features\\service_selection.feature"
+  },
+  {
+    "description": "  Como usuario interesado en servicios legales\n  Quiero navegar por la landing y completar el checkout\n  Para adquirir un servicio de Incorporation o Tax",
+    "elements": [
+      {
+        "description": "",
+        "id": "interfaz-de-usuario-y-checkout;carga-de-landing-para-conocer-los-servicios-ofrecidos",
+        "keyword": "Scenario",
+        "line": 11,
+        "name": "Carga de landing para conocer los servicios ofrecidos",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 4237239199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 7,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 365377800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 141040000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 12,
+            "name": "el usuario visualiza las opciones del menú",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 25227900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 13,
+            "name": "el usuario hace click en la opción \"Services\" del menú",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 48945299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 14,
+            "name": "se deben visualizar los detalles de \"Incorporation\", \"Tax\" y \"Bookkeeping\"",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 37144899
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 10933700
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 10
+          },
+          {
+            "name": "@HU1",
+            "line": 10
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "interfaz-de-usuario-y-checkout;visualización-correcta-en-dispositivos-móviles",
+        "keyword": "Scenario",
+        "line": 17,
+        "name": "Visualización correcta en dispositivos móviles",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1637826600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 7,
+            "name": "que el usuario navega a la landing principal con \"?gclid=g_123&fbclid=f_456\"",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 354979699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "los datos de tráfico se almacenan correctamente en el sistema",
+            "match": {
+              "location": "step_definitions\\common_steps.ts:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 166685400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 18,
+            "name": "el usuario accede desde un dispositivo \"iPhone 13\"",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 249252999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "el usuario hace click en el menú hamburguesa",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:54"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 107942199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "el usuario hace click en la opción \"Services\" del menú",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 94424200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 21,
+            "name": "los servicios deben estar apilados verticalmente y ser legibles",
+            "match": {
+              "location": "step_definitions\\services_steps.ts:62"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 77363499
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 10582899
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@UI",
+            "line": 16
+          },
+          {
+            "name": "@HU1",
+            "line": 16
+          },
+          {
+            "name": "@Responsive",
+            "line": 16
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "interfaz-de-usuario-y-checkout",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Interfaz de Usuario y Checkout",
+    "tags": [],
+    "uri": "features\\services.feature"
+  }
+]

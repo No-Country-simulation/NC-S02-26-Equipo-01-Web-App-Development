@@ -1,0 +1,262 @@
+import {
+  ApartmentIcon,
+  BookIcon,
+  CalculateIcon,
+  FileIcon,
+  FinanceIcon,
+  GroupIcon,
+  ManufacturingIcon,
+  MoneyIcon,
+  UnknownIcon,
+  VerifiedIcon,
+  WwwIcon,
+} from "@assets/icons";
+import AvatarMG from "@assets/img/avatar_MG.png";
+import AvatarAR from "@assets/img/avatar_AR.png";
+import AvatarLK from "@assets/img/avatar_LK.png";
+import type {
+  Problem,
+  Service,
+  ICard,
+  FAQItemProps,
+  Testimonial,
+} from "../types";
+
+export const theProblems: Problem[] = [
+  {
+    id: "1",
+    title: "Complex Legal Requirements",
+    description:
+      "U.S. tax law and compliance rules are difficult to navigate — especially for founders based outside the United States.",
+    icon: GroupIcon,
+  },
+  {
+    id: "2",
+    title: "Too Many Providers",
+    description:
+      "Juggling multiple vendors for incorporation, taxes, and bookkeeping leads to confusion, miscommunication, and missed deadlines.",
+    icon: UnknownIcon,
+  },
+  {
+    id: "3",
+    title: "Hidden Fees & Surprises",
+    description:
+      "Unclear pricing from multiple services means unexpected costs that eat into your business budget every quarter.",
+    icon: MoneyIcon,
+  },
+];
+
+export const theServices: Service[] = [
+  {
+    id: "1",
+    title: "Incorporation",
+    description: "LLC & C-Corp Formation",
+    icon: ApartmentIcon,
+    list: [
+      "Entity selection guidance",
+      "State filing & registration",
+      "EIN (Tax ID) obtainment",
+      "Registered agent service",
+      "Operating agreement drafting",
+    ],
+  },
+  {
+    id: "2",
+    title: "Tax & Compliance",
+    description: "Stay Compliant Year-Round",
+    icon: CalculateIcon,
+    list: [
+      "Federal & state tax filing",
+      "Annual report preparation",
+      "Sales tax registration",
+      "ITIN assistance for non-residents",
+      "Quarterly estimated taxes",
+    ],
+  },
+  {
+    id: "3",
+    title: "Monthly Bookkeeping",
+    description: "Clean Books, Always",
+    icon: BookIcon,
+    list: [
+      "Monthly reconciliation",
+      "Financial statements",
+      "Expense categorization",
+      "Dedicated bookkeeper",
+      "Real-time dashboard access",
+    ],
+  },
+];
+
+export const threeSteps = [
+  {
+    id: "1",
+    title: "Choose Your Entity",
+    description:
+      "Select between an LLC or C-Corp based on your business goals. Our team will guide you through the best option for your situation.",
+    icon: FileIcon,
+  },
+  {
+    id: "2",
+    title: "We Incorporate & Set Up Compliance",
+    description:
+      "We handle all the paperwork — state filing, EIN, registered agent, operating agreements, and initial compliance setup.",
+    icon: ManufacturingIcon,
+  },
+  {
+    id: "3",
+    title: "Ongoing Tax & Bookkeeping Support",
+    description:
+      "From day one, your books are maintained and taxes are filed on time. Focus on growth while we handle the numbers.",
+    icon: FinanceIcon,
+  },
+];
+
+export const smarterWay: ICard[] = [
+  {
+    id: "1",
+    title: "Complex Legal Requirements",
+    description:
+      "U.S. tax law and compliance rules are difficult to navigate — especially for founders based outside the United States.",
+    icon: FileIcon,
+  },
+  {
+    id: "2",
+    title: "Complex Legal Requirements",
+    description:
+      "U.S. tax law and compliance rules are difficult to navigate — especially for founders based outside the United States.",
+    icon: GroupIcon,
+  },
+  {
+    id: "3",
+    title: "Complex Legal Requirements",
+    description:
+      "U.S. tax law and compliance rules are difficult to navigate — especially for founders based outside the United States.",
+    icon: BookIcon,
+  },
+  {
+    id: "4",
+    title: "Complex Legal Requirements",
+    description:
+      "U.S. tax law and compliance rules are difficult to navigate — especially for founders based outside the United States.",
+    icon: WwwIcon,
+  },
+];
+
+export const pricingPlans: Service[] = [
+  {
+    id: "1",
+    productId: "STARTER",
+    title: "Starter",
+    description: "Perfect for solo founders launching their first U.S. entity.",
+    price: {
+      amount: 499,
+      PayMonthly: 150,
+    },
+    list: [
+      "LLC formation in any state",
+      "EIN obtainment",
+      "Registered agent (1 year)",
+      "Operating agreement",
+      "Basic tax filing (annual)",
+      "Monthly bookkeeping",
+      "Email support",
+    ],
+  },
+  {
+    id: "2",
+    productId: "GROWTH",
+    title: "Growth",
+    description:
+      "For scaling businesses that need full-service tax & compliance.",
+    price: {
+      amount: 899,
+      PayMonthly: 299,
+    },
+    badged: {
+      text: "Most Popular",
+      color: "gold",
+      icon: VerifiedIcon,
+    },
+    list: [
+      "LLC or C-Corp formation",
+      "EIN obtainment",
+      "Registered agent (1 year)",
+      "Operating agreement",
+      "Federal + state tax filing",
+      "Quarterly estimated taxes",
+      "Monthly bookkeeping + reporting",
+      "Sales tax registration",
+      "ITIN assistance",
+      "Dedicated account manager",
+      "Priority support ",
+    ],
+  },
+];
+
+export const faqList: FAQItemProps[] = [
+  {
+    id: "1",
+    question: "Who is this service for?",
+    answer:
+      "This service is for international founders who want to start and operate a U.S. business without the complexity and legal challenges of navigating U.S. tax and compliance laws on their own.",
+  },
+
+  {
+    id: "2",
+    question: "Do I need to live in the U.S. to form a company?",
+    answer:
+      "No, you do not need to live in the U.S. to form a U.S. company. Our service is specifically designed for international founders.",
+  },
+  {
+    id: "3",
+    question: "How long does incorporation take?",
+    answer:
+      "Incorporation typically takes 1-2 business days once all required documents are submitted.",
+  },
+  {
+    id: "4",
+    question: "What's the difference between an LLC and a C-Corp?",
+    answer:
+      "An LLC (Limited Liability Company) is a simpler structure with fewer formalities and more flexibility in management and taxation. A C-Corp (Corporation) is a more complex structure that offers greater scalability and is often preferred by investors.",
+  },
+  {
+    id: "5",
+    question: "Are there any hidden fees?",
+    answer:
+      "No, there are no hidden fees. Our pricing is transparent and includes all costs upfront.",
+  },
+  {
+    id: "6",
+    question: "Can I cancel the monthly service?",
+    answer:
+      "Yes, you can cancel the monthly service at any time. We offer a 30-day money-back guarantee.",
+  },
+];
+
+export const testimonials: Testimonial[] = [
+  {
+    id: "1",
+    name: "Maria G.",
+    title: "E-commerce Founder - México",
+    quote:
+      "CorpPath made it incredibly easy to form my LLC from Mexico. I didn't have to worry about a single compliance issue — they handled everything.",
+    avatar: AvatarMG,
+  },
+  {
+    id: "2",
+    name: "Ahmed R.",
+    title: "SaaS Founder — UAE",
+    quote:
+      "I tried doing it myself and got overwhelmed. CorpPath's team set up my C-Corp, handled my ITIN, and now manages my books monthly. It's seamless.",
+    avatar: AvatarAR,
+  },
+  {
+    id: "3",
+    name: "Lena K.",
+    title: "Freelance Consultant — Germany",
+    quote:
+      "The transparent pricing was a huge plus. No hidden fees, no surprises. I know exactly what I'm paying for and my books are always clean.",
+    avatar: AvatarLK,
+  },
+];

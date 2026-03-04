@@ -1,0 +1,17 @@
+@theme {
+  --color-primary: #0C3F86;
+  --color-primary-hover: #09326C;
+
+  
+  --color-secondary: #F07F15 ;
+  --color-secondary-hover: #B86111;
+  --color-secondary-active: #61dafbaa;
+  
+  --color-accent: #FB1313;
+  --color-gold: #CBAC64; 
+  --color-gold-hover: #A68B4C;
+  --color-light-blue: #AED7FF;
+  --color-light-blue-25: #AED7FF40;
+  --color-background: #ffffff;
+  --color-text: #213547;
+}

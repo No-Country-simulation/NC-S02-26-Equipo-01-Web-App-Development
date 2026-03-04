@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mock Landing Page</title>
+    <style>
+      .plan-card {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav data-testid="main-nav">
+      <button data-testid="nav-services">Servicios</button>
+    </nav>
+
+    <section data-testid="services-section">
+      <h2>Servicios</h2>
+      <ul>
+        <li>Incorporation</li>
+        <li>Tax</li>
+        <li>Bookkeeping</li>
+      </ul>
+    </section>
+
+    <section
+      data-testid="pricing-section"
+      style="margin-top: 500px"
+    >
+      <h2>Nuestros Planes</h2>
+
+      <div
+        class="plan-card"
+        data-testid="plan-card"
+      >
+        <h3>Plan Básico</h3>
+        <div data-testid="price-amount">$499</div>
+        <button
+          data-testid="btn-start"
+          class="btn-buy"
+          data-price="$499"
+        >
+          Start Now
+        </button>
+      </div>
+
+      <div
+        class="plan-card"
+        data-testid="plan-card"
+      >
+        <h3>Plan Error</h3>
+        <div data-testid="price-amount"></div>
+        <button
+          data-testid="btn-start"
+          class="btn-buy"
+        >
+          Start Now
+        </button>
+        <div
+          data-testid="price-error"
+          style="display: none; color: red"
+        >
+          Precio no disponible, contacte a soporte
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // 1. Lógica de Tracking (Simular lo que haría React/Google Analytics)
+      window.onload = function () {
+        // Leemos los parámetros de la URL (?gclid=123...)
+        const params = new URLSearchParams(window.location.search)
+
+        const gclid = params.get('gclid')
+        const fbclid = params.get('fbclid')
+
+        // Si existen, los guardamos en el navegador
+        if (gclid) {
+          localStorage.setItem('gclid', gclid)
+          console.log('Tracking GCLID guardado:', gclid)
+        }
+        if (fbclid) {
+          localStorage.setItem('fbclid', fbclid)
+          console.log('Tracking FBCLID guardado:', fbclid)
+        }
+      }
+
+      // 2. Lógica de Navegación al Checkout
+      const buttons = document.querySelectorAll('.btn-buy')
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', function () {
+          const price = this.getAttribute('data-price')
+
+          if (price) {
+            // Si el plan es válido, vamos al checkout mock
+            window.location.href = 'checkout.html'
+          } else {
+            // Si es el plan de error
+            document.querySelector(
+              '[data-testid="price-error"]',
+            ).style.display = 'block'
+          }
+        })
+      })
+    </script>
+  </body>
+</html>

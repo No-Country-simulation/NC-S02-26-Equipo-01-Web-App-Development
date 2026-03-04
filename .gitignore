@@ -7,3 +7,4 @@ target/
 # Secretos locales
 .env
 credenciales_tracking.txt
+
