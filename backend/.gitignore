@@ -4,9 +4,7 @@ target/
 *.zip
 .idea/
 .mvn/
-.vscode/
-node_modules
 # Secretos locales
 .env
-
+credenciales_tracking.txt
 
