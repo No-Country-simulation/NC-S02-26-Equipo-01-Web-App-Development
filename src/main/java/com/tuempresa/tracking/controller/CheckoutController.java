@@ -34,20 +34,15 @@ public class CheckoutController {
             if (request.productId() == null || request.productId().isBlank()) {
                 return ResponseEntity.badRequest().body(Map.of("error", "productId is required"));
             }
-            if (request.email() == null || request.email().isBlank()) {
-                return ResponseEntity.badRequest().body(Map.of("error", "email is required"));
-            }
 
             // 2. Configuración de la sesión
             SessionCreateParams.Builder paramsBuilder = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.SUBSCRIPTION) 
-                .setCustomerEmail(request.email()) // <-- CRÍTICO: Para que Stripe reconozca al usuario
                 .setSuccessUrl(request.successUrl() + "?session_id={CHECKOUT_SESSION_ID}")
                 .setCancelUrl(request.cancelUrl());
 
             // 3. Metadata para el Webhook (Google Ads + Meta + Email)
             paramsBuilder.putMetadata("productId", request.productId());
-            paramsBuilder.putMetadata("email", request.email()); // Para recuperar en el Webhook
             putIfValid(paramsBuilder, "gclid", request.gclid());
             putIfValid(paramsBuilder, "fbclid", request.fbclid());
             putIfValid(paramsBuilder, "campaign", request.campaign());
@@ -62,7 +57,6 @@ public class CheckoutController {
             // 6. PERSISTENCIA EN NEON DB (Aseguramos Email y FBCLID)
             Transaction transaction = new Transaction();
             transaction.setStripeSessionId(session.getId());
-            transaction.setEmail(request.email()); // Guardamos el mail
             transaction.setPlan(request.productId());
             transaction.setGclid(request.gclid());
             transaction.setFbclid(request.fbclid()); // Guardamos el FBCLID
@@ -74,7 +68,7 @@ public class CheckoutController {
             response.put("sessionId", session.getId());
             response.put("url", session.getUrl()); 
             
-            System.out.println(">>> [SRE SUCCESS] Checkout " + request.productId() + " generado para " + request.email());
+            System.out.println(">>> [SRE SUCCESS] Checkout " + request.productId() + " generado para ");
             return ResponseEntity.ok(response);
 
         } catch (IllegalArgumentException e) {
@@ -98,6 +92,26 @@ public class CheckoutController {
             throw new IllegalArgumentException("Plan no reconocido: " + productId);
         }
     }
+
+    @GetMapping("/session/{sessionId}")
+    public ResponseEntity<?> getSession(@PathVariable String sessionId) throws Exception {
+        Stripe.apiKey = stripeApiKey;
+
+        Session session = Session.retrieve(sessionId);
+
+        Map<String, Object> response = Map.of(
+                "id", session.getId(),
+                "email", session.getCustomerDetails() != null
+                        ? session.getCustomerDetails().getEmail()
+                        : null,
+                "amount", session.getAmountTotal() != null
+                        ? session.getAmountTotal() / 100.0
+                        : 0.0,
+                "status", session.getPaymentStatus()
+        );
+
+        return ResponseEntity.ok(response);
+    }   
 
     private SessionCreateParams.LineItem createItem(String priceId) {
         return SessionCreateParams.LineItem.builder()

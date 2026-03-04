@@ -14,9 +14,8 @@ public class Transaction {
 
     private String stripeSessionId;
     private String plan;
-    private String email;  // Asegurate que este campo esté
     private String gclid;
-    private String fbclid; // <--- ESTO ES LO QUE FALTA
+    private String fbclid; 
     private String status;
     
     private LocalDateTime createdAt;
@@ -29,5 +28,4 @@ public class Transaction {
 
     // Métodos explícitos por si Lombok falla en tu IDE
     public void setFbclid(String fbclid) { this.fbclid = fbclid; }
-    public void setEmail(String email) { this.email = email; }
 }

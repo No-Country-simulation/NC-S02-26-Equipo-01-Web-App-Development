@@ -1,6 +1,0 @@
-target/
-.git/
-.mvn/
-mvnw
-mvnw.cmd
-Dockerfile
