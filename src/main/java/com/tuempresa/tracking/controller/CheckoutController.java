@@ -37,7 +37,7 @@ public class CheckoutController {
 
             // 2. Configuración de la sesión
             SessionCreateParams.Builder paramsBuilder = SessionCreateParams.builder()
-                .setMode(SessionCreateParams.Mode.SUBSCRIPTION) 
+                .setMode(SessionCreateParams.Mode.SUBSCRIPTION)
                 .setSuccessUrl(request.successUrl() + "?session_id={CHECKOUT_SESSION_ID}")
                 .setCancelUrl(request.cancelUrl());
 
@@ -67,8 +67,8 @@ public class CheckoutController {
             Map<String, String> response = new HashMap<>();
             response.put("sessionId", session.getId());
             response.put("url", session.getUrl()); 
-            
-            System.out.println(">>> [SRE SUCCESS] Checkout " + request.productId() + " generado para ");
+
+            System.out.println(">>> [SRE SUCCESS] Checkout " + request.productId() + " generado para " + session.getId());
             return ResponseEntity.ok(response);
 
         } catch (IllegalArgumentException e) {
@@ -112,6 +112,7 @@ public class CheckoutController {
 
         return ResponseEntity.ok(response);
     }   
+
 
     private SessionCreateParams.LineItem createItem(String priceId) {
         return SessionCreateParams.LineItem.builder()
