@@ -1,2 +1,10 @@
+target/
+*.class
+*.exe
+*.zip
+.idea/
+.mvn/
+# Secretos locales
 .env
-.vscode
+credenciales_tracking.txt
+
