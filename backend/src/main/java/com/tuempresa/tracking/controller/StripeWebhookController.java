@@ -1,140 +1,93 @@
 package com.tuempresa.tracking.controller;
 
-import com.stripe.exception.EventDataObjectDeserializationException;
 import com.stripe.model.Event;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
+import com.tuempresa.tracking.model.Transaction;
 import com.tuempresa.tracking.repository.TransactionRepository;
-import com.tuempresa.tracking.service.TrackingRouterService;
-import com.tuempresa.tracking.service.integration.CRMIntegrationService;
-import com.tuempresa.tracking.service.integration.MetaCapiService; 
 import com.tuempresa.tracking.service.integration.GoogleAdsService;
+import com.tuempresa.tracking.service.integration.MetaCapiService;
+import com.tuempresa.tracking.service.integration.PipedriveCRMServiceImpl; // Importación clave
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Map;
+
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/webhooks")
+@RequestMapping("/api/v1/stripe")
 public class StripeWebhookController {
-
-    private final TrackingRouterService trackingService;
-    private final CRMIntegrationService crmService;
-    private final MetaCapiService metaCapiService; 
-    private final GoogleAdsService googleAdsService;
-    private final TransactionRepository transactionRepository;
 
     @Value("${stripe.webhook.secret}")
     private String endpointSecret;
 
-    public StripeWebhookController(TrackingRouterService trackingService, 
-                                   CRMIntegrationService crmService,
-                                   MetaCapiService metaCapiService,
-                                   GoogleAdsService googleAdsService,
-                                   TransactionRepository transactionRepository) {
-        this.trackingService = trackingService;
-        this.crmService = crmService;
-        this.metaCapiService = metaCapiService;
-        this.googleAdsService = googleAdsService;
-        this.transactionRepository = transactionRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
+
+    @Autowired
+    private GoogleAdsService googleAdsService;
+
+    @Autowired
+    private MetaCapiService metaCapiService;
+
+    @Autowired
+    private PipedriveCRMServiceImpl pipedriveService; // Inyectamos el servicio que me pasaste
+
+    @PostMapping("/webhook")
+    public ResponseEntity<String> handleStripeWebhook(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
+        Event event;
+        try {
+            event = Webhook.constructEvent(payload, sigHeader, endpointSecret);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Webhook Error: " + e.getMessage());
+        }
+
+        if ("checkout.session.completed".equals(event.getType())) {
+            Session session = (Session) event.getDataObjectDeserializer().getObject().orElse(null);
+            if (session != null) {
+                handleSuccessfulPayment(session);
+            }
+        }
+        return ResponseEntity.ok("Success");
     }
 
-    @PostMapping("/stripe")
-    public ResponseEntity<String> handleStripeWebhook(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
-        try {
-            Event event = Webhook.constructEvent(payload, sigHeader, endpointSecret);
-            System.out.println(">>> [SRE MONITOR] Señal recibida: " + event.getType());
+    private void handleSuccessfulPayment(Session session) {
+        String sessionId = session.getId();
+        Optional<Transaction> transactionOpt = transactionRepository.findByStripeSessionId(sessionId);
 
-            trackingService.routeEvent(event);
+        if (transactionOpt.isPresent()) {
+            Transaction transaction = transactionOpt.get();
+            transaction.setStatus("PAID");
+            transactionRepository.save(transaction);
 
-            if ("checkout.session.completed".equals(event.getType())) {
-                System.out.println(">>> [SRE INFO] 🎯 Venta confirmada. Iniciando pipeline de atribución...");
+            // 1. Extraemos datos
+            String gclid = session.getMetadata().get("gclid");
+            String fbclid = session.getMetadata().get("fbclid");
+            String customerEmail = session.getCustomerDetails() != null ? session.getCustomerDetails().getEmail() : "no-email@test.com";
+            double amount = session.getAmountTotal() / 100.0;
 
-                Session session = (Session) event.getDataObjectDeserializer().deserializeUnsafe();
+            // 2. DISPARO A GOOGLE ADS
+            if (gclid != null && !gclid.isBlank()) {
+                googleAdsService.sendOfflineConversion(gclid, amount);
+                System.out.println(">>> [ADS SUCCESS] Enviado: " + gclid);
+            }
 
-                if (session != null) {
-                    // Extraemos metadata inyectada por nuestro CheckoutController
-                    Map<String, String> metadata = session.getMetadata();
-                    String email = (session.getCustomerDetails() != null) ? session.getCustomerDetails().getEmail() : "cliente_anonimo@test.com";
-                    double amount = (session.getAmountTotal() != null) ? session.getAmountTotal() / 100.0 : 0.0;
+            // 3. DISPARO A META CAPI
+            if (fbclid != null && !fbclid.isBlank()) {
+                metaCapiService.sendPurchaseEvent(customerEmail, amount, fbclid);
+                System.out.println(">>> [META SUCCESS] Enviado: " + fbclid);
+            }
 
-                    System.out.println(">>> [SRE DEBUG] Procesando: " + email + " | Monto: $" + amount);
-                    
-                    // --- ORQUESTACIÓN BACKEND-ONLY ---
-                    
-                    // A. Registro en Pipedrive
-                    crmService.registrarVenta(email, amount);
-
-                    // B. Atribución en Meta CAPI
-                    if (metadata != null) {
-                        String fbclid = metadata.get("fbclid");
-
-                        if (email != null){
-                            metaCapiService.sendPurchaseEvent(email, amount, fbclid);
-                        }
-                    }
-
-                    // C. Atribución en Google Ads (Usando el GCLID de la metadata)
-                    if (metadata != null && metadata.containsKey("gclid")) {
-                        String gclid = metadata.get("gclid");
-                        System.out.println(">>> [SRE SUCCESS] GCLID detectado: " + gclid + ". Enviando a Google Ads...");
-                        googleAdsService.sendOfflineConversion(gclid, amount);
-                    } else {
-                        System.out.println(">>> [SRE WARN] No se detectó GCLID en la metadata de la sesión.");
-                    }
-
-                } else {
-                    System.err.println(">>> [SRE ERROR] No se pudo deserializar la sesión de Stripe.");
-                    return ResponseEntity.badRequest().build();
-                }
-                handleSuccess(event);
-            } 
-            else if ("checkout.session.async_payment_failed".equals(event.getType())) {
-                handleFailure(event);
+            // 4. REGISTRO EN PIPEDRIVE (¡Nuevo!)
+            try {
+                pipedriveService.registrarVenta(customerEmail, amount);
+                System.out.println(">>> [PIPEDRIVE SUCCESS] Venta registrada para: " + customerEmail);
+            } catch (Exception e) {
+                System.err.println(">>> [PIPEDRIVE ERROR] Falló el registro: " + e.getMessage());
             }
             
-            return ResponseEntity.ok("ACK");
-        } catch (Exception e) {
-            System.err.println(">>> [SRE ERROR] Webhook fallido: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            System.out.println(">>> [SRE TOTAL SUCCESS] Ciclo completo para sesión: " + sessionId);
         }
-    }
-
-    // --- AGREGADO EL THROWS AQUÍ ---
-    private void handleSuccess(Event event) throws EventDataObjectDeserializationException {
-        Session session = (Session) event.getDataObjectDeserializer().deserializeUnsafe();
-        if (session == null) return;
-
-        String sessionId = session.getId();
-        String email = (session.getCustomerDetails() != null) ? session.getCustomerDetails().getEmail() : "anonimo";
-        double amount = (session.getAmountTotal() != null) ? session.getAmountTotal() / 100.0 : 0.0;
-
-        transactionRepository.findByStripeSessionId(sessionId).ifPresent(t -> {
-            t.setStatus("PAID");
-            t.setEmail(email);
-            transactionRepository.save(t);
-            System.out.println(">>> [SRE DB] Transacción " + sessionId + " marcada como PAID.");
-        });
-
-        crmService.registrarVenta(email, amount);
-        metaCapiService.sendPurchaseEvent(email, amount);
-
-        Map<String, String> metadata = session.getMetadata();
-        if (metadata != null && metadata.containsKey("gclid")) {
-            googleAdsService.sendOfflineConversion(metadata.get("gclid"), amount);
-        }
-    }
-
-    // --- AGREGADO EL THROWS AQUÍ ---
-    private void handleFailure(Event event) throws EventDataObjectDeserializationException {
-        Session session = (Session) event.getDataObjectDeserializer().deserializeUnsafe();
-        if (session == null) return;
-
-        transactionRepository.findByStripeSessionId(session.getId()).ifPresent(t -> {
-            t.setStatus("FAILED");
-            transactionRepository.save(t);
-            System.err.println(">>> [SRE ALERT] Pago fallido para sesión: " + session.getId());
-        });
     }
 }

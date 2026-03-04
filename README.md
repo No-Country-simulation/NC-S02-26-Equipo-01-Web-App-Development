@@ -1,79 +1,71 @@
-# 🚀 Multi-Channel Tracking & Attribution Engine (Backend)
+# TaxServices  
+## Multi-Channel Tracking & Attribution Engine
 
-Este servicio es un motor de orquestación de alto rendimiento diseñado para la atribución de conversiones en tiempo real. Actúa como un middleware crítico que procesa eventos financieros de Stripe y los propaga hacia Google Ads, Meta CAPI, Pipedrive CRM y PostgreSQL (Neon).
+TaxServices es una **All-in-One Solution** de *Incorporation, Tax y Bookkeeping en USA*.  
 
-## ✅ Hitos de Trazabilidad Cumplidos (9/9)
-Hemos implementado con éxito los requisitos de arquitectura solicitados para el MVP, incluyendo la reciente integración del flujo de Checkout:
+Este repositorio forma parte del sistema que potencia nuestro ecommerce, compuesto por:
 
-Persistencia en Neon: Esquema relacional extendido para analítica.
+- Un **Frontend SPA moderno**
+- Un **Backend de atribución multicanal en tiempo real**
 
-Mapeo de Metadata: Captura de gclid, campaign, source y product_id.
+El objetivo principal es **medir con precisión las conversiones pagadas vía Stripe** y sincronizarlas en tiempo real con:
 
-Trazabilidad de Sesión: Almacenamiento del session_id de Stripe para reconciliación de datos.
+- Google Ads (Offline Conversions)
+- Meta (Conversions API – CAPI)
+- Pipedrive CRM
+- PostgreSQL (Neon)
 
-Ingesta de Webhooks: Procesamiento robusto del evento checkout.session.completed.
+Esto permite optimizar campañas de adquisición y mejorar el **ROAS** mediante atribución confiable y resiliente.
 
-Sincronización CRM: Creación automática de deals en Pipedrive.
+---
 
-Meta CAPI: Envío de eventos de servidor con hashing de datos.
+# 🏗 Arquitectura General
 
-Google Ads Offline: Pipeline de subida de conversiones vía gRPC.
+## Patrón Backend: Event-Driven Middleware
+Stripe → Webhook → Orquestador → Integraciones desacopladas
+El backend actúa como un **motor de orquestación**, procesando eventos financieros y propagándolos hacia múltiples plataformas externas.
 
-Data Seeding: Generador de datos históricos para dashboards de Grafana.
+---
 
-## 🏗️ Arquitectura y Resiliencia
-El sistema implementa patrones de **SRE (Site Reliability Engineering)**:
-* **Aislamiento de Fallos:** Ejecución independiente de integraciones.
-* **Persistencia Atómica:** Registro íntegro de metadata publicitaria en cada venta.
-* **Validación de Build:** Pipeline basado en `mvn clean install` para asegurar la integridad de los binarios.
+# 🧠 Principios de Resiliencia (SRE)
 
-🔌 Especificaciones de la API
-📥 Webhook de Stripe
-POST /api/v1/webhooks/stripe
+- **Aislamiento de fallos**  
+  Cada integración (Google, Meta, CRM) se ejecuta de forma independiente.
 
-Auth: Stripe-Signature.
+- **Persistencia atómica**  
+  La venta siempre se registra en PostgreSQL aunque una API externa falle.
 
-Metadata Requerida: gclid, campaign, source, product_id.
+- **Idempotencia por `session_id`**  
+  Prevención de duplicados ante reintentos de webhook.
 
-🛠️ Herramientas de Administración
-GET /api/v1/admin/seed?days=30
+- **Observabilidad estructurada**  
+  Logging con prefijos:
+  - `[SRE MONITOR]`
+  - `[SRE SUCCESS]`
+  - `[SRE DEBUG]`
+  - `[SRE ERROR]`
 
-Función: Puebla la base de datos con datos sintéticos para pruebas de carga y visualización en Grafana.
+---
 
-Parámetros: days (Cantidad de días históricos a simular).
+# 🖥 Frontend (Ecommerce SPA)
 
-🛠️ Detalle de Integraciones
-🐘 PostgreSQL (Neon.tech)
-Utilizamos Neon como base de datos serverless para el almacenamiento de StripeEventRecord. El esquema soporta:
+El frontend está construido con:
 
-Traceability: session_id y created_at para análisis de embudos.
+- **React 19**
+- **React Router 7**
+- **@tanstack/react-query v5**
+- **TailwindCSS v4**
+- **Framer Motion v12 (LazyMotion optimizado)**
+- **Vite 7**
+- **TypeScript 5.9**
 
-Marketing Data: Columnas específicas para atribución (GCLID/FBCLID).
+## Características técnicas
 
-🎯 Google Ads & Meta CAPI
-Google Ads: Integración mediante el SDK v21 para UploadClickConversions.
+- SPA optimizada para performance
+- Animaciones desacopladas mediante `LazyMotion`
+- Manejo de estado asíncrono con React Query
+- Navegación con scroll controlado por hash
+- Optimización de bundle size
+- SEO técnico compatible con campañas Ads
 
-Meta: Envío de eventos vía Conversions API (CAPI) para mitigar bloqueos de cookies de terceros.
-
-⚙️ Configuración y Despliegue
-Requisitos
-Java 21 (LTS)
-
-Stripe CLI (Para pruebas locales)
-
-Neon Database URL
-
-Instalación y Ejecución
-Para asegurar que los cambios en los modelos y servicios se apliquen correctamente:
-
-PowerShell
-mvn clean install
-mvn spring-boot:run
-📈 Observabilidad
-El sistema utiliza prefijos de logs para monitoreo:
-
-[SRE MONITOR]: Entrada de señales externas.
-
-[SRE SUCCESS]: Confirmación de persistencia y envíos a APIs.
-
-[SRE DEBUG]: Trazabilidad interna de variables.
+El frontend captura metadata publicitaria (`gclid`, `fbclid`, campaign, source) y la envía a Stripe para que sea recuperada luego por el backend vía webhook.

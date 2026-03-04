@@ -30,45 +30,45 @@ public class CheckoutController {
         try {
             Stripe.apiKey = stripeApiKey;
 
-            // 1. Validaciones básicas
+            // 1. Validación de campos obligatorios
             if (request.productId() == null || request.productId().isBlank()) {
                 return ResponseEntity.badRequest().body(Map.of("error", "productId is required"));
             }
 
-            // 2. Configuración de la sesión en modo SUBSCRIPTION (Lógica de Setup Fee + Mensualidad)
+            // 2. Configuración de la sesión
             SessionCreateParams.Builder paramsBuilder = SessionCreateParams.builder()
-                .setMode(SessionCreateParams.Mode.SUBSCRIPTION) 
+                .setMode(SessionCreateParams.Mode.SUBSCRIPTION)
                 .setSuccessUrl(request.successUrl() + "?session_id={CHECKOUT_SESSION_ID}")
                 .setCancelUrl(request.cancelUrl());
 
-            // 3. Metadata extendida para Atribución (Google Ads + Meta + Campañas)
+            // 3. Metadata para el Webhook (Google Ads + Meta + Email)
             paramsBuilder.putMetadata("productId", request.productId());
             putIfValid(paramsBuilder, "gclid", request.gclid());
             putIfValid(paramsBuilder, "fbclid", request.fbclid());
             putIfValid(paramsBuilder, "campaign", request.campaign());
             putIfValid(paramsBuilder, "source", request.source());
 
-            // 4. Inyección de IDs Reales de Stripe según el plan (Starter/Growth)
+            // 4. Inyección de Items (Setup Fee + Mensualidad)
             addPlanItems(paramsBuilder, request.productId());
 
-            // 5. Creación de la sesión en Stripe
+            // 5. Creación en Stripe
             Session session = Session.create(paramsBuilder.build());
 
-
-            // 6. PERSISTENCIA EN NEON DB (SRE Tracking)
+            // 6. PERSISTENCIA EN NEON DB (Aseguramos Email y FBCLID)
             Transaction transaction = new Transaction();
             transaction.setStripeSessionId(session.getId());
             transaction.setPlan(request.productId());
             transaction.setGclid(request.gclid());
+            transaction.setFbclid(request.fbclid()); // Guardamos el FBCLID
             transaction.setStatus("PENDING");
             transactionRepository.save(transaction);
 
-            // 7. Respuesta para el Frontend
+            // 7. Respuesta
             Map<String, String> response = new HashMap<>();
             response.put("sessionId", session.getId());
             response.put("url", session.getUrl()); 
-            
-            System.out.println(">>> [SRE SUCCESS] Checkout " + request.productId() + " generado. Session: " + session.getId());
+
+            System.out.println(">>> [SRE SUCCESS] Checkout " + request.productId() + " generado para " + session.getId());
             return ResponseEntity.ok(response);
 
         } catch (IllegalArgumentException e) {
@@ -79,14 +79,13 @@ public class CheckoutController {
         }
     }
 
-
     private void addPlanItems(SessionCreateParams.Builder builder, String productId) {
         if ("STARTER".equalsIgnoreCase(productId)) {
-            // Setup Fee ($499 puntual) + Monthly Fee ($150 mensual)
+            // Setup Fee ($499) + Monthly ($150)
             builder.addLineItem(createItem("price_1T6dFw12wkAy9LpKpUuYiTr6")); 
             builder.addLineItem(createItem("price_1T6dEI12wkAy9LpKRDjBgWch"));
         } else if ("GROWTH".equalsIgnoreCase(productId)) {
-            // Setup Fee ($899 puntual) + Monthly Fee ($299 mensual)
+            // Setup Fee ($899) + Monthly ($299)
             builder.addLineItem(createItem("price_1T6dSA12wkAy9LpKMAd2EJYO")); 
             builder.addLineItem(createItem("price_1T6dRe12wkAy9LpKWKXjLgYO"));
         } else {
@@ -112,7 +111,8 @@ public class CheckoutController {
         );
 
         return ResponseEntity.ok(response);
-    }    
+    }   
+
 
     private SessionCreateParams.LineItem createItem(String priceId) {
         return SessionCreateParams.LineItem.builder()
