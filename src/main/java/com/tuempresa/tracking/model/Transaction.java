@@ -6,17 +6,18 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transactions")
-@Data // Si usás Lombok, si no, generá Getters y Setters
+@Data 
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String stripeSessionId;
-    private String plan; // STARTER o GROWTH
+    private String plan;
+    private String email;  // Asegurate que este campo esté
     private String gclid;
-    private String email;
-    private String status; // PENDING, PAID, FAILED
+    private String fbclid; // <--- ESTO ES LO QUE FALTA
+    private String status;
     
     private LocalDateTime createdAt;
 
@@ -25,4 +26,8 @@ public class Transaction {
         createdAt = LocalDateTime.now();
         if (status == null) status = "PENDING";
     }
+
+    // Métodos explícitos por si Lombok falla en tu IDE
+    public void setFbclid(String fbclid) { this.fbclid = fbclid; }
+    public void setEmail(String email) { this.email = email; }
 }

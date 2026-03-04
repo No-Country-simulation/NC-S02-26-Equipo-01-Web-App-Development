@@ -24,9 +24,15 @@ public class MetaCapiService {
         this.webClient = builder.baseUrl("https://graph.facebook.com/v19.0").build();
     }
 
-    public void sendPurchaseEvent(String email, double amount) {
+    public void sendPurchaseEvent(String email, double amount, String fbclid) {
         MetaEventDTO.UserData userData = new MetaEventDTO.UserData();
-        userData.setEm(hashSha256(email)); 
+        if (email != null) {
+            userData.setEm(hashSha256(email));
+        }
+
+        if (fbclid != null) {
+            userData.setFbc("fb.1." + (System.currentTimeMillis()/1000) + "." + fbclid);
+        }
         userData.setClient_ip_address("127.0.0.1"); 
 
         MetaEventDTO.CustomData customData = new MetaEventDTO.CustomData();

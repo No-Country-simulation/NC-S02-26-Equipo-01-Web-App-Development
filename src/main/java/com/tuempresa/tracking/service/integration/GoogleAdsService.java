@@ -7,7 +7,8 @@ import com.google.ads.googleads.v21.services.UploadClickConversionsResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 
@@ -26,9 +27,20 @@ public class GoogleAdsService {
         this.googleAdsClient = googleAdsClient;
     }
 
-    // EL MÉTODO QUE TESTRUNNER ESTÁ BUSCANDO
     public void sendOfflineConversion(String gclid, double amount) {
-        String conversionTime = ZonedDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ssXXX"));
+        if (gclid == null || gclid.isEmpty()) {
+            System.err.println("⚠️ [GOOGLE ADS] No se envió conversión: GCLID nulo o vacío.");
+            return;
+        }
+
+        // Formato exacto: yyyy-MM-dd HH:mm:ssZZZZZ (Ej: 2026-03-03 01:17:07-03:00)
+        // Usamos OffsetDateTime para asegurar que el offset sea el de Paraguay (-03:00)
+        String conversionTime = OffsetDateTime.now(ZoneId.of("America/Asuncion"))
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ssZZZZZ"));
+        
+        System.out.println(">>> [DEBUG SRE] GCLID recibido: " + gclid);
+        System.out.println(">>> [DEBUG SRE] Enviando fecha exacta: " + conversionTime);
+
         String resourceName = "customers/" + customerId + "/conversionActions/" + conversionActionId;
 
         try (ConversionUploadServiceClient client = 
@@ -45,10 +57,15 @@ public class GoogleAdsService {
             UploadClickConversionsResponse response = client.uploadClickConversions(
                     customerId, Collections.singletonList(conversion), true);
 
-            System.out.println("🚀 [SPRING SUCCESS] Conversión enviada a Google Ads: " + response);
+            if (response.hasPartialFailureError()) {
+                // Esto nos dirá el error exacto si Google vuelve a quejarse
+                System.err.println("❌ [GOOGLE ADS ERROR DETAIL] " + response.getPartialFailureError().getMessage());
+            } else {
+                System.out.println("🚀 [GOOGLE ADS SUCCESS] Conversión aceptada para GCLID: " + gclid);
+            }
 
         } catch (Exception e) {
-            System.err.println("❌ [SPRING ERROR] Falló el envío a Google Ads: " + e.getMessage());
+            System.err.println("❌ [SPRING ERROR] Error crítico en la llamada a Google Ads: " + e.getMessage());
         }
     }
 }

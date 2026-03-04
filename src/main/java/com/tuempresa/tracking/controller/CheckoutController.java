@@ -8,6 +8,7 @@ import com.tuempresa.tracking.model.Transaction;
 import com.tuempresa.tracking.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -25,54 +26,74 @@ public class CheckoutController {
     private TransactionRepository transactionRepository;
 
     @PostMapping("/create-session")
-    public Map<String, String> createSession(@RequestBody CheckoutRequest request) throws Exception {
-        Stripe.apiKey = stripeApiKey;
+    public ResponseEntity<Map<String, String>> createSession(@RequestBody CheckoutRequest request) throws Exception {
+        try {
+            Stripe.apiKey = stripeApiKey;
 
-        // 1. Configuración de la sesión en modo SUBSCRIPTION
-        // Permite combinar el Setup Fee (puntual) con la mensualidad (recurrente)
-        SessionCreateParams.Builder paramsBuilder = SessionCreateParams.builder()
-            .setMode(SessionCreateParams.Mode.SUBSCRIPTION) 
-            .setSuccessUrl(request.successUrl() + "?session_id={CHECKOUT_SESSION_ID}")
-            .setCancelUrl(request.cancelUrl())
-            .putMetadata("gclid", request.gclid())
-            .putMetadata("plan", request.productId());
+            // 1. Validación de campos obligatorios
+            if (request.productId() == null || request.productId().isBlank()) {
+                return ResponseEntity.badRequest().body(Map.of("error", "productId is required"));
+            }
+            if (request.email() == null || request.email().isBlank()) {
+                return ResponseEntity.badRequest().body(Map.of("error", "email is required"));
+            }
 
-        // 2. Inyección de IDs Reales según el plan seleccionado
-        addPlanItems(paramsBuilder, request.productId());
+            // 2. Configuración de la sesión
+            SessionCreateParams.Builder paramsBuilder = SessionCreateParams.builder()
+                .setMode(SessionCreateParams.Mode.SUBSCRIPTION) 
+                .setCustomerEmail(request.email()) // <-- CRÍTICO: Para que Stripe reconozca al usuario
+                .setSuccessUrl(request.successUrl() + "?session_id={CHECKOUT_SESSION_ID}")
+                .setCancelUrl(request.cancelUrl());
 
-        // 3. Creación de la sesión en los servidores de Stripe
-        Session session = Session.create(paramsBuilder.build());
+            // 3. Metadata para el Webhook (Google Ads + Meta + Email)
+            paramsBuilder.putMetadata("productId", request.productId());
+            paramsBuilder.putMetadata("email", request.email()); // Para recuperar en el Webhook
+            putIfValid(paramsBuilder, "gclid", request.gclid());
+            putIfValid(paramsBuilder, "fbclid", request.fbclid());
+            putIfValid(paramsBuilder, "campaign", request.campaign());
+            putIfValid(paramsBuilder, "source", request.source());
 
-        // 4. PERSISTENCIA EN NEON DB (Trazabilidad SRE)
-        Transaction transaction = new Transaction();
-        transaction.setStripeSessionId(session.getId());
-        transaction.setPlan(request.productId());
-        transaction.setGclid(request.gclid());
-        transaction.setStatus("PENDING");
-        transactionRepository.save(transaction);
+            // 4. Inyección de Items (Setup Fee + Mensualidad)
+            addPlanItems(paramsBuilder, request.productId());
 
-        // 5. Respuesta para el redireccionamiento del Frontend
-        Map<String, String> response = new HashMap<>();
-        response.put("sessionId", session.getId());
-        response.put("url", session.getUrl()); 
-        
-        System.out.println(">>> [SRE SUCCESS] Checkout " + request.productId() + " generado. Session: " + session.getId());
-        return response;
+            // 5. Creación en Stripe
+            Session session = Session.create(paramsBuilder.build());
+
+            // 6. PERSISTENCIA EN NEON DB (Aseguramos Email y FBCLID)
+            Transaction transaction = new Transaction();
+            transaction.setStripeSessionId(session.getId());
+            transaction.setEmail(request.email()); // Guardamos el mail
+            transaction.setPlan(request.productId());
+            transaction.setGclid(request.gclid());
+            transaction.setFbclid(request.fbclid()); // Guardamos el FBCLID
+            transaction.setStatus("PENDING");
+            transactionRepository.save(transaction);
+
+            // 7. Respuesta
+            Map<String, String> response = new HashMap<>();
+            response.put("sessionId", session.getId());
+            response.put("url", session.getUrl()); 
+            
+            System.out.println(">>> [SRE SUCCESS] Checkout " + request.productId() + " generado para " + request.email());
+            return ResponseEntity.ok(response);
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(Map.of("error", "Stripe session creation failed"));
+        }
     }
 
     private void addPlanItems(SessionCreateParams.Builder builder, String productId) {
         if ("STARTER".equalsIgnoreCase(productId)) {
-            // Setup Fee ($499 puntual)
+            // Setup Fee ($499) + Monthly ($150)
             builder.addLineItem(createItem("price_1T6dFw12wkAy9LpKpUuYiTr6")); 
-            // Monthly Fee ($150 mensual)
             builder.addLineItem(createItem("price_1T6dEI12wkAy9LpKRDjBgWch"));
-            
         } else if ("GROWTH".equalsIgnoreCase(productId)) {
-            // Setup Fee ($899 puntual)
+            // Setup Fee ($899) + Monthly ($299)
             builder.addLineItem(createItem("price_1T6dSA12wkAy9LpKMAd2EJYO")); 
-            // Monthly Fee ($299 mensual)
             builder.addLineItem(createItem("price_1T6dRe12wkAy9LpKWKXjLgYO"));
-            
         } else {
             throw new IllegalArgumentException("Plan no reconocido: " + productId);
         }
@@ -83,5 +104,11 @@ public class CheckoutController {
                 .setQuantity(1L)
                 .setPrice(priceId)
                 .build();
+    }
+
+    private void putIfValid(SessionCreateParams.Builder builder, String key, String value) {
+        if (value != null && !value.isBlank() && value.length() <= 255) {
+            builder.putMetadata(key, value);
+        }
     }
 }

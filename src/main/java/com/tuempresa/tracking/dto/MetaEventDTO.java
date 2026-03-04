@@ -27,7 +27,7 @@ public class MetaEventDTO {
         private String em;
         private String client_ip_address;
         private String client_user_agent;
-
+        private String fbc;
         // Getters y Setters
         public String getEm() { return em; }
         public void setEm(String em) { this.em = em; }
@@ -37,6 +37,9 @@ public class MetaEventDTO {
 
         public String getClient_user_agent() { return client_user_agent; }
         public void setClient_user_agent(String client_user_agent) { this.client_user_agent = client_user_agent; }
+
+        public String getFbc() { return fbc; }
+        public void setFbc(String fbc) { this.fbc = fbc; }
     }
 
     public static class CustomData {
