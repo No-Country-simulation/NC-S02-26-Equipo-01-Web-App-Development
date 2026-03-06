@@ -25,7 +25,9 @@ Then(
   'el precio total a pagar {string} sea igual al servicio solicitado',
   async function (this: CustomWorld, precioEsperado) {
     const checkout = new CheckoutPage(this.page!)
-    await expect(checkout.precioTotal).toHaveText(precioEsperado)
+    await expect(checkout.precioTotal(precioEsperado)).toHaveText(
+      precioEsperado,
+    )
   },
 )
 
