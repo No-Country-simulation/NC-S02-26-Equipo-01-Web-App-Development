@@ -9,10 +9,13 @@ import com.tuempresa.tracking.repository.TransactionRepository;
 import com.tuempresa.tracking.service.integration.GoogleAdsService;
 import com.tuempresa.tracking.service.integration.MetaCapiService;
 import com.tuempresa.tracking.service.integration.PipedriveCRMServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -24,122 +27,120 @@ public class StripeWebhookController {
 
     @Autowired
     private TransactionRepository transactionRepository;
+
     @Autowired
     private GoogleAdsService googleAdsService;
+
     @Autowired
     private MetaCapiService metaCapiService;
+
     @Autowired
     private PipedriveCRMServiceImpl pipedriveService;
 
+    private static final Logger log = LoggerFactory.getLogger(StripeWebhookController.class);
     @PostMapping("/webhook")
     public ResponseEntity<String> handleStripeWebhook(@RequestBody String payload,
             @RequestHeader("Stripe-Signature") String sigHeader) {
+
         try {
-            // 1. Validamos firma
             Event event = Webhook.constructEvent(payload, sigHeader, endpointSecret);
-            System.out.println(">>> [WEBHOOK RECEIVED] Tipo de evento: " + event.getType() + " | ID: " + event.getId()
-                    + " | Payload: " + payload);
+
+            log.info("Webhook recibido. Tipo: {} | EventID: {}", event.getType(), event.getId());
 
             if ("checkout.session.completed".equals(event.getType())) {
-                // Extraemos el objeto genérico
-                // com.stripe.model.StripeObject stripeObject =
-                // event.getDataObjectDeserializer().getObject().orElse(null);
-                // System.out.println(stripeObject != null ? ">>> [WEBHOOK INFO] Objeto
-                // deserializado: " + stripeObject.getClass().getSimpleName() : ">>> [WEBHOOK
-                // INFO] No se pudo deserializar el objeto.");
-                com.stripe.model.EventDataObjectDeserializer dataObjectDeserializer = event.getDataObjectDeserializer();
+
+                EventDataObjectDeserializer dataObjectDeserializer = event.getDataObjectDeserializer();
                 StripeObject stripeObject = null;
+
                 if (dataObjectDeserializer.getObject().isPresent()) {
                     stripeObject = dataObjectDeserializer.getObject().get();
-                    System.out.println(
-                            ">>> [WEBHOOK INFO] Objeto deserializado: " + stripeObject.getClass().getSimpleName());
+                    log.debug("Objeto deserializado: {}", stripeObject.getClass().getSimpleName());
+                } else {
+                    log.error("No se pudo deserializar el objeto del evento. Posible mismatch de versión Stripe API.");
                 }
 
-                else {
-                    // Deserialization failed, probably due to an API version mismatch.
-                    // Refer to the Javadoc documentation on `EventDataObjectDeserializer` for
-                    // instructions on how to handle this case, or return an error here.
-                    System.err.println(
-                            ">>> [WEBHOOK ERROR] No se pudo deserializar el objeto del evento. Posible incompatibilidad de versión de API.");
-                }
-
-                // Verificamos si es una Session
-                if (stripeObject instanceof Session) {
-                    Session session = (Session) stripeObject;
-                    System.out.println(">>> [SRE INFO] Procesando Session ID: " + session.getId());
+                if (stripeObject instanceof Session session) {
+                    log.info("Procesando checkout session: {}", session.getId());
                     procesarPagoAcelerado(session);
                 }
 
-                // Si procesamos el pago, respondemos Success
                 return ResponseEntity.ok("Success: Processed");
             }
 
-            // 2. Si el evento NO es de pago, igual respondemos 200 para que Stripe no
-            // reintente
             return ResponseEntity.ok("Success: Event ignored");
 
         } catch (Exception e) {
-            System.err.println(">>> [WEBHOOK ERROR] " + e.getMessage());
-            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+            log.error("Error procesando webhook Stripe", e);
+            return ResponseEntity.badRequest().body("Webhook error");
         }
     }
 
     private void procesarPagoAcelerado(Session session) {
+
         String sessionId = session.getId();
         String customerEmail = (session.getCustomerDetails() != null) ? session.getCustomerDetails().getEmail()
                 : "no-email@test.com";
+
         double amount = (session.getAmountTotal() != null) ? session.getAmountTotal() / 100.0 : 0.0;
 
         String gclid = (session.getMetadata() != null) ? session.getMetadata().get("gclid") : null;
+
         String fbclid = (session.getMetadata() != null) ? session.getMetadata().get("fbclid") : null;
 
-        // 1. LOCK LÓGICO: Actualización atómica en Base de Datos
         int updated = transactionRepository.markAsPaidIfPending(sessionId, customerEmail);
 
-        System.out.println(sessionId + " - Intentando marcar como PAID. Filas afectadas: " + updated + " | Email: "
-                + customerEmail + " | GCLID: " + gclid + " | FBCLID: " + fbclid);
+        log.info("Intentando marcar transacción {} como PAID | filas afectadas={} | email={} | gclid={} | fbclid={}", sessionId, updated, customerEmail, gclid, fbclid);
 
         if (updated == 1) {
-            System.out.println(">>> [DB SUCCESS] Transacción " + sessionId + " marcada como PAID de forma segura.");
 
-            // 2. PROCESAMIENTO ASÍNCRONO BLINDADO
-            // --- BLOQUE PIPEDRIVE CRM ---
+            log.info("Transacción {} marcada como PAID correctamente", sessionId);
+
             try {
                 pipedriveService.registrarVenta(customerEmail, amount);
+                log.info("Venta registrada en Pipedrive para {}", customerEmail);
             } catch (Exception e) {
-                System.err.println(">>> [CRM ERROR] Falló Pipedrive: " + e.getMessage());
+                log.error("Error enviando venta a Pipedrive", e);
             }
-            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-                System.out.println(">>> [ASYNC WORKER] Iniciando tareas de marketing para: " + customerEmail);
 
-                // --- BLOQUE GOOGLE ADS ---
+            CompletableFuture<Void> googleFuture = CompletableFuture.runAsync(() -> {
+
+                log.info("Iniciando worker de marketing para {}", customerEmail);
+
                 try {
                     if (gclid != null && !gclid.isBlank()) {
+
                         googleAdsService.sendOfflineConversion(gclid, amount);
-                        System.out.println(">>> [ADS] Conversión enviada.");
+                        log.info("Conversión enviada a Google Ads");
+
                     } else {
-                        System.out.println(">>> [ADS SKIP] No hay GCLID para enviar.");
+                        log.debug("No hay GCLID, se omite envío a Google Ads");
                     }
+
                 } catch (Exception e) {
-                    System.err.println(
-                            ">>> [ADS ERROR] Falló Google Ads, pero el sistema continúa. Causa: " + e.getMessage());
+                    log.error("Error enviando conversión a Google Ads", e);
                 }
 
             });
-            CompletableFuture<Void> futuroMeta = CompletableFuture.runAsync(() -> {// --- BLOQUE META CAPI ---
+
+            CompletableFuture<Void> metaFuture = CompletableFuture.runAsync(() -> {
+
                 try {
+
                     if (fbclid != null && !fbclid.isBlank()) {
                         metaCapiService.sendPurchaseEvent(customerEmail, amount, fbclid);
-                        System.out.println(">>> [META] Evento enviado.");
+                        log.info("Evento enviado a Meta CAPI");
                     }
+
                 } catch (Exception e) {
-                    System.err.println(">>> [META ERROR] Falló Meta CAPI: " + e.getMessage());
+                    log.error("Error enviando evento a Meta CAPI", e);
                 }
+
             });
 
-            CompletableFuture.allOf(future, futuroMeta).thenRun(() -> System.out.println("TAREA FINALIZADA"));
+            CompletableFuture.allOf(googleFuture, metaFuture).thenRun(() -> log.info("Procesamiento async finalizado para {}", sessionId));
+
         } else {
-            System.err.println(">>> [DB WARNING] No se pudo actualizar " + sessionId + ". No existe o ya estaba PAID.");
+            log.warn("No se actualizó la transacción {}. Puede que no exista o ya esté en estado PAID", sessionId);
         }
     }
 }
