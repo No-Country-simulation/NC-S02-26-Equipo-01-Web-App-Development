@@ -12,8 +12,8 @@ Background:
   Scenario: Efectuar compra del servicio solicitado con todos los campos ingresados
     Then el precio total a pagar "899,00 US$" sea igual al servicio solicitado
     When el usuario rellena el formulario con los siguientes datos:
-        | email             | card_number       | expiry | cvc | name          |
-        | test@example.com  | 4242424242424242  | 12/26  | 123 | Juan Perez    |
+        | email            | card_number      | expiry | cvc | zip   | name       |
+        | test@example.com | 4242424242424242 | 12/26  | 123 | 10001 | Juan Perez |
     And hace click en el botón "Finalizar compra"
     Then el usuario es redirigido a la página de pago exitoso
 

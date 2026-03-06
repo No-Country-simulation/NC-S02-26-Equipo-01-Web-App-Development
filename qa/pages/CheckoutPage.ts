@@ -25,6 +25,9 @@ export class CheckoutPage extends BasePage {
   private titleCanceled = this.page.locator('h1', {
     hasText: 'Payment Canceled',
   })
+  private inputZip = this.page.locator(
+    'input[id="billingPostalCode"], input[name="billingPostalCode"], input[autocomplete="postal-code"]',
+  )
 
   precioTotal(precioEsperado: string) {
     return this.stripePlanAmount.filter({ hasText: precioEsperado })
@@ -58,6 +61,9 @@ export class CheckoutPage extends BasePage {
 
     if (datos.expiry) await this.inputCardExpiry.fill(datos.expiry)
     if (datos.cvc) await this.inputCardCvc.fill(datos.cvc)
+    if (datos.zip) {
+      await this.inputZip.first().fill(datos.zip)
+    }
   }
 
   async finalizarCompra() {
