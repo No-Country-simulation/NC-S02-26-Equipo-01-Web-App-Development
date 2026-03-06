@@ -206,8 +206,23 @@ Los eventos se procesan de forma **idempotente**, previniendo duplicados ante re
 
 </td>
 
+
 <td align="center" width="250" style="border:1px solid #ccc; padding:10px;">
-<!-- <img src="https://img.shields.io/badge/-grey?style=for-the-badge"/>-->
+
+<img src="https://avatars.githubusercontent.com/u/66507975?v=4" width="120"/><br>
+
+<b>Estanislao Hancco Apaza</b><br><br>
+
+<img src="https://img.shields.io/badge/Backend_Developer-0A66C2?style=for-the-badge&logo=java&logoColor=white"/><br><br>
+
+<a href="https://github.com/hanquito">
+<img src="https://img.shields.io/badge/GitHub-Profile-181717?style=for-the-badge&logo=github"/>
+</a>
+
+<a href="https://www.linkedin.com/in/">
+<img src="https://img.shields.io/badge/LinkedIn-Profile-0A66C2?style=for-the-badge&logo=linkedin"/>
+</a>
+
 </td>
 
 </tr>
