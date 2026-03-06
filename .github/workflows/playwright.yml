@@ -1,0 +1,44 @@
+name: Playwright Tests (HU1-HU3)
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: qa
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 25
+          cache: 'npm'
+          cache-dependency-path: qa/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Cucumber Tests
+        run: npm test
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+
+      - name: Generate HTML Report
+        run: node ./generate.report.js
+        if: always()
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cucumber-report
+          path: qa/reports/
+          retention-days: 30
