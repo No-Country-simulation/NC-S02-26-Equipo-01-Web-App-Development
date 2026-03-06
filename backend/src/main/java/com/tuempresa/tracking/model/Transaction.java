@@ -14,8 +14,11 @@ public class Transaction {
 
     private String stripeSessionId;
     private String plan;
+    private String email;    // Para guardar el mail que capture Stripe
     private String gclid;
     private String fbclid; 
+    private String campaign; // Para "perfil_bio"
+    private String source;   // Para "instagram"
     private String status;
     
     private LocalDateTime createdAt;
@@ -25,7 +28,4 @@ public class Transaction {
         createdAt = LocalDateTime.now();
         if (status == null) status = "PENDING";
     }
-
-    // Métodos explícitos por si Lombok falla en tu IDE
-    public void setFbclid(String fbclid) { this.fbclid = fbclid; }
 }

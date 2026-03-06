@@ -4,6 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import reactor.core.publisher.Mono;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import java.util.Map;
 
@@ -14,11 +18,12 @@ public class PipedriveCRMServiceImpl implements CRMIntegrationService {
     private static final Logger log = LoggerFactory.getLogger(PipedriveCRMServiceImpl.class);
 
     private final WebClient webClient;
-    
-    private final String apiToken = "8ef4e1618893b13b34b5d63667ea6aae1a6cd941"; 
 
-    public PipedriveCRMServiceImpl(WebClient.Builder builder) {
-        this.webClient = builder.baseUrl("https://api.pipedrive.com/v1").build();
+    @Value("${pipedrive.api.token}")
+    private String apiToken;
+
+    public PipedriveCRMServiceImpl(WebClient.Builder builder, @Value("${pipedrive.domain}") String domain) {
+        this.webClient = builder.baseUrl("https://" + domain + ".pipedrive.com/api/v2").build();
     }
 
     @Override
@@ -26,24 +31,34 @@ public class PipedriveCRMServiceImpl implements CRMIntegrationService {
         log.info(">>> [SRE DEBUG] Intentando conexión directa con Token: {}...", apiToken.substring(0, 5) + "****");
 
         Map<String, Object> deal = Map.of(
-            "title", "Venta Stripe: " + email,
-            "value", monto,
-            "currency", "USD",
-            "status", "open"
-        );
+                "title", "Venta Stripe: " + email,
+                "value", monto,
+                "currency", "USD",
+                "status", "open");
+        try {
 
-        webClient.post()
-            .uri(uriBuilder -> uriBuilder
-                .path("/deals")
-                .queryParam("api_token", apiToken.trim()) 
-                .build())
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(deal)
-            .retrieve()
-            .bodyToMono(String.class)
-            .subscribe(
-                res -> log.info(">>> [SRE SUCCESS] ¡TRATO CREADO!: {}", res),
-                err -> log.error(">>> [SRE ERROR] Detalle del fallo: {}", err.getMessage())
-            );
+                Map res = this.webClient.post()
+                    .uri("/deals")
+                    .header("x-api-token", apiToken)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(deal)
+                    .retrieve()
+                    .onStatus(status -> status.isError(),
+                            response -> response.bodyToMono(String.class).flatMap(errorBody -> {
+                                log.error(">>> [Pipedrive Error] Código: {} - Cuerpo: {}", response.statusCode(),
+                                        errorBody);
+                                return Mono.error(new RuntimeException("Error en Pipedrive API"));
+                            }))
+                    .bodyToMono(Map.class)
+                    .block(); 
+
+        if (res != null && res.containsKey("data")) {
+            log.info(">>> [SUCCESS] Trato creado en Pipedrive con ID: {}", ((Map) res.get("data")).get("id"));
+        } else {
+            log.warn(">>> [WARNING] Pipedrive respondió, pero no devolvió un ID de Trato válido.");
+        }
+        } catch (Exception e) {
+            log.error("ERROR: " + e.getMessage());
+        }
     }
 }
