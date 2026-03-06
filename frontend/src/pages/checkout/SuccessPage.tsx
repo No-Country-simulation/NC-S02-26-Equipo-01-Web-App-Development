@@ -112,8 +112,8 @@ const SuccessPage = () => {
           </p>
 
           <p className="text-lg mb-4 max-w-md">
-            Amount total:{" "}
-            <span className="font-mono text-sm text-gray-500">
+            Amount total: ${" "}
+            <span className="font-mono font-bold text-lg text-gray-500">
               {data.amount || "No email provided"}
             </span>
           </p>
