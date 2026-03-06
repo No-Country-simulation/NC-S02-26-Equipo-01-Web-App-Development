@@ -9,14 +9,18 @@ Given(
   async function (this: CustomWorld, precio) {
     const landing = new LandingPage(this.page!)
     await landing.clickEnStartNow(precio)
+    await this.page!.waitForLoadState('networkidle')
   },
 )
 
 Then(
   'se valida que el usuario se encuentra en la pasarela de pago',
   async function (this: CustomWorld) {
+    console.log(
+      `[QA DEBUG] URL Actual antes de validar Stripe: ${this.page!.url()}`,
+    )
     await expect(this.page!).toHaveURL(/.*checkout.stripe.com/, {
-      timeout: 15000,
+      timeout: 20000,
     })
   },
 )

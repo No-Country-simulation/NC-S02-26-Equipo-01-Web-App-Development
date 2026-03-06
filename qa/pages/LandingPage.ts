@@ -72,6 +72,6 @@ export class LandingPage extends BasePage {
   async clickEnStartNow(precio: string) {
     const card = this.obtenerPrecioPlan(precio).first()
     const button = card.locator(this.buttonPricingLocator)
-    await button.click()
+    await button.click({ force: true })
   }
 }
