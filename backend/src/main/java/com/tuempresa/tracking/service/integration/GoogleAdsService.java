@@ -37,7 +37,7 @@ public class GoogleAdsService {
         // Usamos OffsetDateTime para asegurar que el offset sea el de Paraguay (-03:00)
         String conversionTime = OffsetDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"))
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ssXXX"));
-        
+
         System.out.println(">>> [DEBUG SRE] GCLID recibido: " + gclid);
         System.out.println(">>> [DEBUG SRE] Enviando fecha exacta: " + conversionTime);
 

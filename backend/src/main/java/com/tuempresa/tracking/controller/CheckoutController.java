@@ -46,6 +46,7 @@ public class CheckoutController {
                 return ResponseEntity.badRequest().body(Map.of("error", "productId is required"));
             }
 
+
             // 2. Configuración sesión
             SessionCreateParams.Builder paramsBuilder = SessionCreateParams.builder()
                     .setMode(SessionCreateParams.Mode.SUBSCRIPTION)
@@ -105,15 +106,15 @@ public class CheckoutController {
     private void addPlanItems(SessionCreateParams.Builder builder, String productId) {
 
         if ("STARTER".equalsIgnoreCase(productId)) {
-
-            builder.addLineItem(createItem("price_1T6dFw12wkAy9LpKpUuYiTr6"));
+            // Setup Fee ($499) + Monthly ($150)
+            builder.addLineItem(createItem("price_1T6dFw12wkAy9LpKpUuYiTr6")); 
             builder.addLineItem(createItem("price_1T6dEI12wkAy9LpKRDjBgWch"));
 
             log.debug("Plan STARTER items added");
 
         } else if ("GROWTH".equalsIgnoreCase(productId)) {
-
-            builder.addLineItem(createItem("price_1T6dSA12wkAy9LpKMAd2EJYO"));
+            // Setup Fee ($899) + Monthly ($299)
+            builder.addLineItem(createItem("price_1T6dSA12wkAy9LpKMAd2EJYO")); 
             builder.addLineItem(createItem("price_1T6dRe12wkAy9LpKWKXjLgYO"));
 
             log.debug("Plan GROWTH items added");
@@ -124,6 +125,7 @@ public class CheckoutController {
             throw new IllegalArgumentException("Plan no reconocido: " + productId);
         }
     }
+    
     @GetMapping("/session/{sessionId}")
     public ResponseEntity<?> getSession(@PathVariable String sessionId) {
 
