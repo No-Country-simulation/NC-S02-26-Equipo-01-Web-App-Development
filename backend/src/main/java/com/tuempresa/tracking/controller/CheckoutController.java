@@ -64,7 +64,7 @@ public class CheckoutController {
             transaction.setSource(request.source());
             transaction.setStatus("PENDING");
             transactionRepository.save(transaction);
-            System.out.println("transaction saved with ID: " + transactionRepository.findById(transaction.getId()).get()+ " | FBCLID: " + transaction.getFbclid());
+
             // 7. Respuesta
             Map<String, String> response = new HashMap<>();
             response.put("sessionId", session.getId());

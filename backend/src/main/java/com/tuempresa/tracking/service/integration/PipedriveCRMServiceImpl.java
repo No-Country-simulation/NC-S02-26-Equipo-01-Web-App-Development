@@ -18,6 +18,7 @@ public class PipedriveCRMServiceImpl implements CRMIntegrationService {
     private static final Logger log = LoggerFactory.getLogger(PipedriveCRMServiceImpl.class);
 
     private final WebClient webClient;
+
     @Value("${pipedrive.api.token}")
     private String apiToken;
 
