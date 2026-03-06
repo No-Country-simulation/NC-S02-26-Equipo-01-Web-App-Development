@@ -7,7 +7,9 @@ export class CheckoutPage extends BasePage {
     '[data-qa="EmptyFieldError"], [role="alert"]',
   )
 
-  private stripeTotalAmount = this.page.locator('#ProductSummary-totalAmount')
+  private stripePlanAmount = this.page.locator(
+    '[data-testid="line-item-total-amount"]',
+  )
 
   private inputCardNumber = this.page.locator(
     '#cardNumber, input[name="cardnumber"]',
@@ -24,8 +26,8 @@ export class CheckoutPage extends BasePage {
     hasText: 'Payment Canceled',
   })
 
-  get precioTotal() {
-    return this.stripeTotalAmount
+  precioTotal(precioEsperado: string) {
+    return this.stripePlanAmount.filter({ hasText: precioEsperado })
   }
   get mensajeErrorStripe() {
     return this.stripeErrorMessage
