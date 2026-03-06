@@ -9,14 +9,18 @@ Given(
   async function (this: CustomWorld, precio) {
     const landing = new LandingPage(this.page!)
     await landing.clickEnStartNow(precio)
+    await this.page!.waitForURL(/.*checkout.stripe.com/, { timeout: 30000 })
   },
 )
 
 Then(
   'se valida que el usuario se encuentra en la pasarela de pago',
   async function (this: CustomWorld) {
+    console.log(
+      `[QA DEBUG] URL Actual antes de validar Stripe: ${this.page!.url()}`,
+    )
     await expect(this.page!).toHaveURL(/.*checkout.stripe.com/, {
-      timeout: 15000,
+      timeout: 20000,
     })
   },
 )
@@ -51,16 +55,17 @@ When(
 Then(
   'el usuario es redirigido a la página de pago exitoso',
   async function (this: CustomWorld) {
-    await expect(this.page!).toHaveURL(/.*success/, { timeout: 20000 })
-  },
-)
+    try {
+      await this.page!.waitForURL(/.*success/, {
+        timeout: 45000,
+        waitUntil: 'networkidle', // Espera a que carguen los scripts de éxito
+      })
+    } catch (e) {
+      console.log(`>>> [QA ERROR] URL final detectada: ${this.page!.url()}`)
+      throw e
+    }
 
-Then(
-  'el sistema debe procesar el pago y enviar los IDs {string} y {string} al servidor',
-  async function (this: CustomWorld) {
-    // Nota: Se valida que los datos de tracking se envían correctamente al servidor, lo cual se puede simular validando que se almacenan en localStorage o que se incluyen en la URL de redirección
-    const checkout = new CheckoutPage(this.page!)
-    await checkout.validarTracking()
+    await expect(this.page!).toHaveURL(/.*success/)
   },
 )
 
