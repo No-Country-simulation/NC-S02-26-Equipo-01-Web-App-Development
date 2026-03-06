@@ -35,8 +35,8 @@ public class GoogleAdsService {
 
         // Formato exacto: yyyy-MM-dd HH:mm:ssZZZZZ (Ej: 2026-03-03 01:17:07-03:00)
         // Usamos OffsetDateTime para asegurar que el offset sea el de Paraguay (-03:00)
-        String conversionTime = OffsetDateTime.now(ZoneId.of("America/Asuncion"))
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ssZZZZZ"));
+        String conversionTime = OffsetDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"))
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ssXXX"));
         
         System.out.println(">>> [DEBUG SRE] GCLID recibido: " + gclid);
         System.out.println(">>> [DEBUG SRE] Enviando fecha exacta: " + conversionTime);

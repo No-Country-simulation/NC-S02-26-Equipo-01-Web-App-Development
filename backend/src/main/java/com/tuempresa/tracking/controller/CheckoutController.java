@@ -37,7 +37,7 @@ public class CheckoutController {
 
             // 2. Configuración de la sesión
             SessionCreateParams.Builder paramsBuilder = SessionCreateParams.builder()
-                .setMode(SessionCreateParams.Mode.SUBSCRIPTION)
+                .setMode(SessionCreateParams.Mode.SUBSCRIPTION) 
                 .setSuccessUrl(request.successUrl() + "?session_id={CHECKOUT_SESSION_ID}")
                 .setCancelUrl(request.cancelUrl());
 
@@ -60,15 +60,17 @@ public class CheckoutController {
             transaction.setPlan(request.productId());
             transaction.setGclid(request.gclid());
             transaction.setFbclid(request.fbclid()); // Guardamos el FBCLID
+            transaction.setCampaign(request.campaign());
+            transaction.setSource(request.source());
             transaction.setStatus("PENDING");
             transactionRepository.save(transaction);
-
+            System.out.println("transaction saved with ID: " + transactionRepository.findById(transaction.getId()).get()+ " | FBCLID: " + transaction.getFbclid());
             // 7. Respuesta
             Map<String, String> response = new HashMap<>();
             response.put("sessionId", session.getId());
             response.put("url", session.getUrl()); 
-
-            System.out.println(">>> [SRE SUCCESS] Checkout " + request.productId() + " generado para " + session.getId());
+            
+            System.out.println(">>> [SRE SUCCESS] Checkout " + request.productId() + " generado para ");
             return ResponseEntity.ok(response);
 
         } catch (IllegalArgumentException e) {
@@ -112,7 +114,6 @@ public class CheckoutController {
 
         return ResponseEntity.ok(response);
     }   
-
 
     private SessionCreateParams.LineItem createItem(String priceId) {
         return SessionCreateParams.LineItem.builder()
