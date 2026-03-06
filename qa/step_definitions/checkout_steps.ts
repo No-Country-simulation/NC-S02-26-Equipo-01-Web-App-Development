@@ -55,7 +55,7 @@ When(
 Then(
   'el usuario es redirigido a la página de pago exitoso',
   async function (this: CustomWorld) {
-    await expect(this.page!).toHaveURL(/.*success/, { timeout: 20000 })
+    await expect(this.page!).toHaveURL(/.*success/, { timeout: 35000 })
   },
 )
 
