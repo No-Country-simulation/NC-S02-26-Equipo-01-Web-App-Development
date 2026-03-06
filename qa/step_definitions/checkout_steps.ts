@@ -9,7 +9,7 @@ Given(
   async function (this: CustomWorld, precio) {
     const landing = new LandingPage(this.page!)
     await landing.clickEnStartNow(precio)
-    await this.page!.waitForLoadState('networkidle')
+    await this.page!.waitForURL(/.*checkout.stripe.com/, { timeout: 30000 })
   },
 )
 
