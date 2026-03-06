@@ -61,9 +61,7 @@ export class CheckoutPage extends BasePage {
   }
 
   async finalizarCompra() {
-    await this.page.waitForLoadState('networkidle')
     await this.btnSubscribe.waitFor({ state: 'visible', timeout: 10000 })
-    await this.btnSubscribe.scrollIntoViewIfNeeded()
-    await this.btnSubscribe.click({ delay: 100 })
+    await this.btnSubscribe.click()
   }
 }
